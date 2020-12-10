@@ -41,12 +41,14 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
   font-family: "Montserrat", sans-serif;
+  background-color:var(--main-color)
 }
 .container {
   width: 90%;
-  height: 100vh;
+  height: 88vh;
   overflow: hidden;
   background-color: var(--main-color);
   margin: 0 auto;
+  border:1px solid black;
 }
 </style>

@@ -5,7 +5,7 @@
       <button class="searchBarExit" @click="toggleSearch"></button>
     </div>
     <div class="headerBox" v-if="headerState === 'standard'">
-      <button class="menuButton"></button>
+      <button class="menuButton" @click='toggleNavBar'></button>
       <logo></logo>
     </div>
     <div class="headerBox" v-if="headerState === 'standard'">
@@ -13,18 +13,22 @@
       <base-button CSS="common headerSignIn">Sign In</base-button>
     </div>
   </header>
+  <nav-bar v-if='navBarState' @close-nav='toggleNavBar'></nav-bar>
 </template>
 <script>
 import Logo from "../UI/Logo.vue";
+import NavBar from "../layout/NavSideBar.vue";
 
 export default {
   components: {
     Logo,
+    NavBar
   },
-  //THIS DATA PUT INTO VUEX AS GLOBAL STATE OF DATA
+  // PUT THIS DATA  INTO VUEX AS GLOBAL STATE OF DATA
   data() {
     return {
       headerState: "standard",
+      navBarState:false,
     };
   },
   methods: {
@@ -34,8 +38,13 @@ export default {
       } else {
         this.headerState = "standard";
       }
-      console.log(this.headerState);
+      
     },
+
+    toggleNavBar(){
+      this.navBarState = !this.navBarState
+      console.log(this.navBarState)
+    }
   },
 };
 </script>
