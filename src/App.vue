@@ -1,7 +1,9 @@
 <template>
   <body>
     <the-header></the-header>
-    <div class="container"></div>
+    <div class="container">
+      <main-page></main-page>
+    </div>
   </body>
 </template>
 
@@ -9,19 +11,48 @@
 //import UserAuth from './components/userAuth.vue';
 //import SignupFrom from './components/SignUpFrom.vue';
 import TheHeader from "./components/layout/TheHeader.vue";
+import MainPage from "./pages/MainPage.vue";
 
 export default {
   components: {
     // UserAuth,
     // SignupFrom,
     TheHeader,
+    MainPage
+  },
+
+
+  created(){
+    this.fetchdata('https://api.themoviedb.org/3/trending/all/day?api_key=b9e62fadaa93179070f235a9087033e2');
+   
   },
 
   data() {
-    return {};
+    return {
+      fetchInfo:'',
+    };
   },
 
-  methods: {},
+  methods: {
+    async fetchdata(url){
+      let data;
+      try {
+         data = await fetch(url)
+         const response = await data.json()
+         this.fetchdata = await response
+        await console.log(this.fetchdata)
+
+      } catch(e){
+        console.log(e)
+      }
+      
+     
+    },
+
+  
+  
+  }
+
 };
 </script>
 
