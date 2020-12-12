@@ -18,41 +18,8 @@ export default {
     // UserAuth,
     // SignupFrom,
     TheHeader,
-    MainPage
+    MainPage,
   },
-
-
-  created(){
-    this.fetchdata('https://api.themoviedb.org/3/trending/all/day?api_key=b9e62fadaa93179070f235a9087033e2');
-   
-  },
-
-  data() {
-    return {
-      fetchInfo:'',
-    };
-  },
-
-  methods: {
-    async fetchdata(url){
-      let data;
-      try {
-         data = await fetch(url)
-         const response = await data.json()
-         this.fetchdata = await response
-        await console.log(this.fetchdata)
-
-      } catch(e){
-        console.log(e)
-      }
-      
-     
-    },
-
-  
-  
-  }
-
 };
 </script>
 
@@ -72,14 +39,14 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
   font-family: "Montserrat", sans-serif;
-  background-color:var(--main-color)
+  background-color: var(--main-color);
+  color: white;
 }
 .container {
   width: 90%;
   height: 88vh;
-  overflow: hidden;
   background-color: var(--main-color);
   margin: 0 auto;
-  border:1px solid black;
+  border: 1px solid black;
 }
 </style>
