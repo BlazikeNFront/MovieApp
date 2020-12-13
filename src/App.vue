@@ -1,7 +1,9 @@
 <template>
   <body>
     <the-header></the-header>
-    <div class="container"></div>
+    <div class="container">
+      <main-page></main-page>
+    </div>
   </body>
 </template>
 
@@ -9,19 +11,15 @@
 //import UserAuth from './components/userAuth.vue';
 //import SignupFrom from './components/SignUpFrom.vue';
 import TheHeader from "./components/layout/TheHeader.vue";
+import MainPage from "./pages/MainPage.vue";
 
 export default {
   components: {
     // UserAuth,
     // SignupFrom,
     TheHeader,
+    MainPage,
   },
-
-  data() {
-    return {};
-  },
-
-  methods: {},
 };
 </script>
 
@@ -41,14 +39,14 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
   font-family: "Montserrat", sans-serif;
-  background-color:var(--main-color)
+  background-color: var(--main-color);
+  color: white;
 }
 .container {
   width: 90%;
   height: 88vh;
-  overflow: hidden;
   background-color: var(--main-color);
   margin: 0 auto;
-  border:1px solid black;
+  border: 1px solid black;
 }
 </style>
