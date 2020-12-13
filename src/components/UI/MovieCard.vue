@@ -2,9 +2,9 @@
   <div class="box">
     <div class="img" :style="{ backgroundImage: 'url(' + imgLink + ')' }"></div>
     <div class="posterAndTextBox">
-      <img :src="posterLink" />
+      <img :src="posterImg" />
       <div class="text">
-        <h3>{{ title }}</h3>
+        <h3>{{ active.title || active.name }}</h3>
         <p>{{ overviewShort }}</p>
         <button>More details...</button>
       </div>
@@ -14,20 +14,29 @@
 
 <script>
 export default {
-  inject: ["type", "title", "overview", "posterUrl", "imgUrl"],
+  props: ["active"],
 
   data() {
     return {
-      imgLink: "https://image.tmdb.org/t/p/w500" + this.posterUrl,
-      posterLink: "https://image.tmdb.org/t/p/w500" + this.imgUrl,
-      color: "white",
-      overviewShort: this.cutOverview(),
+      posterLink: "https://image.tmdb.org/t/p/w500" + this.active.poster_path,
     };
+  },
+  computed: {
+    posterImg() {
+      return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
+    },
+    imgLink() {
+      return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
+    },
+    overviewShort() {
+      return this.cutOverview();
+    },
   },
   methods: {
     cutOverview() {
       return (
-        this.overview.split("").splice(0, 150).join("") + "..." || this.overview
+        this.active.overview.split("").splice(0, 150).join("") + "..." ||
+        this.overview
       );
     },
   },
