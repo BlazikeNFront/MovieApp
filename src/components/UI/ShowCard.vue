@@ -15,14 +15,9 @@
 <script>
 export default {
   props: ["active"],
-
-  data() {
-    return {
-      posterLink: "https://image.tmdb.org/t/p/w500" + this.active.poster_path,
-    };
-  },
   computed: {
     posterImg() {
+      console.log();
       return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
     },
     imgLink() {

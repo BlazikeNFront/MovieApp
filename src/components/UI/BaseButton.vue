@@ -40,4 +40,10 @@ export default {
   box-shadow: none;
   font-size: 1.5rem;
 }
+
+.searchBarConfirm {
+  padding: 0.6rem;
+  color: white;
+  background: black;
+}
 </style>

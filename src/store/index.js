@@ -1,10 +1,12 @@
 import { createStore } from 'vuex';
 
-import UserAuthModule from './Authentication/index.js'
+import UserAuth from './Authentication/index.js'
+import HeaderLayout from './HeaderLayout/HeaderLayout.js'
 
  const store = createStore({
     modules:{
-        userAuth:UserAuthModule,
+        UserAuth,
+        HeaderLayout,
     }
 })
 
