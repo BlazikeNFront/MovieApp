@@ -3,7 +3,7 @@
     <ul>
       <li>
         <transition mode="out-in">
-          <movie-card v-if="loadedData" :active="activeSlide"></movie-card>
+          <show-card v-if="loadedData" :active="activeSlide"></show-card>
         </transition>
       </li>
     </ul>
@@ -13,13 +13,11 @@
 
 
 <script>
-import MovieCard from "./MovieCard.vue";
-
+import ShowCard from "./ShowCard.vue";
 export default {
   components: {
-    MovieCard,
+    ShowCard,
   },
-
   data() {
     return {
       numberOfActive: 1,
@@ -58,7 +56,6 @@ export default {
       });
     },
 
-    enter() {},
     changeActiveSlide() {
       setInterval(() => {
         this.loadedData = false;
@@ -69,7 +66,7 @@ export default {
         setTimeout(() => {
           this.loadedData = true;
         }, 1000);
-      }, 7000);
+      }, 20000);
     },
   },
 };

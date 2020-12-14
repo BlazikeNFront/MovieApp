@@ -1,50 +1,63 @@
 <template>
   <header>
-    <div class="searchBar" v-if="headerState === 'searchBar'">
-      <input type="text" placeholder="...search" />
-      <button class="searchBarExit" @click="toggleSearch"></button>
+    <div class="searchBar" v-if="searchBar">
+      <button class="searchBarExit" @click="toggleSearchOption"></button>
+      <form @submit.prevent="handleSearch">
+        <input type="text" placeholder="...search" v-model.trim="searchInput" />
+        <base-button CSS="common searchBarConfirm">Search</base-button>
+      </form>
     </div>
-    <div class="headerBox" v-if="headerState === 'standard'">
-      <button class="menuButton" @click='toggleNavBar'></button>
+    <div class="headerBox" v-if="!searchBar">
+      <button class="menuButton" @click="toggleNavBar"></button>
       <logo></logo>
     </div>
-    <div class="headerBox" v-if="headerState === 'standard'">
-      <button class="searchButton" @click="toggleSearch"></button>
+    <div class="headerBox" v-if="!searchBar">
+      <button class="searchButton" @click="toggleSearchOption"></button>
       <base-button CSS="common headerSignIn">Sign In</base-button>
     </div>
   </header>
-  <nav-bar v-if='navBarState' @close-nav='toggleNavBar'></nav-bar>
+  <nav-bar v-if="navBar" @close-nav="toggleNavBar"></nav-bar>
 </template>
 <script>
 import Logo from "../UI/Logo.vue";
 import NavBar from "../layout/NavSideBar.vue";
+import BaseButton from "../UI/BaseButton.vue";
 
 export default {
   components: {
     Logo,
-    NavBar
+    NavBar,
+    BaseButton,
   },
-  // PUT THIS DATA  INTO VUEX AS GLOBAL STATE OF DATA
+
   data() {
     return {
-      headerState: "standard",
-      navBarState:false,
+      searchInput: null,
     };
   },
+
+  computed: {
+    searchBar() {
+      return this.$store.getters["HeaderLayout/headerSearchState"];
+    },
+    navBar() {
+      return this.$store.getters["HeaderLayout/navBarState"];
+    },
+  },
+
   methods: {
-    toggleSearch() {
-      if (this.headerState === "standard") {
-        this.headerState = "searchBar";
-      } else {
-        this.headerState = "standard";
-      }
-      
+    toggleSearchOption() {
+      this.$store.dispatch("HeaderLayout/toggleHeaderSearch");
     },
 
-    toggleNavBar(){
-      this.navBarState = !this.navBarState
-      console.log(this.navBarState)
-    }
+    toggleNavBar() {
+      this.$store.dispatch("HeaderLayout/toggleNavBar");
+    },
+
+    handleSearch() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", this.searchInput);
+      this.searchInput = "";
+    },
   },
 };
 </script>
@@ -60,7 +73,7 @@ header {
   border-bottom-right-radius: 10px;
 }
 input {
-  width: 85vw;
+  width: 70vw;
   height: 3rem;
   background-color: inherit;
   border: none;
@@ -71,6 +84,10 @@ input {
 }
 ::placeholder {
   color: #a8adaa;
+}
+
+form {
+  display: flex;
 }
 .headerBox {
   display: flex;

@@ -1,15 +1,12 @@
 <template>
   <main>
-    <standard-carousel></standard-carousel>
+    <div>
+      <standard-carousel></standard-carousel>
+    </div>
   </main>
 </template>
 <script>
-export default {
-  provide: {},
-};
+export default {};
 </script>
-
-
-
 <style scoped>
 </style>

@@ -3,6 +3,7 @@
     <the-header></the-header>
     <div class="container">
       <main-page></main-page>
+      <search-result></search-result>
     </div>
   </body>
 </template>
@@ -12,6 +13,7 @@
 //import SignupFrom from './components/SignUpFrom.vue';
 import TheHeader from "./components/layout/TheHeader.vue";
 import MainPage from "./pages/MainPage.vue";
+import SearchResult from "./pages/SearchResult.vue";
 
 export default {
   components: {
@@ -19,6 +21,7 @@ export default {
     // SignupFrom,
     TheHeader,
     MainPage,
+    SearchResult,
   },
 };
 </script>
