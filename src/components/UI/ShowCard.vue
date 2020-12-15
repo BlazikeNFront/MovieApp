@@ -17,7 +17,6 @@ export default {
   props: ["active"],
   computed: {
     posterImg() {
-      console.log();
       return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
     },
     imgLink() {

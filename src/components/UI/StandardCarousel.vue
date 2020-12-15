@@ -13,49 +13,34 @@
 
 
 <script>
+// props which points out which data we provide
 import ShowCard from "./ShowCard.vue";
 export default {
+  props: ["slides"],
   components: {
     ShowCard,
   },
+  created() {
+    const elements = [];
+    for (const element of this.activeList) {
+      elements.push(element);
+    }
+    this.activeSlide = elements[0];
+    this.loadedData = true;
+    this.activeList = elements;
+    this.changeActiveSlide();
+    console.log(this.activeList);
+  },
+
   data() {
     return {
       numberOfActive: 1,
       activeSlide: null,
-      activeList: this.getPopular(),
+      activeList: this.slides,
       loadedData: false,
     };
   },
   methods: {
-    async fetchData(url) {
-      try {
-        const data = await fetch(url);
-        if (!data.ok) {
-          const error = "There was an error in response";
-          throw new Error(error);
-        }
-        return await data.json();
-      } catch (e) {
-        console.log(e);
-      }
-    },
-
-    getPopular() {
-      this.fetchData(
-        "https://api.themoviedb.org/3/trending/all/day?api_key=b9e62fadaa93179070f235a9087033e2"
-      ).then((data) => {
-        const arrayOfTrendings = data.results;
-        const elements = [];
-        for (const element of arrayOfTrendings) {
-          elements.push(element);
-        }
-        this.activeSlide = elements[0];
-        this.loadedData = true;
-        this.activeList = elements;
-        this.changeActiveSlide();
-      });
-    },
-
     changeActiveSlide() {
       setInterval(() => {
         this.loadedData = false;
