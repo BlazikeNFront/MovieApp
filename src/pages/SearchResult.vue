@@ -1,6 +1,5 @@
 <template>
   <section>
-    <button @click="check">CHECK</button>
     <ul v-if="searchData">
       <show-card
         v-for="show in searchData.results"
@@ -32,11 +31,6 @@ export default {
   watch: {
     searchDataAvalible(newVal) {
       this.searchData = newVal;
-    },
-  },
-  methods: {
-    check() {
-      console.log(this.searchData.results);
     },
   },
 };

@@ -61,7 +61,7 @@ const headerLayoutStore = {
 
     getters: {
         headerSearchState(state) {
-                return state.headerSearchState
+            return state.headerSearchState
         },
         navBarState(state) {
             return state.navBarState
@@ -73,4 +73,4 @@ const headerLayoutStore = {
     }
 
 
-export default headerLayoutStore;
+    export default headerLayoutStore;
