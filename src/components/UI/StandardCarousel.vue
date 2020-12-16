@@ -1,5 +1,6 @@
 <template>
   <section>
+    <h3>{{ title }}</h3>
     <ul>
       <li>
         <transition mode="out-in">
@@ -16,7 +17,7 @@
 // props which points out which data we provide
 import ShowCard from "./ShowCard.vue";
 export default {
-  props: ["slides"],
+  props: ["slides", "title"],
   components: {
     ShowCard,
   },
@@ -29,7 +30,6 @@ export default {
     this.loadedData = true;
     this.activeList = elements;
     this.changeActiveSlide();
-    console.log(this.activeList);
   },
 
   data() {
@@ -51,7 +51,7 @@ export default {
         setTimeout(() => {
           this.loadedData = true;
         }, 1000);
-      }, 20000);
+      }, 10000);
     },
   },
 };
@@ -59,6 +59,15 @@ export default {
 
 
 <style scoped>
+h3 {
+  margin-top: 1rem;
+  font-size: 2rem;
+  color: black;
+  text-align: center;
+}
+ul {
+  list-style-type: none;
+}
 .v-enter-from {
   opacity: 0;
   transform: translate(10rem);

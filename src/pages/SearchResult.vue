@@ -31,6 +31,7 @@ export default {
   watch: {
     searchDataAvalible(newVal) {
       this.searchData = newVal;
+      console.log(this.searchData);
     },
   },
 };

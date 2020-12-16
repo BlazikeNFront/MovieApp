@@ -1,10 +1,11 @@
 <template>
   <body>
     <the-header></the-header>
-    <div class="container">
-      <main-page></main-page>
-      <search-result></search-result>
-    </div>
+    <main>
+      <div class="container">
+        <router-view></router-view>
+      </div>
+    </main>
   </body>
 </template>
 
@@ -12,16 +13,12 @@
 //import UserAuth from './components/userAuth.vue';
 //import SignupFrom from './components/SignUpFrom.vue';
 import TheHeader from "./components/layout/TheHeader.vue";
-import MainPage from "./pages/MainPage.vue";
-import SearchResult from "./pages/SearchResult.vue";
 
 export default {
   components: {
     // UserAuth,
     // SignupFrom,
     TheHeader,
-    MainPage,
-    SearchResult,
   },
 };
 </script>
