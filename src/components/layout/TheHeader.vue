@@ -9,7 +9,7 @@
     </div>
     <div class="headerBox" v-if="!searchBar">
       <button class="menuButton" @click="toggleNavBar"></button>
-      <logo></logo>
+      <router-link to="/"><logo></logo></router-link>
     </div>
     <div class="headerBox" v-if="!searchBar">
       <button class="searchButton" @click="toggleSearchOption"></button>
@@ -56,6 +56,7 @@ export default {
 
     handleSearch() {
       this.$store.dispatch("HeaderLayout/updateSearchData", this.searchInput);
+      this.$router.push("/searchResult");
       this.searchInput = "";
     },
   },
@@ -96,6 +97,10 @@ form {
 .searchBar {
   display: flex;
   align-items: center;
+}
+
+a {
+  text-decoration: none;
 }
 
 .searchButton {

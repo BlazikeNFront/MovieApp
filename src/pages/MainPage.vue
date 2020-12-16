@@ -4,10 +4,12 @@
       <standard-carousel
         v-if="moviesLoaded"
         :slides="trendingMovies.results"
+        title="Trending Movies"
       ></standard-carousel>
       <standard-carousel
         v-if="tvShowsLoaded"
         :slides="trendingTv.results"
+        title="Trending TvShow"
       ></standard-carousel>
     </div>
   </main>
@@ -32,7 +34,7 @@ export default {
       return this.$store.getters["StandardCarousels/trendingMovies"];
     },
     updatedTrendingTvShows() {
-      return this.$store.getters["StandardCarousels/trendingMovies"];
+      return this.$store.getters["StandardCarousels/trendingTvShows"];
     },
   },
   watch: {

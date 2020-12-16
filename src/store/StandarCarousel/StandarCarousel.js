@@ -12,17 +12,19 @@ const StandardCarousels = {
     mutations: {
         updateTrendingMovies(state,payload) {
             state.trendingMovies = payload;
+         
         },
         updateTrendingTvShows(state,payload) {
-            state.trendingTvShows = payload;
+          state.trendingTvShows = payload;
+         
         },
     },
     actions: {
       async  updateTrendingMovies(context) {
         try {
-            const data = await fetch("https://api.themoviedb.org/3/trending/movie/day?api_key=b9e62fadaa93179070f235a9087033e2");
+            const data = await fetch("https://api.themoviedb.org/3/movie/popular?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1");
             const dataJson = await data.json()
-           
+     
             
             if (!data.ok) {
               const error = "There was an error in response";
@@ -37,16 +39,16 @@ const StandardCarousels = {
 
         async  updateTrendingTvShows(context) {
             try {                         
-                const data = await fetch("https://api.themoviedb.org/3/trending/tv/day?api_key=b9e62fadaa93179070f235a9087033e2");
-
+                const data = await fetch("https://api.themoviedb.org/3/tv/popular?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1");
+               
                 const dataJson = await data.json()
-
+              
                 if (!data.ok) {
                   const error = "There was an error in response";
                   throw new Error(error);
                 }
                 
-                context.commit('updateTrendingMovies', dataJson)
+                context.commit('updateTrendingTvShows', dataJson)
               } catch (e) {
                 console.log(e);
               }

@@ -28,6 +28,9 @@ export default {
   },
   methods: {
     cutOverview() {
+      if (!this.active.overview) {
+        return;
+      }
       return (
         this.active.overview.split("").splice(0, 150).join("") + "..." ||
         this.overview
