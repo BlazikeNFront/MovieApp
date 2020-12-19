@@ -1,12 +1,19 @@
 <template>
-  <div class="box">
-    <div class="img" :style="{ backgroundImage: 'url(' + imgLink + ')' }"></div>
-    <div class="posterAndTextBox">
-      <img :src="posterImg" />
-      <div class="text">
-        <h3>{{ active.title || active.name }}</h3>
-        <p>{{ overviewShort }}</p>
-        <button>More details...</button>
+  <div>
+    <div class="box">
+      <div
+        class="img"
+        :style="{ backgroundImage: 'url(' + imgLink + ')' }"
+      ></div>
+      <div class="posterAndTextBox">
+        <img :src="posterImg" />
+        <div class="text">
+          <h3>{{ active.title || active.name }}</h3>
+          <p>{{ overviewShort }}</p>
+          <button @click.prevent="updateDetailShowComponent">
+            More Details...
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -15,6 +22,7 @@
 <script>
 export default {
   props: ["active"],
+
   computed: {
     posterImg() {
       return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
@@ -26,15 +34,25 @@ export default {
       return this.cutOverview();
     },
   },
+
   methods: {
     cutOverview() {
       if (!this.active.overview) {
         return;
       }
       return (
-        this.active.overview.split("").splice(0, 150).join("") + "..." ||
+        this.active.overview.split(" ").splice(0, 30).join(" ") + "..." ||
         this.overview
       );
+    },
+
+    updateDetailShowComponent() {
+      const payload = {
+        movie: !!this.active["release_date"],
+        id: this.active.id,
+      };
+      this.$store.dispatch("ShowDetails/updateShowInformations", payload);
+      this.$router.push("/show");
     },
   },
 };
