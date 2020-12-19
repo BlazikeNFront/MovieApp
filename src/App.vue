@@ -25,7 +25,7 @@ export default {
 
 <style>
 :root {
-  --main-color: rgb(255, 209, 26);
+  --main-color: rgb(245, 199, 14);
 }
 
 *,

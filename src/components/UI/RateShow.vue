@@ -1,12 +1,9 @@
 <template>
-  <section>
-    <ul>
-      <li></li>
-    </ul>
-  </section>
+  <form></form>
 </template>
+
 <script>
 export default {};
 </script>
-<style>
+<style scoped>
 </style>
