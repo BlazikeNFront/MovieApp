@@ -38,7 +38,12 @@
               {{ genre.name }}
             </p>
           </div>
-          <p>Homepage:{{ showInformations.homepage }}</p>
+          <p>Your Rate:</p>
+          <rate-form
+            class="form"
+            :isM="this.movie"
+            :Id="this.showInformations.id"
+          ></rate-form>
         </div>
       </div>
 
@@ -67,6 +72,11 @@
         <div class="overView">
           {{ showInformations.overview }}
         </div>
+        <rate-form
+          class="form"
+          :isM="movie"
+          :Id="showInformations.id"
+        ></rate-form>
         <div class="additionalInfo">
           <h4>Seasons:</h4>
           <div class="seasonsInfo">
@@ -90,7 +100,13 @@
   </section>
 </template>
 <script>
+import RateForm from "../components/UI/RateForm.vue";
+
 export default {
+  components: {
+    RateForm,
+  },
+
   data() {
     return {
       showInformations: null,
@@ -106,8 +122,7 @@ export default {
   watch: {
     showInfo(newVal) {
       this.showInformations = newVal;
-      console.log(newVal);
-      this.movie = newVal.release_date;
+      this.movie = !!newVal.release_date;
     },
   },
 };
@@ -173,5 +188,8 @@ img {
 
 h3 {
   color: black;
+}
+.form {
+  margin: 0 auto;
 }
 </style>
