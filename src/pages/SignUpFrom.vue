@@ -123,7 +123,11 @@ export default {
         return;
       }
 
-      console.log("works");
+      this.$store.dispatch("signUp", {
+        email: this.email.value,
+        password: this.passwords.value1,
+        userName: this.userName.value,
+      });
     },
   },
 };

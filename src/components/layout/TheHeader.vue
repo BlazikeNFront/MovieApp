@@ -13,7 +13,15 @@
     </div>
     <div class="headerBox" v-if="!searchBar">
       <button class="searchButton" @click="toggleSearchOption"></button>
-      <base-button CSS="common headerSignIn">Sign In</base-button>
+      <router-link to="/signUp">
+        <base-button CSS="common headerSignIn"
+          >Sign In</base-button
+        ></router-link
+      >
+
+      <router-link to="/login">
+        <base-button CSS="common headerSignIn">Login</base-button></router-link
+      >
     </div>
   </header>
   <nav-bar v-if="navBar" @close-nav="toggleNavBar"></nav-bar>
