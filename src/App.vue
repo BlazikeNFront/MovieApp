@@ -10,14 +10,10 @@
 </template>
 
 <script>
-//import UserAuth from './components/userAuth.vue';
-//import SignupFrom from './components/SignUpFrom.vue';
 import TheHeader from "./components/layout/TheHeader.vue";
 
 export default {
   components: {
-    // UserAuth,
-    // SignupFrom,
     TheHeader,
   },
 };

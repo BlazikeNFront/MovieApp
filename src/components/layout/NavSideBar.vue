@@ -2,16 +2,36 @@
   <div @click="$emit('close-nav')"></div>
   <nav>
     <ul>
+      <li><router-link to="/show">My Account</router-link></li>
       <li><router-link to="/show">Details</router-link></li>
       <li>Movies</li>
       <li>TvShows</li>
       <li>Celebs</li>
+      <li
+        v-if="isAuth"
+        @click="
+          logout();
+          $emit('close-nav');
+        "
+      >
+        Logout
+      </li>
     </ul>
   </nav>
 </template>
 <script>
 export default {
   emits: ["close-nav"],
+  computed: {
+    isAuth() {
+      return this.$store.getters["isAuth"];
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
+  },
 };
 </script>
 
@@ -38,5 +58,10 @@ li {
   color: White;
   text-align: center;
   border-bottom: 1px solid black;
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }
 </style>

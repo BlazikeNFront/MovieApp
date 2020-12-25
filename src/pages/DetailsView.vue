@@ -28,6 +28,12 @@
           {{ showInformations.overview }}
         </div>
         <div class="additionalInfo">
+          <p>Your Rate:</p>
+          <rate-form
+            class="form"
+            :isM="true"
+            :Id="showInformations.id"
+          ></rate-form>
           <div class="genre">
             <h4>Genres:</h4>
             <p
@@ -38,12 +44,6 @@
               {{ genre.name }}
             </p>
           </div>
-          <p>Your Rate:</p>
-          <rate-form
-            class="form"
-            :isM="this.movie"
-            :Id="this.showInformations.id"
-          ></rate-form>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
         </div>
         <rate-form
           class="form"
-          :isM="movie"
+          :isM="false"
           :Id="showInformations.id"
         ></rate-form>
         <div class="additionalInfo">
