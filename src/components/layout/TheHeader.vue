@@ -13,7 +13,13 @@
     </div>
     <div class="headerBox" v-if="!searchBar">
       <button class="searchButton" @click="toggleSearchOption"></button>
-      <base-button CSS="common headerSignIn">Sign In</base-button>
+      <div v-if="!isAuth">
+        <router-link to="/login">
+          <base-button CSS="common headerSignIn"
+            >Login</base-button
+          ></router-link
+        >
+      </div>
     </div>
   </header>
   <nav-bar v-if="navBar" @close-nav="toggleNavBar"></nav-bar>
@@ -42,6 +48,9 @@ export default {
     },
     navBar() {
       return this.$store.getters["HeaderLayout/navBarState"];
+    },
+    isAuth() {
+      return this.$store.getters["isAuth"];
     },
   },
 
@@ -104,7 +113,7 @@ a {
 }
 
 .searchButton {
-  margin-right: 2rem;
+  margin-right: 1rem;
   background-color: #292e2b;
   background-image: url("../../assets/icons/searchIcon.png");
   box-shadow: none;

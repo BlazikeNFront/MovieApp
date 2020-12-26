@@ -51,7 +51,11 @@
             Password do not match ! Please try again
           </p>
         </div>
-        <base-button CSS="common userSignUpForm"> SIGN UP !</base-button>
+        <p v-if="!!errorText" class="errorText">{{ errorText }}</p>
+        <div class="buttonSpinnerContainer">
+          <base-button CSS="common userSignUpForm"> SIGN UP !</base-button>
+          <spinner class="spinner" v-if="isLoading"></spinner>
+        </div>
       </form>
     </base-card>
   </section>
@@ -61,6 +65,8 @@
 export default {
   data() {
     return {
+      isLoading: false,
+      errorText: null,
       email: {
         value: "",
         isValid: true,
@@ -118,19 +124,32 @@ export default {
       return regEx.test(String(userName));
     },
 
-    submitForm() {
+    async submitForm() {
+      this.errorText = null;
+      this.isLoading = true;
       if (this.validateForm() === false) {
+        this.isLoading = false;
         return;
       }
 
-      console.log("works");
+      try {
+        await this.$store.dispatch("signUp", {
+          email: this.email.value,
+          password: this.passwords.value1,
+          displayName: this.userName.value,
+        });
+        this.$router.push("/");
+      } catch (err) {
+        this.errorText = err.message.split(":")[1].replace(/_/g, " ");
+      }
+      this.isLoading = false;
     },
   },
 };
 </script>
 <style scoped>
 section {
-  margin-top: 20rem;
+  margin-top: 5rem;
 }
 
 h2 {
@@ -141,6 +160,7 @@ form {
   flex-direction: column;
   align-items: center;
   padding: 2rem 0;
+  height: 59rem;
 }
 h2 {
   font-size: 3rem;
@@ -173,5 +193,17 @@ p {
 }
 .invalid {
   border-color: red;
+}
+
+.buttonSpinnerContainer {
+  float: left;
+}
+.spinner {
+  transform: scale(0.7);
+}
+.errorText {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: red;
 }
 </style>

@@ -7,13 +7,18 @@ const showDetails = {
     state() {
         return {
             showInformations: null,
-            detailVie:false,
+            detailVie: false,
+            showRate:false,
         }
     },
     mutations: {
         updateShowInformations(state, payload) {
           
             state.showInformations = payload
+        },
+
+        updateShowRate(state, payload) {
+            state.showRate = payload
         }
     },
     actions: {
@@ -22,8 +27,7 @@ const showDetails = {
             if (!payload.movie) {
                 url = `https://api.themoviedb.org/3/tv/${payload.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`
             }
-            
-           
+       
             try {
                 const data = await fetch(url);
                 if (!data.ok) {
@@ -38,7 +42,9 @@ const showDetails = {
                 console.log(e)
             }
 
-        }
+        },
+        
+        
     },
     getters: {
         showInformations(state){

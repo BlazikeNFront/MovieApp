@@ -13,7 +13,7 @@ import router from './router.js'
 import  BaseButton from './components/UI/BaseButton.vue'
 import BaseCard from './components/UI/BaseCard.vue'
 import StandardCarousel from './components/UI/StandardCarousel.vue'
-
+import Spinner from './components/UI/Spinner.vue'
 
 const movieApp = createApp(App);
 
@@ -24,8 +24,10 @@ movieApp.use(router);
 
 movieApp.component('base-button',BaseButton);
 movieApp.component('base-card',BaseCard);
-movieApp.component('standard-carousel',StandardCarousel);
+movieApp.component('standard-carousel', StandardCarousel);
+movieApp.component('spinner', Spinner);
 movieApp.component('font-awesome-icon', FontAwesomeIcon);
+
 
 
 movieApp.mount('#app');
