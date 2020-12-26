@@ -7,13 +7,18 @@ const showDetails = {
     state() {
         return {
             showInformations: null,
-            detailVie:false,
+            detailVie: false,
+            showRate:false,
         }
     },
     mutations: {
         updateShowInformations(state, payload) {
           
             state.showInformations = payload
+        },
+
+        updateShowRate(state, payload) {
+            state.showRate = payload
         }
     },
     actions: {
@@ -37,7 +42,9 @@ const showDetails = {
                 console.log(e)
             }
 
-        }
+        },
+        
+        
     },
     getters: {
         showInformations(state){

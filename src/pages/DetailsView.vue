@@ -29,11 +29,7 @@
         </div>
         <div class="additionalInfo">
           <p>Your Rate:</p>
-          <rate-form
-            class="form"
-            :isM="true"
-            :Id="showInformations.id"
-          ></rate-form>
+          <rate-form :isM="true" :Id="showInformations.id"></rate-form>
           <div class="genre">
             <h4>Genres:</h4>
             <p
@@ -72,11 +68,7 @@
         <div class="overView">
           {{ showInformations.overview }}
         </div>
-        <rate-form
-          class="form"
-          :isM="false"
-          :Id="showInformations.id"
-        ></rate-form>
+        <rate-form :isM="false" :Id="showInformations.id"></rate-form>
         <div class="additionalInfo">
           <h4>Seasons:</h4>
           <div class="seasonsInfo">

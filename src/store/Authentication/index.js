@@ -98,8 +98,12 @@ export default {
 
     getters:{
         isAuth(state) {
-            console.log(state.userId)
+           
             return !!state.userId
+        },
+
+        userId(state) {
+            return state.userId
         }
     },
     

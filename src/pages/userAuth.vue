@@ -18,6 +18,9 @@
     </form>
     <h4>You dont have account? Click below and Sing Up !</h4>
     <base-button CSS="userAuth" class="signup">Sign up</base-button>
+    <h4 class="signUpText">
+      Dont have an account?? <router-link to="/signUp">Sign UP !</router-link>
+    </h4>
   </section>
 </template>
 
@@ -67,6 +70,14 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.signUpText {
+  width: 30rem;
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
 }
 h3 {
   font-size: 3rem;

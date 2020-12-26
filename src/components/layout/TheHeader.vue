@@ -14,11 +14,6 @@
     <div class="headerBox" v-if="!searchBar">
       <button class="searchButton" @click="toggleSearchOption"></button>
       <div v-if="!isAuth">
-        <router-link to="/signUp">
-          <base-button CSS="common headerSignIn"
-            >Sign In</base-button
-          ></router-link
-        >
         <router-link to="/login">
           <base-button CSS="common headerSignIn"
             >Login</base-button
