@@ -14,7 +14,7 @@
           />
           <p v-if="!email.isValid">Invalid email</p>
         </div>
-        <div class="formElement">
+        <!-- <div class="formElement">
           <label for="userName">User Name</label>
           <input
             name="userName"
@@ -27,7 +27,7 @@
           <p v-if="!userName.isValid">
             User Name cant contain special symbols like - ?';_
           </p>
-        </div>
+        </div> -->
         <div class="formElement">
           <label for="password"> Password</label>
           <input

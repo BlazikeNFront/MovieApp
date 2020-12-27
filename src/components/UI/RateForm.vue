@@ -95,6 +95,7 @@ export default {
           body: this.formRate,
         }
       );
+
       if (!response.ok) {
         console.log("ERROR RESPONSE IN HandleRate METHOD(RATEFORM COMPONENT)");
       }

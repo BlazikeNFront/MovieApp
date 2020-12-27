@@ -1,22 +1,20 @@
 <template>
   <section>
-    <rate-form></rate-form>
-    <!-- <ul v-if="searchData">
+    <ul v-if="searchData">
       <show-card
         v-for="show in searchData.results"
         :key="show.id"
         :active="show"
       ></show-card>
-    </ul> -->
+    </ul>
   </section>
 </template>
 <script>
-//import ShowCard from "../components/UI/ShowCard.vue";
-import RateForm from "../components/UI/RateForm.vue";
+import ShowCard from "../components/UI/ShowCard.vue";
+
 export default {
   components: {
-    // ShowCard,
-    RateForm,
+    ShowCard,
   },
 
   data() {
