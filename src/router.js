@@ -6,6 +6,7 @@ import  SearchResult  from './pages/SearchResult.vue';
 import  DetailsView  from './pages/DetailsView.vue';
 import  SignUpForm  from './pages/SignUpFrom.vue';
 import  UserAuth  from './pages/userAuth.vue';
+import  UserAccountDetails  from './pages/UserAccountDetails.vue';
 
 
 const router = createRouter({
@@ -14,8 +15,9 @@ const router = createRouter({
         { path: '/', component: MainPage },
         { path: '/signUp', component: SignUpForm },
         { path: '/login', component: UserAuth },
+        { path: '/UserAccountDetails', component: UserAccountDetails },
         { path: '/searchResult', component: SearchResult },
-        { path:'/show',component:DetailsView }
+        { path:'/show',component:DetailsView },
     ],
 })
 

@@ -2,7 +2,7 @@
   <div @click="$emit('close-nav')"></div>
   <nav>
     <ul>
-      <li><router-link to="/show">My Account</router-link></li>
+      <li><router-link to="/UserAccountDetails">My Account</router-link></li>
       <li><router-link to="/show">Details</router-link></li>
       <li>Movies</li>
       <li>TvShows</li>
