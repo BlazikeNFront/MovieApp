@@ -58,10 +58,15 @@
 </template>
 <script>
 export default {
-  props: ["Id", "isM"],
+  props: ["Id", "isM", "rated"],
 
   mounted() {
     this.form = Array.from(this.$refs.form.children);
+    if (this.rated) {
+      for (let i = 0; i < this.rated; i++) {
+        this.form[i].classList.add("checked");
+      }
+    }
   },
 
   data() {

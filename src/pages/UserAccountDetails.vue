@@ -29,14 +29,22 @@
           <button>Click to set your nickname</button>
         </form>
       </div>
-      <div class="ratedMovies">
+      <div class="ratedShows movies">
+        <button @click="moviesRatedData"></button>
         <p>Movies rated</p>
         <div class="dataLoadingBox" v-if="!moviesRated">
           <h3>Loading data...</h3>
           <spinner></spinner>
         </div>
+        <show-rated-box
+          v-for="(movie, key) of moviesRated"
+          :id="key"
+          :rate="moviesRated[key]"
+          :key="movie"
+          :isMovie="true"
+        ></show-rated-box>
       </div>
-      <div class="ratedShows">
+      <div class="ratedShows tvShows">
         <p>Tv shows rated</p>
         <div class="dataLoadingBox" v-if="!tvShows">
           <h3>Loading data...</h3>
@@ -47,7 +55,13 @@
   </section>
 </template>
 <script>
+import ShowRatedBox from "../components/UI/ShowRatedBox.vue";
+
 export default {
+  components: {
+    ShowRatedBox,
+  },
+
   data() {
     return {
       moviesRated: null,
@@ -97,10 +111,26 @@ export default {
         console.log(err);
       }
     },
+
+    async moviesRatedData() {
+      try {
+        const response = await fetch(
+          "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/Movie.json"
+        );
+        this.moviesRated = await response.json();
+        console.log(this.moviesRated);
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>
 <style  scoped>
+button {
+  padding: 2rem;
+}
+
 .loader {
   display: flex;
   flex-direction: column;
@@ -148,6 +178,11 @@ form button {
   padding: 1rem 2rem;
   background-color: black;
   border-radius: 15px;
+}
+
+.ratedShows {
+  text-align: center;
+  margin-bottom: 10rem;
 }
 
 .infoBox {
