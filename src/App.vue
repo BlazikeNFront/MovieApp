@@ -40,6 +40,7 @@ html {
 }
 .container {
   width: 90%;
+  max-width: 500px;
   height: 88vh;
   background-color: var(--main-color);
   margin: 0 auto;

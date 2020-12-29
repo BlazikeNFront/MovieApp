@@ -75,6 +75,8 @@ export default {
 <style scoped>
 header {
   padding: 1.5rem 1.5rem;
+  margin: 0 auto;
+  max-width: 500px;
   background-color: #292e2b;
   display: flex;
   align-items: center;

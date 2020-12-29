@@ -1,15 +1,14 @@
 <template>
-  <div class="box">
+  <div>
     <spinner v-if="!isLoading" class="spinner"></spinner>
     <div class="container" v-else>
-      <div
-        class="moviePoster"
-        :style="{ backgroundImage: 'url(' + posterSrc + ')' }"
-      ></div>
-      <h3>{{ title }}</h3>
-      <div class="scale">
-        <!--There is some sort of a bug(feature??) - cant give class directly to rate form component  (cuz of lifecycle hook being used[mounted]???)  -->
-        <rate-form :isM="isMovie" :Id="id" :rated="rate"></rate-form>
+      <img class="moviePoster" :src="posterSrc" alt="moviePoster" />
+      <div>
+        <h3>{{ title }}</h3>
+        <div class="scale">
+          <!--There is some sort of a bug(feature??) - cant give class directly to rate form component  (cuz of lifecycle hook being used[mounted]???)  -->
+          <rate-form :isM="isMovie" :Id="id" :rated="rate"></rate-form>
+        </div>
       </div>
     </div>
   </div>
@@ -37,12 +36,21 @@ export default {
   },
   methods: {
     async fetchData() {
+      let url = `https://api.themoviedb.org/3/movie/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+      if (!this.isMovie) {
+        url = `https://api.themoviedb.org/3/tv/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+      }
       try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`
-        );
+        const response = await fetch(url);
         const responseData = await response.json();
-        this.title = responseData.title;
+
+        const name = responseData.title || responseData.original_name;
+        if (name.split("").length > 14) {
+          this.title = name.split("").splice(0, 11).join("") + "...";
+        } else {
+          this.title = name;
+        }
+
         this.posterSrc =
           "https://image.tmdb.org/t/p/w500" + responseData.poster_path;
       } catch (err) {
@@ -55,9 +63,9 @@ export default {
 
 <style scoped>
 .container {
+  margin: 0 1rem;
   width: 11rem;
-  height: 20rem;
-  padding-top: 0.5rem;
+  height: 23rem;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
   border-radius: 5px;
   background-color: black;
@@ -71,22 +79,14 @@ export default {
   transform: scale(0.6);
 }
 
-.box {
-  width: 11rem;
-  height: 20rem;
-  padding-top: 0.5rem;
-  box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
-}
-
 .moviePoster {
   width: 90%;
-  height: 77%;
-  background-color: coral;
-  background-size: contain;
+  height: 73%;
+  border-radius: 5px;
 }
 h3 {
   margin-top: 1rem;
+  font-size: 1rem;
 }
 .scale {
   transform: scale(0.6);
