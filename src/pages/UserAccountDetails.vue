@@ -7,7 +7,7 @@
     <div class="data" v-else>
       <div class="infoBox">
         <p class="InfoBox_typeOfInfo">Your Email:</p>
-        <p>{{ email }}</p>
+        <p class="infoBox__infoValue">{{ email }}</p>
       </div>
       <div class="infoBox">
         <p class="InfoBox_typeOfInfo">Your userName:</p>
@@ -29,14 +29,14 @@
           <button>Click to set your nickname</button>
         </form>
       </div>
-      <div class="ratedShows movies">
-        <button @click="moviesRatedData"></button>
-        <p>Movies rated</p>
+      <h3>Movies rated</h3>
+      <div class="ratedShows movies" ref="ratedMovies">
         <div class="dataLoadingBox" v-if="!moviesRated">
           <h3>Loading data...</h3>
           <spinner></spinner>
         </div>
         <show-rated-box
+          v-else
           v-for="(movie, key) of moviesRated"
           :id="key"
           :rate="moviesRated[key]"
@@ -44,12 +44,20 @@
           :isMovie="true"
         ></show-rated-box>
       </div>
+      <h3>Tv shows rated</h3>
       <div class="ratedShows tvShows">
-        <p>Tv shows rated</p>
         <div class="dataLoadingBox" v-if="!tvShows">
           <h3>Loading data...</h3>
           <spinner></spinner>
         </div>
+        <show-rated-box
+          v-else
+          v-for="(show, key) of tvShows"
+          :id="key"
+          :rate="tvShows[key]"
+          :key="show"
+          :isMovie="false"
+        ></show-rated-box>
       </div>
     </div>
   </section>
@@ -61,12 +69,25 @@ export default {
   components: {
     ShowRatedBox,
   },
+  mounted() {
+    this.moviesRatedData();
+    this.tvShowRatedData();
+    console.log(this.$refs.ratedMovies);
+  },
 
   data() {
     return {
       moviesRated: null,
       tvShows: null,
       userNameInput: { value: "", isValid: true },
+
+      sliderInterval: setInterval(() => {
+        this.$refs.ratedMovies.scrollBy({
+          left: 50,
+          behavior: "smooth",
+        });
+        this.sliderScroll += 100;
+      }, 3000),
     };
   },
   computed: {
@@ -118,11 +139,23 @@ export default {
           "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/Movie.json"
         );
         this.moviesRated = await response.json();
-        console.log(this.moviesRated);
       } catch (err) {
         console.log(err);
       }
     },
+    async tvShowRatedData() {
+      try {
+        const response = await fetch(
+          "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/TvShow.json"
+        );
+        this.tvShows = await response.json();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  unmounted() {
+    clearInterval(this.sliderInterval);
   },
 };
 </script>
@@ -131,12 +164,20 @@ button {
   padding: 2rem;
 }
 
+.data {
+  overflow: hidden;
+}
+
 .loader {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 50%;
+}
+
+h3 {
+  text-align: center;
 }
 
 .loader h3 {
@@ -182,7 +223,12 @@ form button {
 
 .ratedShows {
   text-align: center;
-  margin-bottom: 10rem;
+  transition: all 1s;
+  padding: 4rem 1rem;
+  scroll-behavior: smooth;
+  display: flex;
+  width: 100%;
+  overflow-x: SCROLL;
 }
 
 .infoBox {
@@ -190,12 +236,17 @@ form button {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .InfoBox_typeOfInfo {
   width: 40%;
   text-align: right;
+}
+
+.infoBox__infoValue {
+  display: block;
+  width: 50%;
 }
 
 .invalid {
