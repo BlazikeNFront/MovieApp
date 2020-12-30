@@ -2,11 +2,22 @@
   <div @click="$emit('close-nav')"></div>
   <nav>
     <ul>
-      <li><router-link to="/UserAccountDetails">My Account</router-link></li>
-      <li><router-link to="/show">Details</router-link></li>
-      <li>Movies</li>
-      <li>TvShows</li>
-      <li>Celebs</li>
+      <li
+        @click="
+          handleRouteChange();
+          $emit('close-nav');
+        "
+      >
+        My Account
+      </li>
+      <li>
+        <router-link to="/show" @click="$emit('close-nav')"
+          >Details</router-link
+        >
+      </li>
+      <li @click="$emit('close-nav')">Movies</li>
+      <li @click="$emit('close-nav')">TvShows</li>
+      <li @click="$emit('close-nav')">Celebs</li>
       <li
         v-if="isAuth"
         @click="
@@ -30,6 +41,14 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
+    handleRouteChange() {
+      if (this.isAuth) {
+        this.$router.push("/UserAccountDetails");
+      } else {
+        this.$router.push("/login");
+      }
     },
   },
 };

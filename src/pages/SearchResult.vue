@@ -5,6 +5,7 @@
         v-for="show in searchData.results"
         :key="show.id"
         :active="show"
+        :actor="show.gender"
       ></show-card>
     </ul>
   </section>
@@ -30,6 +31,7 @@ export default {
   },
   watch: {
     searchDataAvalible(newVal) {
+      console.log(newVal);
       this.searchData = newVal;
     },
   },

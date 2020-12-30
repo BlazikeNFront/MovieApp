@@ -11,7 +11,7 @@
       </div>
       <div class="infoBox">
         <p class="InfoBox_typeOfInfo">Your userName:</p>
-        <p v-if="userName">{{ userName }}</p>
+        <p v-if="userName" class="infoBox__infoValue">{{ userName }}</p>
         <form v-else @submit.prevent="handleSetUserRequest">
           <label for="userName">Set Username</label>
           <input
@@ -29,8 +29,11 @@
           <button>Click to set your nickname</button>
         </form>
       </div>
-      <h3>Movies rated</h3>
-      <div class="ratedShows movies" ref="ratedMovies">
+      <h3>
+        Movies rated:
+        <span v-if="moviesRated">{{ Object.keys(moviesRated).length }}</span>
+      </h3>
+      <div class="ratedShows movies">
         <div class="dataLoadingBox" v-if="!moviesRated">
           <h3>Loading data...</h3>
           <spinner></spinner>
@@ -44,7 +47,10 @@
           :isMovie="true"
         ></show-rated-box>
       </div>
-      <h3>Tv shows rated</h3>
+      <h3>
+        Tv shows rated
+        <span v-if="tvShows">{{ Object.keys(tvShows).length }}</span>
+      </h3>
       <div class="ratedShows tvShows">
         <div class="dataLoadingBox" v-if="!tvShows">
           <h3>Loading data...</h3>
@@ -72,7 +78,6 @@ export default {
   mounted() {
     this.moviesRatedData();
     this.tvShowRatedData();
-    console.log(this.$refs.ratedMovies);
   },
 
   data() {
@@ -80,14 +85,6 @@ export default {
       moviesRated: null,
       tvShows: null,
       userNameInput: { value: "", isValid: true },
-
-      sliderInterval: setInterval(() => {
-        this.$refs.ratedMovies.scrollBy({
-          left: 50,
-          behavior: "smooth",
-        });
-        this.sliderScroll += 100;
-      }, 3000),
     };
   },
   computed: {
@@ -139,6 +136,7 @@ export default {
           "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/Movie.json"
         );
         this.moviesRated = await response.json();
+        console.log(Object.keys(this.moviesRated).length);
       } catch (err) {
         console.log(err);
       }
@@ -153,9 +151,6 @@ export default {
         console.log(err);
       }
     },
-  },
-  unmounted() {
-    clearInterval(this.sliderInterval);
   },
 };
 </script>

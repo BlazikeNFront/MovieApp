@@ -42,6 +42,10 @@ export default {
       }
       try {
         const response = await fetch(url);
+        if (!response.ok) {
+          const error = new Error("SERVER SIDE ERROR");
+          throw error;
+        }
         const responseData = await response.json();
 
         const name = responseData.title || responseData.original_name;

@@ -4,7 +4,11 @@
     <ul>
       <li>
         <transition mode="out-in">
-          <show-card v-if="loadedData" :active="activeSlide"></show-card>
+          <show-card
+            v-if="loadedData"
+            :active="activeSlide"
+            :actor="false"
+          ></show-card>
         </transition>
       </li>
     </ul>
