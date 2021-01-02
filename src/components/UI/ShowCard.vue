@@ -14,9 +14,8 @@
         <div class="text">
           <h3>{{ active.title || active.name }}</h3>
           <p>{{ overviewShort }}</p>
-          <button @click.prevent="updateDetailShowComponent">
-            More Details...
-          </button>
+
+          <button @click="updateDetailShowComponent">More Details...</button>
         </div>
       </div>
       <div class="posterAndTextBox posterAndTextBox--actor" v-else>
@@ -27,7 +26,7 @@
           :alt="active.name + ' picture'"
         />
 
-        <!-- bind src to a computed that return local src  does not provide img ??? -->
+        <!-- binding src to a computed that return local src  does not provide img(BUG???)  -->
         <img
           v-else
           class="actorImg"
@@ -86,13 +85,15 @@ export default {
       );
     },
 
-    updateDetailShowComponent() {
+    async updateDetailShowComponent() {
+      this.$store.dispatch("ShowDetails/updateShowInformations", null);
       const payload = {
         movie: !!this.active["release_date"],
         id: this.active.id,
       };
-      this.$store.dispatch("ShowDetails/updateShowInformations", payload);
-      this.$router.push("/show");
+      await this.$store.dispatch("ShowDetails/updateShowInformations", payload);
+      const routeParam = payload.movie === true ? "movie" : "show";
+      this.$router.push(`/${routeParam}`);
     },
   },
 };

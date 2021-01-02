@@ -1,6 +1,11 @@
 <template>
   <section>
+    <div class="sliderButtonsContainer">
+      <arrow-button class="button" @click="slideLeft"></arrow-button>
+      <arrow-button class="button right" @click="slideRight"></arrow-button>
+    </div>
     <h3>{{ title }}</h3>
+
     <ul>
       <li>
         <transition mode="out-in">
@@ -20,11 +25,24 @@
 <script>
 // props which points out which data we provide
 import ShowCard from "./ShowCard.vue";
+import ArrowButton from "./ArrowButton.vue";
 export default {
   props: ["slides", "title"],
   components: {
     ShowCard,
+    ArrowButton,
   },
+  data() {
+    return {
+      numberOfActive: 1,
+      activeSlide: null,
+      activeList: this.slides,
+      loadedData: false,
+      isClickable: true,
+      interval: null,
+    };
+  },
+
   created() {
     const elements = [];
     for (const element of this.activeList) {
@@ -32,30 +50,75 @@ export default {
     }
     this.activeSlide = elements[0];
     this.loadedData = true;
+    this.lengthOfArray = this.activeList.length;
     this.activeList = elements;
     this.changeActiveSlide();
   },
+  mounted() {
+    this.interval = setInterval(() => {
+      this.loadedData = false;
 
-  data() {
-    return {
-      numberOfActive: 1,
-      activeSlide: null,
-      activeList: this.slides,
-      loadedData: false,
-    };
+      this.numberOfActive =
+        ((this.numberOfActive + this.lengthOfArray) % this.lengthOfArray) + 1;
+      this.activeSlide = this.activeList[this.numberOfActive - 1];
+      setTimeout(() => {
+        this.loadedData = true;
+      }, 1000);
+    }, 5000);
+    console.log(this.interval);
   },
+
   methods: {
     changeActiveSlide() {
-      setInterval(() => {
+      /* setInterval(() => {
         this.loadedData = false;
-        const lengthOfArray = this.activeList.length;
+
         this.numberOfActive =
-          ((this.numberOfActive + lengthOfArray) % lengthOfArray) + 1;
+          ((this.numberOfActive + this.lengthOfArray) % this.lengthOfArray) + 1;
         this.activeSlide = this.activeList[this.numberOfActive - 1];
         setTimeout(() => {
           this.loadedData = true;
         }, 1000);
-      }, 10000);
+      }, 5000); */
+    },
+
+    slideLeft() {
+      if (!this.isClickable) {
+        return;
+      }
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+      this.loadedData = false;
+
+      this.numberOfActive =
+        (this.numberOfActive + this.lengthOfArray - 1) % this.lengthOfArray;
+
+      this.activeSlide = this.activeList[this.numberOfActive];
+
+      setTimeout(() => {
+        this.loadedData = true;
+      }, 1000);
+    },
+    slideRight() {
+      if (!this.isClickable) {
+        return;
+      }
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+      this.isClickable = false;
+      this.loadedData = false;
+
+      this.numberOfActive =
+        (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
+
+      this.activeSlide = this.activeList[this.numberOfActive];
+
+      setTimeout(() => {
+        this.loadedData = true;
+        this.isClickable = true;
+      }, 1000);
     },
   },
 };
@@ -71,6 +134,23 @@ h3 {
 }
 ul {
   list-style-type: none;
+}
+button {
+  width: 100%;
+  height: 100%;
+}
+.right {
+  transform: translate(0, -0.9rem) rotate(180deg);
+}
+
+.sliderButtonsContainer {
+  position: relative;
+  top: 20rem;
+  width: 96%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
 }
 .v-enter-from {
   opacity: 0;

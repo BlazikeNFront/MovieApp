@@ -20,7 +20,7 @@ export default {
 
   data() {
     return {
-      searchData: null,
+      searchData: this.$store.getters["HeaderLayout/searchData"],
     };
   },
 
@@ -31,7 +31,6 @@ export default {
   },
   watch: {
     searchDataAvalible(newVal) {
-      console.log(newVal);
       this.searchData = newVal;
     },
   },

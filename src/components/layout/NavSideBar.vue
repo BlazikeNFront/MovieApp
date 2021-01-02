@@ -10,14 +10,31 @@
       >
         My Account
       </li>
-      <li>
-        <router-link to="/show" @click="$emit('close-nav')"
-          >Details</router-link
-        >
+
+      <li
+        @click.prevent="
+          $emit('close-nav');
+          handleMoviesRequest();
+        "
+      >
+        Movies
       </li>
-      <li @click="$emit('close-nav')">Movies</li>
-      <li @click="$emit('close-nav')">TvShows</li>
-      <li @click="$emit('close-nav')">Celebs</li>
+      <li
+        @click.prevent="
+          $emit('close-nav');
+          handleTvShowRequest();
+        "
+      >
+        TvShows
+      </li>
+      <li
+        @click.prevent="
+          $emit('close-nav');
+          handleCelebsRequest();
+        "
+      >
+        Celebs
+      </li>
       <li
         v-if="isAuth"
         @click="
@@ -50,6 +67,21 @@ export default {
         this.$router.push("/login");
       }
     },
+    handleMoviesRequest() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url: `https://api.themoviedb.org/3/movie/top_rated?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1`,
+        movies: true,
+      });
+      this.$router.push("/searchResult");
+    },
+    handleTvShowRequest() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url: `https://api.themoviedb.org/3/tv/on_the_air?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1
+`,
+      });
+      this.$router.push("/searchResult");
+    },
+    handleCelebsRequest() {},
   },
 };
 </script>

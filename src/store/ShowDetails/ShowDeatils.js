@@ -7,7 +7,7 @@ const showDetails = {
     state() {
         return {
             showInformations: null,
-            detailVie: false,
+            
             showRate:false,
         }
     },
@@ -35,8 +35,9 @@ const showDetails = {
                     throw new Error(error);
                   }
                 const dataJson = await data.json();
+               
                 context.commit('updateShowInformations', await dataJson);
-                
+           
                
             } catch(e) {
                 console.log(e)

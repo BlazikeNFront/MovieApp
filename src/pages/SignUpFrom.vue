@@ -11,23 +11,11 @@
             v-model.trim="email.value"
             @blur="update('email')"
             :class="{ invalid: !email.isValid }"
+            autocomplete="username"
           />
           <p v-if="!email.isValid">Invalid email</p>
         </div>
-        <!-- <div class="formElement">
-          <label for="userName">User Name</label>
-          <input
-            name="userName"
-            type="text"
-            v-model.trim="userName.value"
-            autocomplete="new-username"
-            @blur="update('userName')"
-            :class="{ invalid: !userName.isValid }"
-          />
-          <p v-if="!userName.isValid">
-            User Name cant contain special symbols like - ?';_
-          </p>
-        </div> -->
+
         <div class="formElement">
           <label for="password"> Password</label>
           <input
@@ -71,10 +59,7 @@ export default {
         value: "",
         isValid: true,
       },
-      userName: {
-        value: "",
-        isValid: true,
-      },
+
       passwords: {
         value1: "",
         value2: "",
@@ -104,24 +89,10 @@ export default {
         this.email.isValid = false;
         return false;
       }
-
-      if (
-        !this.validateUserName(this.userName.value) ||
-        this.userName.value === ""
-      ) {
-        this.userName.value = "";
-        this.userName.isValid = false;
-        return false;
-      }
     },
     validateMail(email) {
       const regEx = /\S+@\S+\.\S+/;
       return regEx.test(String(email).toLowerCase());
-    },
-
-    validateUserName(userName) {
-      const regEx = /^[a-zA-Z0-9]*$/;
-      return regEx.test(String(userName));
     },
 
     async submitForm() {
@@ -136,7 +107,6 @@ export default {
         await this.$store.dispatch("signUp", {
           email: this.email.value,
           password: this.passwords.value1,
-          displayName: this.userName.value,
         });
         this.$router.push("/");
       } catch (err) {

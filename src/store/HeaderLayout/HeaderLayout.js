@@ -37,17 +37,23 @@ const headerLayoutStore = {
          },
 
          async updateSearchData(context,payload) {
+        
 
+             
+             
                 try {
                   const response = await fetch(
-                    `https://api.themoviedb.org/3/search/multi?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&query=${payload}&page=1`
+                    payload.url
                   );
                   if (!response.ok) {
                     const error = "Server side error";
                     throw new Error(error);
                   }
-                  const data = await response.json();
+                    const data = await response.json();
+                    if (payload.movies === true) { data.results.splice(0, 3) }
+                    console.log(data)
                     context.commit('updateSearchData', await data)  
+                    context.state.headerSearchState = false
                    
                 } catch (err) {
                   console.log(err);

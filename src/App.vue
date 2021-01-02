@@ -3,8 +3,8 @@
     <the-header></the-header>
     <main>
       <div class="container">
-        <router-view v-slot="slotProps">
-          <transition name="fade" mode="out-in">
+        <router-view v-slot="slotProps"
+          ><transition name="fade" mode="out-in">
             <component :is="slotProps.Component"></component>
           </transition>
         </router-view>
@@ -15,7 +15,7 @@
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
-
+/**/
 export default {
   components: {
     TheHeader,

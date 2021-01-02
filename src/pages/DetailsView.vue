@@ -1,129 +1,48 @@
 <template>
-  <section>
-    <div class="loader" v-if="!showInformations"></div>
-    <div v-else>
-      <div class="boxcontainer movie" v-if="movie">
-        <img
-          class="poster"
-          :src="
-            'https://image.tmdb.org/t/p/w500' + showInformations.poster_path
-          "
-        />
-        <h2>{{ showInformations.title }}</h2>
-        <div class="showData">
-          <div class="rate">
-            <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
-            <p class="voteCounted">
-              Vote counted: {{ showInformations.vote_count }}
-            </p>
-          </div>
-          <div class="dateOfRealesed">
-            <p>
-              Date of realeased:
-              {{ showInformations.release_date }}
-            </p>
-          </div>
-        </div>
-        <div class="overView">
-          {{ showInformations.overview }}
-        </div>
-        <div class="additionalInfo">
-          <p>Your Rate:</p>
-          <rate-form :isM="true" :Id="showInformations.id"></rate-form>
-          <div class="genre">
-            <h4>Genres:</h4>
-            <p
-              class="genres"
-              v-for="genre in showInformations.genres"
-              :key="genre['name']"
-            >
-              {{ genre.name }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="boxcontainer tvShow" v-else>
-        <img
-          class="poster"
-          :src="
-            'https://image.tmdb.org/t/p/w500' + showInformations.poster_path
-          "
-        />
-        <div class="showData">
-          <div class="rate">
-            <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
-            <p class="voteCounted">
-              Vote counted: {{ showInformations.vote_count }}
-            </p>
-          </div>
-          <div class="lastEpisode">
-            <p>Last episode</p>
-            <div class="lastEpisode__data">
-              <p>{{ showInformations.last_episode_to_air.name }}</p>
-              <p>{{ showInformations.last_episode_to_air.air_date }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="overView">
-          {{ showInformations.overview }}
-        </div>
-        <rate-form :isM="false" :Id="showInformations.id"></rate-form>
-        <div class="additionalInfo">
-          <h4>Seasons:</h4>
-          <div class="seasonsInfo">
-            <button
-              v-for="season in showInformations['seasons']"
-              :key="season.name"
-            >
-              {{ season.name }}
-            </button>
-          </div>
-          <div class="showCreators">
-            <h4>Created by:</h4>
-            <p v-for="creator in showInformations.created_by" :key="creator.id">
-              {{ creator.name }}
-            </p>
-          </div>
-          <p>Homepage:{{ showInformations.homepage }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <sec></sec>
+  <!-- <div v-else>
+      <detail-view-movie
+        v-if="movie"
+        :showInformations="showInformations"
+      ></detail-view-movie>
+      <detail-view-show
+        v-else
+        :showInformations="showInformations"
+      ></detail-view-show>
+    </div> -->
 </template>
 <script>
-import RateForm from "../components/UI/RateForm.vue";
+/* import DetailViewShow from "../components/UI/DetailViewShow.vue";
+import DetailViewMovie from "../components/UI/DetaliViewMovie.vue"; */
 
 export default {
   components: {
-    RateForm,
+    /* DetailViewMovie,
+    DetailViewShow, */
   },
-
-  data() {
+  /*  data() {
     return {
       showInformations: null,
       movie: null,
     };
-  },
-
-  computed: {
+  }, */
+  /*  computed: {
     showInfo() {
       return this.$store.getters["ShowDetails/showInformations"];
     },
-  },
-  watch: {
+  }, */
+  /*  watch: {
     showInfo(newVal) {
       this.showInformations = newVal;
       this.movie = !!newVal.release_date;
     },
-  },
+  }, */
 };
 </script>
 <style  scoped>
 section {
   margin-top: 4rem;
 }
-
 .boxcontainer {
   display: flex;
   flex-direction: column;
@@ -131,11 +50,9 @@ section {
   padding: 3rem 0;
   text-align: center;
 }
-
 img {
   width: 100%;
 }
-
 .showData {
   margin-top: 2rem;
   display: flex;
@@ -151,19 +68,16 @@ img {
   display: flex;
   flex-direction: column;
 }
-
 .poster {
   width: 90%;
   margin: 0 auto;
 }
-
 .seasonsInfo {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
 }
-
 .overView {
   margin: 2rem 1rem;
 }
@@ -172,12 +86,10 @@ img {
   flex-direction: column;
   align-items: center;
 }
-
 .additionalInfo {
   margin: 1rem;
   text-align: center;
 }
-
 h3 {
   color: black;
 }

@@ -49,7 +49,7 @@
       </div>
       <h3>
         Tv shows rated
-        <span v-if="tvShows">{{ Object.keys(tvShows).length }}</span>
+        <span v-if="tvShows">{{ Object.keys(tvShows).length || "0" }}</span>
       </h3>
       <div class="ratedShows tvShows">
         <div class="dataLoadingBox" v-if="!tvShows">
@@ -85,6 +85,7 @@ export default {
       moviesRated: null,
       tvShows: null,
       userNameInput: { value: "", isValid: true },
+      userID: this.$store.getters["userId"],
     };
   },
   computed: {
@@ -92,6 +93,7 @@ export default {
       return this.$store.getters["userEmail"];
     },
     userName() {
+      console.log(this.$store.getters["userName"]);
       return this.$store.getters["userName"];
     },
   },
@@ -122,7 +124,7 @@ export default {
 
       try {
         this.$store.dispatch("setUserName", {
-          userID: this.$store.getters["userId"],
+          userID: this.userID,
           userName: this.userNameInput.value,
         });
       } catch (err) {
@@ -133,10 +135,14 @@ export default {
     async moviesRatedData() {
       try {
         const response = await fetch(
-          "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/Movie.json"
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/Movie.json`
         );
-        this.moviesRated = await response.json();
-        console.log(Object.keys(this.moviesRated).length);
+        const data = await response.json();
+        if (data === null) {
+          this.moviesRated = [];
+        } else {
+          this.moviesRated = data;
+        }
       } catch (err) {
         console.log(err);
       }
@@ -144,9 +150,14 @@ export default {
     async tvShowRatedData() {
       try {
         const response = await fetch(
-          "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/TvShow.json"
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/TvShow.json`
         );
-        this.tvShows = await response.json();
+        const data = await response.json();
+        if (data === null) {
+          this.tvShows = [];
+        } else {
+          this.tvShows = data;
+        }
       } catch (err) {
         console.log(err);
       }
@@ -235,13 +246,13 @@ form button {
 }
 
 .InfoBox_typeOfInfo {
-  width: 40%;
+  width: 35%;
   text-align: right;
 }
 
 .infoBox__infoValue {
   display: block;
-  width: 50%;
+  width: 60%;
 }
 
 .invalid {
