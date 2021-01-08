@@ -3,7 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import  MainPage  from './pages/MainPage.vue';
 import  SearchResult  from './pages/SearchResult.vue';
-import  DetailsView  from './pages/DetailsView.vue';
+
+import DetailViewMovie from './components/UI/DetaliViewMovie.vue'
+import DetailViewShow from './components/UI/DetailViewShow.vue'
 import  SignUpForm  from './pages/SignUpFrom.vue';
 import  UserAuth  from './pages/userAuth.vue';
 import  UserAccountDetails  from './pages/UserAccountDetails.vue';
@@ -17,7 +19,9 @@ const router = createRouter({
         { path: '/login', component: UserAuth },
         { path: '/UserAccountDetails', component: UserAccountDetails },
         { path: '/searchResult', component: SearchResult },
-        { path:'/show',component:DetailsView },
+        { path: '/movie/:movieID', component: DetailViewMovie },
+        { path:'/show/:showID',component:DetailViewShow}
+       
     ],
 })
 

@@ -64,7 +64,9 @@ export default {
     },
 
     handleSearch() {
-      this.$store.dispatch("HeaderLayout/updateSearchData", this.searchInput);
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url: `https://api.themoviedb.org/3/search/multi?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&query=${this.searchInput}&page=1`,
+      });
       this.$router.push("/searchResult");
       this.searchInput = "";
     },

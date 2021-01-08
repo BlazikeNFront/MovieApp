@@ -5,6 +5,7 @@
         v-for="show in searchData.results"
         :key="show.id"
         :active="show"
+        :actor="show.gender"
       ></show-card>
     </ul>
   </section>
@@ -19,7 +20,7 @@ export default {
 
   data() {
     return {
-      searchData: null,
+      searchData: this.$store.getters["HeaderLayout/searchData"],
     };
   },
 

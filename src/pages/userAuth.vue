@@ -47,6 +47,7 @@ export default {
         });
         this.$router.push("/");
       } catch (err) {
+        console.log(err);
         let errorText = err.message.replace("Error:", "");
         const typeOfError = err.message.replace("Error:", "").indexOf(":");
 

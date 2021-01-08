@@ -2,12 +2,17 @@
   <div>
     <spinner v-if="!isLoading" class="spinner"></spinner>
     <div class="container" v-else>
-      <img class="moviePoster" :src="posterSrc" alt="moviePoster" />
+      <img
+        class="moviePoster"
+        :src="posterSrc"
+        alt="moviePoster"
+        @click="updateDetailShowComponent"
+      />
       <div>
         <h3>{{ title }}</h3>
         <div class="scale">
           <!--There is some sort of a bug(feature??) - cant give class directly to rate form component  (cuz of lifecycle hook being used[mounted]???)  -->
-          <rate-form :isM="isMovie" :Id="id" :rated="rate"></rate-form>
+          <rate-form :type="type" :Id="id"></rate-form>
         </div>
       </div>
     </div>
@@ -23,7 +28,7 @@ export default {
     RateForm,
     Spinner,
   },
-  props: ["id", "isMovie", "rate"],
+  props: ["id", "type"],
   mounted() {
     this.fetchData();
   },
@@ -35,24 +40,61 @@ export default {
     };
   },
   methods: {
+    updateDetailShowComponent() {
+      this.$store.dispatch("ShowDetails/updateShowInformations", null);
+      const isMovie = this.type === "movie" ? true : false;
+      const payload = {
+        movie: isMovie,
+        id: this.id,
+      };
+      this.$store.dispatch("ShowDetails/updateShowInformations", payload);
+      const routeParam = payload.movie === true ? "movie" : "show";
+      this.$router.push(`/${routeParam}/${payload.id}`);
+    },
+
     async fetchData() {
-      let url = `https://api.themoviedb.org/3/movie/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
-      if (!this.isMovie) {
-        url = `https://api.themoviedb.org/3/tv/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+      let url;
+      switch (this.type) {
+        case "movie":
+          url = `https://api.themoviedb.org/3/movie/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+          break;
+        case "tvShow":
+          url = `https://api.themoviedb.org/3/tv/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+          break;
+        case "actor":
+          url = `https://api.themoviedb.org/3/person/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+          break;
       }
+
       try {
         const response = await fetch(url);
+        if (!response.ok) {
+          const error = new Error("SERVER SIDE ERROR");
+          throw error;
+        }
         const responseData = await response.json();
 
-        const name = responseData.title || responseData.original_name;
-        if (name.split("").length > 14) {
-          this.title = name.split("").splice(0, 11).join("") + "...";
-        } else {
-          this.title = name;
-        }
+        if (this.type !== "actor") {
+          const name = responseData.title || responseData.original_name;
+          if (name.split("").length > 14) {
+            this.title = name.split("").splice(0, 11).join("") + "...";
+          } else {
+            this.title = name;
+          }
 
-        this.posterSrc =
-          "https://image.tmdb.org/t/p/w500" + responseData.poster_path;
+          this.posterSrc =
+            "https://image.tmdb.org/t/p/w500" + responseData.poster_path;
+        } else {
+          const name = responseData.name;
+          if (name.split("").length > 14) {
+            this.title = name.split("").splice(0, 11).join("") + "...";
+          } else {
+            this.title = name;
+          }
+
+          this.posterSrc =
+            "https://image.tmdb.org/t/p/w500" + responseData.profile_path;
+        }
       } catch (err) {
         console.log(err);
       }

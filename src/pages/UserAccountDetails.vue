@@ -11,7 +11,7 @@
       </div>
       <div class="infoBox">
         <p class="InfoBox_typeOfInfo">Your userName:</p>
-        <p v-if="userName">{{ userName }}</p>
+        <p v-if="userName" class="infoBox__infoValue">{{ userName }}</p>
         <form v-else @submit.prevent="handleSetUserRequest">
           <label for="userName">Set Username</label>
           <input
@@ -29,8 +29,11 @@
           <button>Click to set your nickname</button>
         </form>
       </div>
-      <h3>Movies rated</h3>
-      <div class="ratedShows movies" ref="ratedMovies">
+      <h3>
+        Movies rated:
+        <span v-if="moviesRated">{{ Object.keys(moviesRated).length }}</span>
+      </h3>
+      <div class="ratedShows movies">
         <div class="dataLoadingBox" v-if="!moviesRated">
           <h3>Loading data...</h3>
           <spinner></spinner>
@@ -39,12 +42,14 @@
           v-else
           v-for="(movie, key) of moviesRated"
           :id="key"
-          :rate="moviesRated[key]"
           :key="movie"
-          :isMovie="true"
+          type="movie"
         ></show-rated-box>
       </div>
-      <h3>Tv shows rated</h3>
+      <h3>
+        Tv shows rated
+        <span v-if="tvShows">{{ Object.keys(tvShows).length || "0" }}</span>
+      </h3>
       <div class="ratedShows tvShows">
         <div class="dataLoadingBox" v-if="!tvShows">
           <h3>Loading data...</h3>
@@ -54,9 +59,25 @@
           v-else
           v-for="(show, key) of tvShows"
           :id="key"
-          :rate="tvShows[key]"
-          :key="show"
-          :isMovie="false"
+          :key="key"
+          type="tvShow"
+        ></show-rated-box>
+      </div>
+      <h3>
+        Actors rated
+        <span v-if="actors">{{ Object.keys(actors).length || "0" }}</span>
+      </h3>
+      <div class="ratedShows actors">
+        <div class="dataLoadingBox" v-if="!actors">
+          <h3>Loading data...</h3>
+          <spinner></spinner>
+        </div>
+        <show-rated-box
+          v-else
+          v-for="(actor, key) of actors"
+          :id="key"
+          :key="actor"
+          type="actor"
         ></show-rated-box>
       </div>
     </div>
@@ -72,22 +93,17 @@ export default {
   mounted() {
     this.moviesRatedData();
     this.tvShowRatedData();
-    console.log(this.$refs.ratedMovies);
+    this.actorsRatedData();
   },
 
   data() {
     return {
       moviesRated: null,
       tvShows: null,
-      userNameInput: { value: "", isValid: true },
+      actors: null,
 
-      sliderInterval: setInterval(() => {
-        this.$refs.ratedMovies.scrollBy({
-          left: 50,
-          behavior: "smooth",
-        });
-        this.sliderScroll += 100;
-      }, 3000),
+      userNameInput: { value: "", isValid: true },
+      userID: this.$store.getters["userId"],
     };
   },
   computed: {
@@ -125,7 +141,7 @@ export default {
 
       try {
         this.$store.dispatch("setUserName", {
-          userID: this.$store.getters["userId"],
+          userID: this.userID,
           userName: this.userNameInput.value,
         });
       } catch (err) {
@@ -136,9 +152,14 @@ export default {
     async moviesRatedData() {
       try {
         const response = await fetch(
-          "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/Movie.json"
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/movie.json`
         );
-        this.moviesRated = await response.json();
+        const data = await response.json();
+        if (data === null) {
+          this.moviesRated = [];
+        } else {
+          this.moviesRated = data;
+        }
       } catch (err) {
         console.log(err);
       }
@@ -146,16 +167,34 @@ export default {
     async tvShowRatedData() {
       try {
         const response = await fetch(
-          "https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/ratedShows/TvShow.json"
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/tvShow.json`
         );
-        this.tvShows = await response.json();
+        const data = await response.json();
+        if (data === null) {
+          this.tvShows = [];
+        } else {
+          this.tvShows = data;
+        }
       } catch (err) {
         console.log(err);
       }
     },
-  },
-  unmounted() {
-    clearInterval(this.sliderInterval);
+    async actorsRatedData() {
+      try {
+        const response = await fetch(
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/actor.json`
+        );
+        const data = await response.json();
+
+        if (data === null) {
+          this.actors = [];
+        } else {
+          this.actors = data;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>
@@ -185,7 +224,7 @@ h3 {
   color: #292e2b;
 }
 .dataLoadingBox {
-  margin-top: 4rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -224,7 +263,7 @@ form button {
 .ratedShows {
   text-align: center;
   transition: all 1s;
-  padding: 4rem 1rem;
+  margin: 4rem 0.5rem;
   scroll-behavior: smooth;
   display: flex;
   width: 100%;
@@ -240,13 +279,13 @@ form button {
 }
 
 .InfoBox_typeOfInfo {
-  width: 40%;
+  width: 35%;
   text-align: right;
 }
 
 .infoBox__infoValue {
   display: block;
-  width: 50%;
+  width: 60%;
 }
 
 .invalid {

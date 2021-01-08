@@ -16,6 +16,8 @@ export default {
             state.userId = payload.userId;
             state.tokenExpiration = payload.tokenExpiration;
             state.email = payload.userEmail
+            state.userName = '';
+            
         },
         logout(state) {
             state.token = null;
@@ -39,7 +41,7 @@ export default {
                         email: payload.email,
                         password: payload.password,
                         returnSecureToken: true,
-                        userName: payload.userName
+                        
                     })
                 })
                 
@@ -52,6 +54,7 @@ export default {
                     token: responseData.idToken,
                     userId: responseData.localId,
                     tokenExpiration: responseData.expiresIn,
+
                     
                 })
                
@@ -77,13 +80,13 @@ export default {
                    })
 
                  
-            })
-              const userNameData = await fetch(`https://movieapp-9f058-default-rtdb.firebaseio.com/hmj8LQ9skrOZCjofzwzab42FnjX2/userName.json`);
-              const responseUserNameData = await userNameData.json();
+          })
+              
+              
               
               const responseData = await response.json();
               
-              if (!response.ok || !userNameData.ok) {
+              if (!response.ok ) {
                   
                 const error = new Error(responseData.error.message)
                 throw error
@@ -97,6 +100,16 @@ export default {
                    userEmail:responseData.email
                    
                })
+               
+              const userNameData = await fetch(`https://movieapp-9f058-default-rtdb.firebaseio.com/${context.state.userId}/userName.json`);
+              
+              const responseUserNameData = await userNameData.json();
+              if ( !userNameData.ok) {
+                  
+                const error = new Error(responseData.error.message)
+                throw error
+                   
+               }
               context.commit('setUserName',responseUserNameData)
              
           } catch(err){

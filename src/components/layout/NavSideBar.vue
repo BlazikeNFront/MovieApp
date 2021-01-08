@@ -2,11 +2,39 @@
   <div @click="$emit('close-nav')"></div>
   <nav>
     <ul>
-      <li><router-link to="/UserAccountDetails">My Account</router-link></li>
-      <li><router-link to="/show">Details</router-link></li>
-      <li>Movies</li>
-      <li>TvShows</li>
-      <li>Celebs</li>
+      <li
+        @click="
+          handleRouteChange();
+          $emit('close-nav');
+        "
+      >
+        My Account
+      </li>
+
+      <li
+        @click.prevent="
+          $emit('close-nav');
+          handleMoviesRequest();
+        "
+      >
+        Movies
+      </li>
+      <li
+        @click.prevent="
+          $emit('close-nav');
+          handleTvShowRequest();
+        "
+      >
+        TvShows
+      </li>
+      <li
+        @click.prevent="
+          $emit('close-nav');
+          handleCelebsRequest();
+        "
+      >
+        Celebs
+      </li>
       <li
         v-if="isAuth"
         @click="
@@ -30,6 +58,35 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
+    handleRouteChange() {
+      if (this.isAuth) {
+        this.$router.push("/UserAccountDetails");
+      } else {
+        this.$router.push("/login");
+      }
+    },
+    handleMoviesRequest() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url: `https://api.themoviedb.org/3/movie/top_rated?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1`,
+        movies: true,
+      });
+      this.$router.push("/searchResult");
+    },
+    handleTvShowRequest() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url: `https://api.themoviedb.org/3/tv/on_the_air?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1
+`,
+      });
+      this.$router.push("/searchResult");
+    },
+    handleCelebsRequest() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url:
+          "https://api.themoviedb.org/3/person/popular?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1",
+      });
+      this.$router.push("/searchResult");
     },
   },
 };
