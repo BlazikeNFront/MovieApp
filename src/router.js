@@ -19,8 +19,8 @@ const router = createRouter({
         { path: '/login', component: UserAuth },
         { path: '/UserAccountDetails', component: UserAccountDetails },
         { path: '/searchResult', component: SearchResult },
-        { path: '/movie', component: DetailViewMovie },
-        { path:'/show',component:DetailViewShow}
+        { path: '/movie/:movieID', component: DetailViewMovie },
+        { path:'/show/:showID',component:DetailViewShow}
        
     ],
 })

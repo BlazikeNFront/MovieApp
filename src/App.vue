@@ -26,6 +26,8 @@ export default {
 <style>
 :root {
   --main-color: rgb(245, 199, 14);
+  --border-radius-lg: 20px;
+  --border-radius-md: 10px;
 }
 
 *,
@@ -45,10 +47,11 @@ html {
 .container {
   width: 90%;
   max-width: 500px;
-  height: 88vh;
+
   background-color: var(--main-color);
   margin: 0 auto;
   border: 1px solid black;
+  overflow: hidden;
 }
 
 .fade-enter-from {

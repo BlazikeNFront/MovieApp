@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      numberOfActive: 1,
+      numberOfActive: 0,
       activeSlide: null,
       activeList: this.slides,
       loadedData: false,
@@ -52,43 +52,31 @@ export default {
     this.loadedData = true;
     this.lengthOfArray = this.activeList.length;
     this.activeList = elements;
-    this.changeActiveSlide();
   },
   mounted() {
     this.interval = setInterval(() => {
       this.loadedData = false;
 
       this.numberOfActive =
-        ((this.numberOfActive + this.lengthOfArray) % this.lengthOfArray) + 1;
-      this.activeSlide = this.activeList[this.numberOfActive - 1];
+        (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
+
+      this.activeSlide = this.activeList[this.numberOfActive];
       setTimeout(() => {
         this.loadedData = true;
       }, 1000);
-    }, 5000);
-    console.log(this.interval);
+    }, 10000);
   },
 
   methods: {
-    changeActiveSlide() {
-      /* setInterval(() => {
-        this.loadedData = false;
-
-        this.numberOfActive =
-          ((this.numberOfActive + this.lengthOfArray) % this.lengthOfArray) + 1;
-        this.activeSlide = this.activeList[this.numberOfActive - 1];
-        setTimeout(() => {
-          this.loadedData = true;
-        }, 1000);
-      }, 5000); */
-    },
-
     slideLeft() {
       if (!this.isClickable) {
         return;
       }
+
       if (this.interval) {
         clearInterval(this.interval);
       }
+      this.isClickable = false;
       this.loadedData = false;
 
       this.numberOfActive =
@@ -98,12 +86,14 @@ export default {
 
       setTimeout(() => {
         this.loadedData = true;
+        this.isClickable = true;
       }, 1000);
     },
     slideRight() {
       if (!this.isClickable) {
         return;
       }
+
       if (this.interval) {
         clearInterval(this.interval);
       }

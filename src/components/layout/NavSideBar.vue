@@ -81,7 +81,13 @@ export default {
       });
       this.$router.push("/searchResult");
     },
-    handleCelebsRequest() {},
+    handleCelebsRequest() {
+      this.$store.dispatch("HeaderLayout/updateSearchData", {
+        url:
+          "https://api.themoviedb.org/3/person/popular?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1",
+      });
+      this.$router.push("/searchResult");
+    },
   },
 };
 </script>

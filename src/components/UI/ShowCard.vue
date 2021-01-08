@@ -1,24 +1,26 @@
 <template>
-  <div v-if="active.gender !== 0">
+  <div v-if="active.gender !== '0'">
     <div class="box">
       <div
         v-if="!actor && active.backdrop_path"
         class="img"
-        :style="{
-          backgroundImage: 'url(' + imgLink + ')',
-        }"
+        :style="{ backgroundImage: 'url(' + imgLink + ')' }"
       ></div>
       <div v-if="!actor && !active.backdrop_path" class="img placeholder"></div>
       <div class="posterAndTextBox" v-if="!actor">
-        <img :src="posterImg" alt="posterImg" />
+        <img
+          :src="posterImg"
+          alt="posterImg"
+          :class="{ posterPlaceholder: !active.poster_path }"
+        />
         <div class="text">
           <h3>{{ active.title || active.name }}</h3>
-          <p>{{ overviewShort }}</p>
+          <p>{{ overviewShort || "There is no overview for this show..." }}</p>
 
           <button @click="updateDetailShowComponent">More Details...</button>
         </div>
       </div>
-      <div class="posterAndTextBox posterAndTextBox--actor" v-else>
+      <div v-else class="posterAndTextBox posterAndTextBox--actor">
         <img
           v-if="active.profile_path"
           class="actorImg"
@@ -26,7 +28,6 @@
           :alt="active.name + ' picture'"
         />
 
-        <!-- binding src to a computed that return local src  does not provide img(BUG???)  -->
         <img
           v-else
           class="actorImg"
@@ -41,6 +42,8 @@
               {{ show.original_title || show.name }}
             </li>
           </ul>
+          <p>Rate actor:</p>
+          <rate-form type="actor" :Id="active.id"></rate-form>
         </div>
       </div>
     </div>
@@ -48,23 +51,26 @@
 </template>
 
 <script>
-//import dsad from '../../assets/img/actorPlaceHolderImg.png'
-//src\assets\img\actressPlaceholderImg.jpgsrc\assets\img\actorPlaceHolderImg.png
 export default {
   props: ["active", "actor"],
 
   computed: {
     posterImg() {
-      return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
+      if (!this.active.poster_path) {
+        return require("../../assets/img/posterPlaceholder.png");
+      } else {
+        return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
+      }
     },
     imgLink() {
-      if (!this.active.backdrop_path) {
-        return "../../assets/img/movieImgPlaceholder.png";
+      if (!this.active.poster_path) {
+        return require("../../assets/img/movieImgPlaceholder.png");
+      } else {
+        return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
       }
-      return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
     },
     placeholder() {
-      return "../../assets/img/actorPlaceHolderImg.png";
+      return require("../../assets/img/actorPlaceHolderImg.png");
     },
     actorPicture() {
       return "https://image.tmdb.org/t/p/w500" + this.active.profile_path;
@@ -80,20 +86,20 @@ export default {
         return;
       }
       return (
-        this.active.overview.split(" ").splice(0, 30).join(" ") + "..." ||
+        this.active.overview.split(" ").splice(0, 25).join(" ") + "..." ||
         this.overview
       );
     },
 
-    async updateDetailShowComponent() {
+    updateDetailShowComponent() {
       this.$store.dispatch("ShowDetails/updateShowInformations", null);
       const payload = {
         movie: !!this.active["release_date"],
         id: this.active.id,
       };
-      await this.$store.dispatch("ShowDetails/updateShowInformations", payload);
+      this.$store.dispatch("ShowDetails/updateShowInformations", payload);
       const routeParam = payload.movie === true ? "movie" : "show";
-      this.$router.push(`/${routeParam}`);
+      this.$router.push(`/${routeParam}/${payload.id}`);
     },
   },
 };
@@ -108,7 +114,7 @@ export default {
 }
 .posterAndTextBox {
   position: relative;
-  top: -1.5rem;
+  top: -2.5rem;
   margin-left: 1rem;
   display: flex;
   align-items: center;
@@ -121,7 +127,7 @@ export default {
 
 img {
   width: 10rem;
-  transform: translate(0rem, -3.5rem);
+  transform: translate(0rem, -2.5rem);
 }
 .actorImg {
   position: initial;
@@ -135,6 +141,7 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 button {
@@ -165,7 +172,9 @@ h3 {
 h4 {
   margin-top: 1rem;
 }
-
+.posterPlaceholder {
+  transform: translate(0rem, 0.5rem);
+}
 .placeholder {
   background-image: url(/img/movieImgPlaceholder.9b3f9c24.png);
   background-size: contain;
@@ -173,6 +182,9 @@ h4 {
 }
 
 p {
+  display: block;
+  overflow: hidden;
   margin: 0.5rem;
+  max-height: 6rem;
 }
 </style>

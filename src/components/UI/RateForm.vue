@@ -58,46 +58,69 @@
 </template>
 <script>
 export default {
-  props: ["Id", "isM", "rated"],
+  props: ["Id", "type"],
 
   mounted() {
     this.form = Array.from(this.$refs.form.children);
-    if (this.rated) {
-      for (let i = 0; i < this.rated; i++) {
-        this.form[i].classList.add("checked");
-      }
-    }
+    this.checkIfWasRated();
   },
 
   data() {
     return {
       formRate: null,
       form: null,
-      isMovie: this.isM,
-      showId: this.Id,
       userID: this.$store.getters["userId"],
     };
   },
 
   methods: {
+    rateForm(val) {
+      this.form.forEach((element) => element.classList.remove("checked"));
+      for (let i = 0; i < val; i++) {
+        this.form[i].classList.add("checked");
+      }
+    },
+
+    async checkIfWasRated() {
+      if (!this.userId) {
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/${this.type}/${this.Id}.json`
+        );
+
+        const data = await response.json();
+
+        if (data) {
+          this.rateForm(data);
+        }
+        if (!response.ok) {
+          const error = new Error("No r");
+          throw error;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async handleRate(val) {
       if (!this.userId) {
         return;
       }
-      this.formRate = val;
+      this.rateForm(val);
 
       this.form.forEach((element) => element.classList.remove("checked"));
       for (let i = 0; i < val; i++) {
         this.form[i].classList.add("checked");
       }
 
-      const isMovie = this.isMovie ? "Movie" : "TvShow";
-
       const response = await fetch(
-        `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/${isMovie}/${this.showId}.json`,
+        `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
         {
           method: "PUT",
-          body: this.formRate,
+          body: val,
         }
       );
 

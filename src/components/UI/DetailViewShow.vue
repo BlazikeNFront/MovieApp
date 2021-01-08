@@ -1,47 +1,47 @@
 <template>
-  <div class="boxcontainer tvShow">
-    <img
-      class="poster"
-      :src="'https://image.tmdb.org/t/p/w500' + showInformations.poster_path"
-    />
-    <div class="showData">
-      <div class="rate">
-        <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
-        <p class="voteCounted">
-          Vote counted: {{ showInformations.vote_count }}
-        </p>
-      </div>
-      <div class="lastEpisode">
-        <p>Last episode</p>
-        <div class="lastEpisode__data">
-          <p>{{ showInformations.last_episode_to_air.name }}</p>
-          <p>{{ showInformations.last_episode_to_air.air_date }}</p>
+  <section>
+    <spinner v-if="!showInformations"></spinner>
+    <div v-else class="boxcontainer tvShow">
+      <img class="poster" :src="showposterSrc" />
+      <div class="showData">
+        <div class="rate">
+          <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
+          <p class="voteCounted">
+            Vote counted: {{ showInformations.vote_count }}
+          </p>
+        </div>
+        <div class="lastEpisode">
+          <p>Last episode</p>
+          <div class="lastEpisode__data">
+            <p>{{ showInformations.last_episode_to_air.name }}</p>
+            <p>{{ showInformations.last_episode_to_air.air_date }}</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="overView">
-      {{ showInformations.overview }}
-    </div>
-    <rate-form :isM="false" :Id="showInformations.id"></rate-form>
-    <div class="additionalInfo">
-      <h4>Seasons:</h4>
-      <div class="seasonsInfo">
-        <button
-          v-for="season in showInformations['seasons']"
-          :key="season.name"
-        >
-          {{ season.name }}
-        </button>
+      <div class="overView">
+        {{ showInformations.overview }}
       </div>
-      <div class="showCreators">
-        <h4>Created by:</h4>
-        <p v-for="creator in showInformations.created_by" :key="creator.id">
-          {{ creator.name }}
-        </p>
+      <rate-form type="tvShow" :Id="showInformations.id"></rate-form>
+      <div class="additionalInfo">
+        <h4>Seasons:</h4>
+        <div class="seasonsInfo">
+          <button
+            v-for="season in showInformations['seasons']"
+            :key="season.name"
+          >
+            {{ season.name }}
+          </button>
+        </div>
+        <div class="showCreators">
+          <h4>Created by:</h4>
+          <p v-for="creator in showInformations.created_by" :key="creator.id">
+            {{ creator.name }}
+          </p>
+        </div>
+        <p>Homepage:{{ showInformations.homepage }}</p>
       </div>
-      <p>Homepage:{{ showInformations.homepage }}</p>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -51,10 +51,20 @@ export default {
   components: {
     RateForm,
   },
-  data() {
-    return {
-      showInformations: this.$store.getters["ShowDetails/showInformations"],
-    };
+
+  computed: {
+    showInformations() {
+      return this.$store.getters["ShowDetails/showInformations"];
+    },
+    showposterSrc() {
+      if (this.showInformations.poster_path === null) {
+        return require("../../assets/img/posterPlaceholder.png");
+      } else {
+        return (
+          "https://image.tmdb.org/t/p/w500" + this.showInformations.poster_path
+        );
+      }
+    },
   },
 };
 </script>
@@ -65,10 +75,12 @@ export default {
   background-color: #292e2b;
   padding: 3rem 0;
   text-align: center;
+  border-radius: var(--border-radius-lg);
 }
 
 img {
   width: 100%;
+  border-radius: var(--border-radius-md);
 }
 
 .showData {

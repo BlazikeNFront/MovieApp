@@ -51,7 +51,7 @@ const headerLayoutStore = {
                   }
                     const data = await response.json();
                     if (payload.movies === true) { data.results.splice(0, 3) }
-                    console.log(data)
+                    
                     context.commit('updateSearchData', await data)  
                     context.state.headerSearchState = false
                    

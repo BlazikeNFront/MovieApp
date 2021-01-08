@@ -1,42 +1,42 @@
 <template>
-  <div class="boxcontainer movie">
-    <img
-      class="poster"
-      :src="'https://image.tmdb.org/t/p/w500' + showInformations.poster_path"
-    />
-    <h2>{{ showInformations.title }}</h2>
-    <div class="showData">
-      <div class="rate">
-        <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
-        <p class="voteCounted">
-          Vote counted: {{ showInformations.vote_count }}
-        </p>
+  <section>
+    <spinner v-if="!showInformations"></spinner>
+    <div v-else class="boxcontainer movie">
+      <img class="poster" :src="showposterSrc" />
+      <h2>{{ showInformations.title }}</h2>
+      <div class="showData">
+        <div class="rate">
+          <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
+          <p class="voteCounted">
+            Vote counted: {{ showInformations.vote_count }}
+          </p>
+        </div>
+        <div class="dateOfRealesed">
+          <p>
+            Date of realeased:
+            {{ showInformations.release_date }}
+          </p>
+        </div>
       </div>
-      <div class="dateOfRealesed">
-        <p>
-          Date of realeased:
-          {{ showInformations.release_date }}
-        </p>
+      <div class="overView">
+        {{ showInformations.overview }}
+      </div>
+      <div class="additionalInfo">
+        <p>Your Rate:</p>
+        <rate-form type="movie" :Id="showInformations.id"></rate-form>
+        <div class="genre">
+          <h4>Genres:</h4>
+          <p
+            class="genres"
+            v-for="genre in showInformations.genres"
+            :key="genre['name']"
+          >
+            {{ genre.name }}
+          </p>
+        </div>
       </div>
     </div>
-    <div class="overView">
-      {{ showInformations.overview }}
-    </div>
-    <div class="additionalInfo">
-      <p>Your Rate:</p>
-      <rate-form :isM="true" :Id="showInformations.id"></rate-form>
-      <div class="genre">
-        <h4>Genres:</h4>
-        <p
-          class="genres"
-          v-for="genre in showInformations.genres"
-          :key="genre['name']"
-        >
-          {{ genre.name }}
-        </p>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -46,10 +46,19 @@ export default {
   components: {
     RateForm,
   },
-  data() {
-    return {
-      showInformations: this.$store.getters["ShowDetails/showInformations"],
-    };
+  computed: {
+    showInformations() {
+      return this.$store.getters["ShowDetails/showInformations"];
+    },
+    showposterSrc() {
+      if (this.showInformations.poster_path === null) {
+        return require("../../assets/img/posterPlaceholder.png");
+      } else {
+        return (
+          "https://image.tmdb.org/t/p/w500" + this.showInformations.poster_path
+        );
+      }
+    },
   },
 };
 </script>
