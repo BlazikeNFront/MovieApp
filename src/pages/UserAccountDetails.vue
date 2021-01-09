@@ -84,7 +84,7 @@
   </section>
 </template>
 <script>
-import ShowRatedBox from "../components/UI/ShowRatedBox.vue";
+import ShowRatedBox from "../components/UI/UserAccount/ShowRatedBox.vue";
 
 export default {
   components: {

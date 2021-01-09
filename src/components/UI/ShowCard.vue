@@ -31,7 +31,7 @@
         <img
           v-else
           class="actorImg"
-          src="../../assets/img/actorPlaceHolderImg.png"
+          src="../../../public/assets/img/actorPlaceHolderImg.png"
           :alt="active.name + ' picture'"
         />
         <div class="text">
@@ -57,20 +57,20 @@ export default {
   computed: {
     posterImg() {
       if (!this.active.poster_path) {
-        return require("../../assets/img/posterPlaceholder.png");
+        return require("../../../public/assets/img/posterPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
       }
     },
     imgLink() {
       if (!this.active.poster_path) {
-        return require("../../assets/img/movieImgPlaceholder.png");
+        return require("../../../public/assets/img/movieImgPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
       }
     },
     placeholder() {
-      return require("../../assets/img/actorPlaceHolderImg.png");
+      return require("../../../public/assets/img/actorPlaceHolderImg.png");
     },
     actorPicture() {
       return "https://image.tmdb.org/t/p/w500" + this.active.profile_path;
@@ -114,7 +114,8 @@ export default {
 }
 .posterAndTextBox {
   position: relative;
-  top: -2.5rem;
+  height: 40%;
+
   margin-left: 1rem;
   display: flex;
   align-items: center;

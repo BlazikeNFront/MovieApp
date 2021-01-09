@@ -30,19 +30,19 @@ export default {
     };
   },
   computed: {
-    updatedTrendingMovies() {
+    updateTrendingMovies() {
       return this.$store.getters["StandardCarousels/trendingMovies"];
     },
-    updatedTrendingTvShows() {
+    updateTrendingTvShows() {
       return this.$store.getters["StandardCarousels/trendingTvShows"];
     },
   },
   watch: {
-    updatedTrendingMovies(newVal) {
+    updateTrendingMovies(newVal) {
       this.trendingMovies = newVal;
       this.moviesLoaded = true;
     },
-    updatedTrendingTvShows(newVal) {
+    updateTrendingTvShows(newVal) {
       this.trendingTv = newVal;
       this.tvShowsLoaded = true;
     },

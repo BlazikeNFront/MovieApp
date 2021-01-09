@@ -24,8 +24,8 @@
 
 <script>
 // props which points out which data we provide
-import ShowCard from "./ShowCard.vue";
-import ArrowButton from "./ArrowButton.vue";
+import ShowCard from "../ShowCard.vue";
+import ArrowButton from "../Common/ArrowButton.vue";
 export default {
   props: ["slides", "title"],
   components: {
@@ -43,31 +43,37 @@ export default {
     };
   },
 
-  created() {
-    const elements = [];
-    for (const element of this.activeList) {
-      elements.push(element);
-    }
-    this.activeSlide = elements[0];
-    this.loadedData = true;
-    this.lengthOfArray = this.activeList.length;
-    this.activeList = elements;
-  },
   mounted() {
-    this.interval = setInterval(() => {
-      this.loadedData = false;
-
-      this.numberOfActive =
-        (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
-
-      this.activeSlide = this.activeList[this.numberOfActive];
-      setTimeout(() => {
-        this.loadedData = true;
-      }, 1000);
-    }, 10000);
+    this.createSlidesData();
+    this.startSlideShow();
   },
 
   methods: {
+    createSlidesData() {
+      const elements = [];
+      for (const element of this.activeList) {
+        elements.push(element);
+      }
+      this.activeSlide = elements[0];
+      this.loadedData = true;
+      this.lengthOfArray = this.activeList.length;
+      this.activeList = elements;
+    },
+
+    startSlideShow() {
+      this.interval = setInterval(() => {
+        this.loadedData = false;
+
+        this.numberOfActive =
+          (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
+
+        this.activeSlide = this.activeList[this.numberOfActive];
+        setTimeout(() => {
+          this.loadedData = true;
+        }, 1000);
+      }, 10000);
+    },
+
     slideLeft() {
       if (!this.isClickable) {
         return;

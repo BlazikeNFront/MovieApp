@@ -20,14 +20,7 @@
 </template>
 
 <script>
-import RateForm from "./RateForm.vue";
-import Spinner from "./Spinner.vue";
-
 export default {
-  components: {
-    RateForm,
-    Spinner,
-  },
   props: ["id", "type"],
   mounted() {
     this.fetchData();
@@ -41,6 +34,9 @@ export default {
   },
   methods: {
     updateDetailShowComponent() {
+      if (this.type === "actor") {
+        return;
+      }
       this.$store.dispatch("ShowDetails/updateShowInformations", null);
       const isMovie = this.type === "movie" ? true : false;
       const payload = {

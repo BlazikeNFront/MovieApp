@@ -10,25 +10,21 @@
       <div></div>
       <div></div>
     </div>
+    <p>Loading...</p>
   </div>
 </template>
 
 <style scoped>
-.spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  margin-top: 50%;
-}
-
 .lds-roller {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 80px;
 }
+p {
+  font-size: 2rem;
+}
+
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   transform-origin: 40px 40px;
