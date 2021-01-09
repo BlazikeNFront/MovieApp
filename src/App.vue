@@ -1,15 +1,17 @@
 <template>
   <body>
-    <the-header></the-header>
-    <main>
-      <div class="container">
-        <router-view v-slot="slotProps"
-          ><transition name="fade" mode="out-in">
-            <component :is="slotProps.Component"></component>
-          </transition>
-        </router-view>
-      </div>
-    </main>
+    <div class="overlayForDesktop">
+      <the-header></the-header>
+      <main>
+        <div class="mainContainer">
+          <router-view v-slot="slotProps"
+            ><transition name="fade" mode="out-in">
+              <component :is="slotProps.Component"></component>
+            </transition>
+          </router-view>
+        </div>
+      </main>
+    </div>
   </body>
 </template>
 
@@ -41,13 +43,20 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
   font-family: "Montserrat", sans-serif;
-  background-color: var(--main-color);
+
   color: white;
 }
-.container {
-  width: 90%;
-  max-width: 500px;
 
+.overlayForDesktop {
+  margin: 0 auto;
+  max-width: 500px;
+  background-color: var(--main-color);
+}
+
+.mainContainer {
+  width: 95%;
+  max-width: 500px;
+  min-height: 100vh;
   background-color: var(--main-color);
   margin: 0 auto;
   border: 1px solid black;

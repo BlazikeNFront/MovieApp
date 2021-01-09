@@ -170,6 +170,7 @@ p {
 }
 .spinner {
   transform: scale(0.7);
+  text-align: center;
 }
 .errorText {
   margin-bottom: 1rem;

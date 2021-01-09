@@ -13,8 +13,8 @@
 
       <li
         @click.prevent="
-          $emit('close-nav');
           handleMoviesRequest();
+          $emit('close-nav');
         "
       >
         Movies
@@ -38,8 +38,8 @@
       <li
         v-if="isAuth"
         @click="
-          logout();
           $emit('close-nav');
+          logout();
         "
       >
         Logout
@@ -104,7 +104,7 @@ nav {
   position: fixed;
   background-color: #4c4d4f;
   width: 15rem;
-  height: 40rem;
+  height: 20rem;
   top: 5.89rem;
   border-radius: 0 15px 15px 0;
   z-index: 10;

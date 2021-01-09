@@ -10,11 +10,13 @@ import store from './store/index.js'
 import router from './router.js'
 
 //global components
-import  BaseButton from './components/UI/BaseButton.vue'
-import BaseCard from './components/UI/BaseCard.vue'
-import StandardCarousel from './components/UI/StandardCarousel.vue'
-import Spinner from './components/UI/Spinner.vue'
-import RateForm from './components/UI/RateForm.vue'
+import BaseButton from './components/UI/Common/BaseButton.vue'
+import BaseCard from './components/UI/Common/BaseCard.vue'
+import StandardCarousel from './components/UI/MainPage/StandardCarousel.vue'
+import Spinner from './components/UI/Common/Spinner.vue'
+import RateForm from './components/UI/Common/RateForm.vue'
+
+
 const movieApp = createApp(App);
 
 movieApp.use(store);

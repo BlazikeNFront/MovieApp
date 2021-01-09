@@ -4,8 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import  MainPage  from './pages/MainPage.vue';
 import  SearchResult  from './pages/SearchResult.vue';
 
-import DetailViewMovie from './components/UI/DetaliViewMovie.vue'
-import DetailViewShow from './components/UI/DetailViewShow.vue'
+import DetailViewMovie from './pages/DetailViews/DetaliViewMovie.vue'
+import DetailViewShow from './pages/DetailViews/DetailViewShow.vue'
 import  SignUpForm  from './pages/SignUpFrom.vue';
 import  UserAuth  from './pages/userAuth.vue';
 import  UserAccountDetails  from './pages/UserAccountDetails.vue';

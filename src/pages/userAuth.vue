@@ -12,14 +12,14 @@
         autocomplete="on"
         v-model="password"
       />
-      <button>Login</button>
+      <button class="button login">Login</button>
       <spinner class="spinner" v-if="isLoading"></spinner>
       <p v-if="!!error">{{ error }}</p>
     </form>
-    <h4>You dont have account? Click below and Sing Up !</h4>
-    <base-button CSS="userAuth" class="signup">Sign up</base-button>
+
     <h4 class="signUpText">
-      Dont have an account?? <router-link to="/signUp">Sign UP !</router-link>
+      Dont have an account??
+      <router-link to="/signUp"> Click to Sign UP !</router-link>
     </h4>
   </section>
 </template>
@@ -67,7 +67,7 @@ export default {
 
 <style scoped>
 section {
-  margin: 20rem 50%;
+  margin: 13rem 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,6 +75,7 @@ section {
 .signUpText {
   width: 30rem;
   font-size: 2rem;
+  margin-top: 11rem;
 }
 
 a {
@@ -89,6 +90,7 @@ h4 {
   text-align: center;
   line-height: 2rem;
   width: 16rem;
+  line-height: 3rem;
 }
 
 form {
@@ -109,6 +111,16 @@ input {
   font-family: inherit;
 }
 
+button {
+  font-family: inherit;
+  border-radius: 20px;
+  background-color: none;
+  border: none;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+  width: 20rem;
+  font-size: 2rem;
+  padding: 0.7rem 2rem;
+}
 .email {
   width: 24rem;
 }
@@ -116,16 +128,14 @@ input {
   font-weight: bolder;
 }
 
-.signup {
-  margin-top: 1rem;
-  width: 10rem;
-  font-size: 1.5rem;
-}
 p {
   margin-top: 1rem;
 }
 
 .spinner {
+  position: absolute;
+  margin-left: 7rem;
+
   transform: scale(0.7);
 }
 </style>

@@ -1,23 +1,21 @@
 <template>
   <header>
     <div class="searchBar" v-if="searchBar">
-      <button class="searchBarExit" @click="toggleSearchOption"></button>
+      <button class="closeSearchButton" @click="toggleSearchOption"></button>
       <form @submit.prevent="handleSearch">
         <input type="text" placeholder="...search" v-model.trim="searchInput" />
-        <base-button CSS="common searchBarConfirm">Search</base-button>
+        <button class="button formButton">Search</button>
       </form>
     </div>
     <div class="headerBox" v-if="!searchBar">
-      <button class="menuButton" @click="toggleNavBar"></button>
+      <button class="toggleMenuButton" @click="toggleNavBar"></button>
       <router-link to="/"><logo></logo></router-link>
     </div>
     <div class="headerBox" v-if="!searchBar">
       <button class="searchButton" @click="toggleSearchOption"></button>
       <div v-if="!isAuth">
         <router-link to="/login">
-          <base-button CSS="common headerSignIn"
-            >Login</base-button
-          ></router-link
+          <button class="button signInButton">Login</button></router-link
         >
       </div>
     </div>
@@ -27,13 +25,11 @@
 <script>
 import Logo from "../UI/Logo.vue";
 import NavBar from "../layout/NavSideBar.vue";
-import BaseButton from "../UI/BaseButton.vue";
 
 export default {
   components: {
     Logo,
     NavBar,
-    BaseButton,
   },
 
   data() {
@@ -83,11 +79,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 0 0 10px 10px;
 }
 input {
-  width: 70vw;
   height: 3rem;
   background-color: inherit;
   border: none;
@@ -102,6 +96,8 @@ input {
 
 form {
   display: flex;
+  width: 80%;
+  justify-content: space-between;
 }
 .headerBox {
   display: flex;
@@ -110,25 +106,46 @@ form {
 .searchBar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.button {
+  font-family: inherit;
+  border-radius: 20px;
+  background-color: none;
+  border: none;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+.formButton {
+  font-family: inherit;
+  background: black;
+  padding: 0.6rem;
+  color: white;
 }
 
 a {
   text-decoration: none;
 }
-
+.signInButton {
+  background-color: #292e2b;
+  color: white;
+  box-shadow: none;
+  font-size: 1.5rem;
+}
 .searchButton {
   margin-right: 1rem;
   background-color: #292e2b;
-  background-image: url("../../assets/icons/searchIcon.png");
+  background-image: url("../../../public/assets/icons/searchIcon.png");
   box-shadow: none;
   border: none;
   background-size: cover;
   height: 3rem;
   width: 3rem;
 }
-.searchBarExit {
+.closeSearchButton {
   margin-right: 2rem;
-  background-image: url("../../assets/icons/closeButton.svg");
+  background-image: url("../../../public/assets/icons/closeButton.svg");
   background-color: #292e2b;
   box-shadow: none;
   border: none;
@@ -137,10 +154,10 @@ a {
   width: 2rem;
 }
 
-.menuButton {
+.toggleMenuButton {
   margin-right: 2rem;
   background-color: #292e2b;
-  background-image: url("../../assets/icons/menu.svg");
+  background-image: url("../../../public/assets//icons/menu.svg");
   box-shadow: none;
   border: none;
   background-size: cover;

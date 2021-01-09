@@ -1,9 +1,8 @@
 <template>
   <section>
-    <spinner v-if="!showInformations"></spinner>
-    <div v-else class="boxcontainer movie">
+    <spinner v-if="!showInformations" class="spinner"></spinner>
+    <div v-else class="boxcontainer tvShow">
       <img class="poster" :src="showposterSrc" />
-      <h2>{{ showInformations.title }}</h2>
       <div class="showData">
         <div class="rate">
           <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
@@ -11,48 +10,49 @@
             Vote counted: {{ showInformations.vote_count }}
           </p>
         </div>
-        <div class="dateOfRealesed">
-          <p>
-            Date of realeased:
-            {{ showInformations.release_date }}
-          </p>
+        <div class="lastEpisode">
+          <p>Last episode</p>
+          <div class="lastEpisode__data">
+            <p>{{ showInformations.last_episode_to_air.name }}</p>
+            <p>{{ showInformations.last_episode_to_air.air_date }}</p>
+          </div>
         </div>
       </div>
       <div class="overView">
         {{ showInformations.overview }}
       </div>
+      <rate-form type="tvShow" :Id="showInformations.id"></rate-form>
       <div class="additionalInfo">
-        <p>Your Rate:</p>
-        <rate-form type="movie" :Id="showInformations.id"></rate-form>
-        <div class="genre">
-          <h4>Genres:</h4>
-          <p
-            class="genres"
-            v-for="genre in showInformations.genres"
-            :key="genre['name']"
+        <h4>Seasons:</h4>
+        <div class="seasonsInfo">
+          <button
+            v-for="season in showInformations['seasons']"
+            :key="season.name"
           >
-            {{ genre.name }}
+            {{ season.name }}
+          </button>
+        </div>
+        <div class="showCreators">
+          <h4>Created by:</h4>
+          <p v-for="creator in showInformations.created_by" :key="creator.id">
+            {{ creator.name }}
           </p>
         </div>
+        <p>Homepage:{{ showInformations.homepage }}</p>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import RateForm from "./RateForm.vue";
-
 export default {
-  components: {
-    RateForm,
-  },
   computed: {
     showInformations() {
       return this.$store.getters["ShowDetails/showInformations"];
     },
     showposterSrc() {
       if (this.showInformations.poster_path === null) {
-        return require("../../assets/img/posterPlaceholder.png");
+        return require("../../../public/assets/img/posterPlaceholder.png");
       } else {
         return (
           "https://image.tmdb.org/t/p/w500" + this.showInformations.poster_path
@@ -62,7 +62,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .boxcontainer {
   display: flex;
@@ -70,10 +69,17 @@ export default {
   background-color: #292e2b;
   padding: 3rem 0;
   text-align: center;
+  border-radius: var(--border-radius-lg);
+}
+
+.spinner {
+  margin-top: 50%;
+  text-align: center;
 }
 
 img {
   width: 100%;
+  border-radius: var(--border-radius-md);
 }
 
 .showData {
