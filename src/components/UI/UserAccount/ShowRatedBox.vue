@@ -1,6 +1,6 @@
 <template>
   <div>
-    <spinner v-if="!isLoading" class="spinner"></spinner>
+    <spinner v-if="!isLoading" class="spinner scale"></spinner>
     <div class="container" v-else>
       <img
         class="moviePoster"
@@ -11,7 +11,6 @@
       <div>
         <h3>{{ title }}</h3>
         <div class="scale">
-          <!--There is some sort of a bug(feature??) - cant give class directly to rate form component  (cuz of lifecycle hook being used[mounted]???)  -->
           <rate-form :type="type" :Id="id"></rate-form>
         </div>
       </div>
@@ -34,33 +33,25 @@ export default {
   },
   methods: {
     updateDetailShowComponent() {
-      if (this.type === "actor") {
+      if (this.type === "person") {
         return;
       }
+
+      // WHY you use store reset ?
       this.$store.dispatch("ShowDetails/updateShowInformations", null);
-      const isMovie = this.type === "movie" ? true : false;
+
       const payload = {
-        movie: isMovie,
+        typeOfShow: this.type,
         id: this.id,
       };
+
       this.$store.dispatch("ShowDetails/updateShowInformations", payload);
-      const routeParam = payload.movie === true ? "movie" : "show";
-      this.$router.push(`/${routeParam}/${payload.id}`);
+
+      this.$router.push(`/${this.type}/${payload.id}`);
     },
 
     async fetchData() {
-      let url;
-      switch (this.type) {
-        case "movie":
-          url = `https://api.themoviedb.org/3/movie/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
-          break;
-        case "tvShow":
-          url = `https://api.themoviedb.org/3/tv/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
-          break;
-        case "actor":
-          url = `https://api.themoviedb.org/3/person/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
-          break;
-      }
+      const url = `https://api.themoviedb.org/3/${this.type}/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
 
       try {
         const response = await fetch(url);
@@ -70,7 +61,7 @@ export default {
         }
         const responseData = await response.json();
 
-        if (this.type !== "actor") {
+        if (this.type !== "person") {
           const name = responseData.title || responseData.original_name;
           if (name.split("").length > 14) {
             this.title = name.split("").splice(0, 11).join("") + "...";
@@ -114,7 +105,6 @@ export default {
 }
 .spinner {
   margin: 35% auto;
-  transform: scale(0.6);
 }
 
 .moviePoster {
