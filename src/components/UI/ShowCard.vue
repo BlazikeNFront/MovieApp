@@ -4,12 +4,12 @@
       <div
         v-if="!actor && active.backdrop_path"
         class="img"
-        :style="{ backgroundImage: 'url(' + imgLink + ')' }"
+        :style="{ backgroundImage: 'url(' + imgSrc + ')' }"
       ></div>
       <div v-if="!actor && !active.backdrop_path" class="img placeholder"></div>
       <div class="posterAndTextBox" v-if="!actor">
         <img
-          :src="posterImg"
+          :src="posterSrc"
           alt="posterImg"
           :class="{ posterPlaceholder: !active.poster_path }"
         />
@@ -51,18 +51,23 @@
 </template>
 
 <script>
+//import ShowBox from "./ShowBox.vue";
+
 export default {
+  components: {
+    // ShowBox,
+  },
   props: ["active", "actor"],
 
   computed: {
-    posterImg() {
+    posterSrc() {
       if (!this.active.poster_path) {
         return require("../../../public/assets/img/posterPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
       }
     },
-    imgLink() {
+    imgSrc() {
       if (!this.active.poster_path) {
         return require("../../../public/assets/img/movieImgPlaceholder.png");
       } else {
@@ -90,15 +95,22 @@ export default {
         this.overview
       );
     },
-
+    checkTypeOfShow(obj) {
+      if (obj["release_date"]) {
+        return "movie";
+      } else {
+        return "tv";
+      }
+    },
     updateDetailShowComponent() {
       this.$store.dispatch("ShowDetails/updateShowInformations", null);
       const payload = {
-        movie: !!this.active["release_date"],
+        typeOfShow: this.checkTypeOfShow(this.active),
         id: this.active.id,
       };
+      console.log(payload);
       this.$store.dispatch("ShowDetails/updateShowInformations", payload);
-      const routeParam = payload.movie === true ? "movie" : "show";
+      const routeParam = payload.typeOfShow;
       this.$router.push(`/${routeParam}/${payload.id}`);
     },
   },

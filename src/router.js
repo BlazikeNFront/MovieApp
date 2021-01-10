@@ -20,7 +20,7 @@ const router = createRouter({
         { path: '/UserAccountDetails', component: UserAccountDetails },
         { path: '/searchResult', component: SearchResult },
         { path: '/movie/:movieID', component: DetailViewMovie },
-        { path:'/show/:showID',component:DetailViewShow}
+        { path:'/tv/:showID',component:DetailViewShow}
        
     ],
 })

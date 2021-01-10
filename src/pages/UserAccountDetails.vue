@@ -33,41 +33,19 @@
         Movies rated:
         <span v-if="moviesRated">{{ Object.keys(moviesRated).length }}</span>
       </h3>
-      <div class="ratedShows movies">
-        <div class="dataLoadingBox" v-if="!moviesRated">
-          <h3>Loading data...</h3>
-          <spinner></spinner>
-        </div>
-        <show-rated-box
-          v-else
-          v-for="(movie, key) of moviesRated"
-          :id="key"
-          :key="movie"
-          type="movie"
-        ></show-rated-box>
-      </div>
+      <movie-box-small :moviesRated="moviesRated"></movie-box-small>
       <h3>
         Tv shows rated
         <span v-if="tvShows">{{ Object.keys(tvShows).length || "0" }}</span>
       </h3>
-      <div class="ratedShows tvShows">
-        <div class="dataLoadingBox" v-if="!tvShows">
-          <h3>Loading data...</h3>
-          <spinner></spinner>
-        </div>
-        <show-rated-box
-          v-else
-          v-for="(show, key) of tvShows"
-          :id="key"
-          :key="key"
-          type="tvShow"
-        ></show-rated-box>
-      </div>
+      <tvshow-box-small :tvShows="tvShows"></tvshow-box-small>
+
       <h3>
         Actors rated
         <span v-if="actors">{{ Object.keys(actors).length || "0" }}</span>
       </h3>
-      <div class="ratedShows actors">
+      <person-box-small :actors="actors"></person-box-small>
+      <!-- <div class="ratedShows actors">
         <div class="dataLoadingBox" v-if="!actors">
           <h3>Loading data...</h3>
           <spinner></spinner>
@@ -77,19 +55,24 @@
           v-for="(actor, key) of actors"
           :id="key"
           :key="actor"
-          type="actor"
+          type="person"
         ></show-rated-box>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
 <script>
-import ShowRatedBox from "../components/UI/UserAccount/ShowRatedBox.vue";
+import MovieBoxSmall from "../components/UI/UserAccount/MovieBoxSmall.vue";
+import TvshowBoxSmall from "../components/UI/UserAccount/TvshowBoxSmall.vue";
+import PersonBoxSmall from "../components/UI/UserAccount/PersonBoxSmall.vue";
 
 export default {
   components: {
-    ShowRatedBox,
+    MovieBoxSmall,
+    TvshowBoxSmall,
+    PersonBoxSmall,
   },
+
   mounted() {
     this.moviesRatedData();
     this.tvShowRatedData();

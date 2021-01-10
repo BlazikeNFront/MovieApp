@@ -25,11 +25,12 @@ const showDetails = {
         async updateShowInformations(context, payload) {
             if (payload === null) {
                 context.commit('updateShowInformations', payload);
-        return    }
-            let url = `https://api.themoviedb.org/3/movie/${payload.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
-            if (!payload.movie) {
-                url = `https://api.themoviedb.org/3/tv/${payload.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`
+                return
             }
+            console.log
+            const url = `https://api.themoviedb.org/3/${payload.typeOfShow}/${payload.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`
+           
+           
        
             try {
                 const data = await fetch(url);
