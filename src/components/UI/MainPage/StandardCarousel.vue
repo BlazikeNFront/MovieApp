@@ -23,8 +23,7 @@
 
 
 <script>
-// props which points out which data we provide
-import ShowCard from "../ShowCard.vue";
+import ShowCard from "../ShowCard/ShowCard.vue";
 import ArrowButton from "../Common/ArrowButton.vue";
 export default {
   props: ["slides", "title"],

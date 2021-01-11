@@ -57,6 +57,7 @@ export default {
           errorText = errorText.replace(/_/g, " ") || "Failed to sign In";
         }
         this.error = errorText;
+        this.password = "";
       }
 
       this.isLoading = false;

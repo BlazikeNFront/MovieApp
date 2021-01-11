@@ -11,7 +11,7 @@
   </section>
 </template>
 <script>
-import ShowCard from "../components/UI/ShowCard.vue";
+import ShowCard from "../components/UI/ShowCard/ShowCard.vue";
 
 export default {
   components: {

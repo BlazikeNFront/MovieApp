@@ -17,6 +17,7 @@
 import ShowRatedBox from "./ShowRatedBox.vue";
 export default {
   props: ["tvShows"],
+
   components: {
     ShowRatedBox,
   },
