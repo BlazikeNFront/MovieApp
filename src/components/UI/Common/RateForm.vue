@@ -92,7 +92,7 @@ export default {
         );
 
         const data = await response.json();
-
+        console.log(data);
         if (data) {
           this.rateForm(data);
         }
@@ -154,6 +154,9 @@ form {
 }
 .checked {
   color: yellow;
+}
+p {
+  text-align: center;
 }
 </style>
 

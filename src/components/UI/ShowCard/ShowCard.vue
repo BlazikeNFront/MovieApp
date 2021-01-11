@@ -20,62 +20,37 @@
           <button @click="updateDetailShowComponent">More Details...</button>
         </div>
       </div>
-      <div v-else class="posterAndTextBox posterAndTextBox--actor">
-        <img
-          v-if="active.profile_path"
-          class="actorImg"
-          :src="actorPicture"
-          :alt="active.name + ' picture'"
-        />
-
-        <img
-          v-else
-          class="actorImg"
-          src="../../../public/assets/img/actorPlaceHolderImg.png"
-          :alt="active.name + ' picture'"
-        />
-        <div class="text">
-          <h3>{{ active.name }}</h3>
-          <h4>Known from:</h4>
-          <ul>
-            <li v-for="show in active.known_for" :key="show.id">
-              {{ show.original_title || show.name }}
-            </li>
-          </ul>
-          <p>Rate actor:</p>
-          <rate-form type="actor" :Id="active.id"></rate-form>
-        </div>
-      </div>
+      <person-box v-else :personInfo="active"></person-box>
     </div>
   </div>
 </template>
 
 <script>
-//import ShowBox from "./ShowBox.vue";
+import PersonBox from "./PersonBox.vue";
 
 export default {
   components: {
-    // ShowBox,
+    PersonBox,
   },
   props: ["active", "actor"],
 
   computed: {
     posterSrc() {
       if (!this.active.poster_path) {
-        return require("../../../public/assets/img/posterPlaceholder.png");
+        return require("../../../../public/assets/img/posterPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.poster_path;
       }
     },
     imgSrc() {
       if (!this.active.poster_path) {
-        return require("../../../public/assets/img/movieImgPlaceholder.png");
+        return require("../../../../public/assets/img/movieImgPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
       }
     },
     placeholder() {
-      return require("../../../public/assets/img/actorPlaceHolderImg.png");
+      return require("../../../../public/assets/img/actorPlaceHolderImg.png");
     },
     actorPicture() {
       return "https://image.tmdb.org/t/p/w500" + this.active.profile_path;

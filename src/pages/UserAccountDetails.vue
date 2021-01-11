@@ -45,19 +45,6 @@
         <span v-if="actors">{{ Object.keys(actors).length || "0" }}</span>
       </h3>
       <person-box-small :actors="actors"></person-box-small>
-      <!-- <div class="ratedShows actors">
-        <div class="dataLoadingBox" v-if="!actors">
-          <h3>Loading data...</h3>
-          <spinner></spinner>
-        </div>
-        <show-rated-box
-          v-else
-          v-for="(actor, key) of actors"
-          :id="key"
-          :key="actor"
-          type="person"
-        ></show-rated-box>
-      </div> -->
     </div>
   </section>
 </template>
