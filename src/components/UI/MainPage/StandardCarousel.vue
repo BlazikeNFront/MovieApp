@@ -44,7 +44,7 @@ export default {
 
   mounted() {
     this.createSlidesData();
-    this.startSlideShow();
+    //this.startSlideShow();
   },
 
   methods: {
@@ -70,7 +70,7 @@ export default {
         setTimeout(() => {
           this.loadedData = true;
         }, 1000);
-      }, 10000);
+      }, 50000);
     },
 
     slideLeft() {

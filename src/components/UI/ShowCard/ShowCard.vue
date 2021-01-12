@@ -1,25 +1,7 @@
 <template>
   <div v-if="active.gender !== '0'">
     <div class="box">
-      <div
-        v-if="!actor && active.backdrop_path"
-        class="img"
-        :style="{ backgroundImage: 'url(' + imgSrc + ')' }"
-      ></div>
-      <div v-if="!actor && !active.backdrop_path" class="img placeholder"></div>
-      <div class="posterAndTextBox" v-if="!actor">
-        <img
-          :src="posterSrc"
-          alt="posterImg"
-          :class="{ posterPlaceholder: !active.poster_path }"
-        />
-        <div class="text">
-          <h3>{{ active.title || active.name }}</h3>
-          <p>{{ overviewShort || "There is no overview for this show..." }}</p>
-
-          <button @click="updateDetailShowComponent">More Details...</button>
-        </div>
-      </div>
+      <show-box v-if="!actor" :active="active"></show-box>
       <person-box v-else :personInfo="active"></person-box>
     </div>
   </div>
@@ -27,10 +9,12 @@
 
 <script>
 import PersonBox from "./PersonBox.vue";
+import ShowBox from "./ShowBox.vue";
 
 export default {
   components: {
     PersonBox,
+    ShowBox,
   },
   props: ["active", "actor"],
 
