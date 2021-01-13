@@ -2,7 +2,7 @@
   <body>
     <div class="overlayForDesktop">
       <the-header></the-header>
-      <main>
+      <main @click="closeSearchOptionInHeader">
         <div class="mainContainer">
           <router-view v-slot="slotProps"
             ><transition name="fade" mode="out-in">
@@ -21,6 +21,11 @@ import TheHeader from "./components/layout/TheHeader.vue";
 export default {
   components: {
     TheHeader,
+  },
+  methods: {
+    closeSearchOptionInHeader() {
+      this.$store.dispatch("HeaderLayout/closeHeaderSearch");
+    },
   },
 };
 </script>

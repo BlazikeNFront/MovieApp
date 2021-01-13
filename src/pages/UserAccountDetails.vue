@@ -137,7 +137,7 @@ export default {
     async tvShowRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/tvShow.json`
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/tv.json`
         );
         const data = await response.json();
         if (data === null) {
@@ -152,7 +152,7 @@ export default {
     async actorsRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/actor.json`
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/person.json`
         );
         const data = await response.json();
 
@@ -233,7 +233,7 @@ form button {
 .ratedShows {
   text-align: center;
   transition: all 1s;
-  margin: 4rem 0.5rem;
+  padding: 3rem 0.5rem;
   scroll-behavior: smooth;
   display: flex;
   width: 100%;

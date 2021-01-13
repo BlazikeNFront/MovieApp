@@ -7,11 +7,16 @@ const headerLayoutStore = {
         return {
             headerSearchState: false,
             navBarState: false,
-            searchData: null,
+            searchData: [],
         }
     },
 
     mutations: {
+        closeHeaderSearch(state) {
+           
+            state.headerSearchState = false;
+        },
+
         toggleHeaderSearch(state) {
             state.headerSearchState = !state.headerSearchState
         },
@@ -28,7 +33,11 @@ const headerLayoutStore = {
         
 
 
-     actions: {
+    actions: {
+        closeHeaderSearch(context) {
+            context.commit('closeHeaderSearch')
+        },
+
          toggleHeaderSearch(context) {
              context.commit('toggleHeaderSearch')
          },
@@ -50,7 +59,9 @@ const headerLayoutStore = {
                     throw new Error(error);
                   }
                     const data = await response.json();
-                    if (payload.movies === true) { data.results.splice(0, 3) }
+
+                    console.log(data)
+                    if (payload.movies === true) { data.results.splice(0, 3) } // this condition avoid anime shows that comes from database as first places...
                     
                     context.commit('updateSearchData', await data)  
                     context.state.headerSearchState = false

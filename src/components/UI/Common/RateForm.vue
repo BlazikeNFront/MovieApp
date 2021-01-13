@@ -92,7 +92,7 @@ export default {
         );
 
         const data = await response.json();
-        console.log(data);
+        console.log(data, this.type, this.Id);
         if (data) {
           this.rateForm(data);
         }
@@ -142,6 +142,8 @@ form {
   display: flex;
   width: 18rem;
   background-color: black;
+  border-radius: 10px;
+
   justify-content: center;
   margin: 0 auto;
 }

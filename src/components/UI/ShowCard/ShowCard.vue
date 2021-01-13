@@ -67,7 +67,7 @@ export default {
         typeOfShow: this.checkTypeOfShow(this.active),
         id: this.active.id,
       };
-      console.log(payload);
+
       this.$store.dispatch("ShowDetails/updateShowInformations", payload);
       const routeParam = payload.typeOfShow;
       this.$router.push(`/${routeParam}/${payload.id}`);

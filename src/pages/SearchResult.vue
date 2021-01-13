@@ -8,6 +8,9 @@
         :actor="show.gender"
       ></show-card>
     </ul>
+    <h2 v-if="searchData.results.length === 0">
+      Sorry not a single data found ... :(
+    </h2>
   </section>
 </template>
 <script>
@@ -37,6 +40,14 @@ export default {
 };
 </script>
 <style scoped>
+h2 {
+  display: block;
+  width: 90%;
+  font-size: 4rem;
+  margin: 19rem auto;
+  text-align: center;
+}
+
 button {
   padding: 1rem;
 }

@@ -21,7 +21,7 @@
       <div class="overView">
         {{ showInformations.overview }}
       </div>
-      <rate-form type="tvShow" :Id="showInformations.id"></rate-form>
+      <rate-form type="tv" :Id="showInformations.id"></rate-form>
       <div class="additionalInfo">
         <h4>Seasons:</h4>
         <div class="seasonsInfo">
