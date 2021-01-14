@@ -51,6 +51,7 @@ export default {
     },
 
     async fetchData() {
+      console.log(this.type);
       const url = `https://api.themoviedb.org/3/${this.type}/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
 
       try {
@@ -63,8 +64,10 @@ export default {
 
         if (this.type !== "person") {
           const name = responseData.title || responseData.original_name;
-          if (name.split("").length > 14) {
-            this.title = name.split("").splice(0, 11).join("") + "...";
+
+          if (name.split("").length > 16) {
+            console.log(name.split("").length);
+            this.title = name.split("").splice(0, 10).join("") + "...";
           } else {
             this.title = name;
           }
@@ -74,7 +77,7 @@ export default {
         } else {
           const name = responseData.name;
           if (name.split("").length > 14) {
-            this.title = name.split("").splice(0, 11).join("") + "...";
+            this.title = name.split("").splice(0, 10).join("") + "...";
           } else {
             this.title = name;
           }

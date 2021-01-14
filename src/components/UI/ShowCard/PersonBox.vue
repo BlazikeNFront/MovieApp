@@ -22,7 +22,7 @@
         </li>
       </ul>
       <p>Rate actor:</p>
-      <rate-form type="actor" :Id="personInfo.id"></rate-form>
+      <rate-form type="person" :Id="personInfo.id"></rate-form>
     </div>
   </article>
 </template>
