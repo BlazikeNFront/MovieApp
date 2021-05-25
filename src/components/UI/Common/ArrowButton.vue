@@ -9,10 +9,10 @@ export default {};
 </script>
 <style  scoped>
 .arrow {
-  cursor: pointer;
-  height: 5rem;
-  width: 3rem;
   left: 50%;
+  width: 3rem;
+  height: 5rem;
+  cursor: pointer;
 }
 
 .arrowPart {
@@ -21,11 +21,11 @@ export default {};
   background-color: rgba(139, 139, 139, 0.8);
 }
 .arrow-top {
-  transform: rotate(45deg);
   border-radius: 3px 3px 0 0;
+  transform: rotate(45deg);
 }
 .arrow-bottom {
-  transform: translate(0, -1rem) rotate(-45deg);
   border-radius: 0 0 3px 3px;
+  transform: translate(0, -1rem) rotate(-45deg);
 }
 </style>

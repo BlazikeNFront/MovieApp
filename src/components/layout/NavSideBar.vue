@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('close-nav')"></div>
+  <div class="backdrop" @click="$emit('close-nav')"></div>
   <nav>
     <ul>
       <li
@@ -93,32 +93,56 @@ export default {
 </script>
 
 <style  scoped>
-div {
+.backdrop {
   position: fixed;
-  z-index: 2;
-  height: 100vh;
+  top: 0;
+  left: 0;
   width: 100vw;
+  height: 100vh;
+  z-index: 2;
 }
 
 nav {
   position: fixed;
-  background-color: #4c4d4f;
+  top: 5.89rem;
+  left: 0;
   width: 15rem;
   height: 20rem;
-  top: 5.89rem;
   border-radius: 0 15px 15px 0;
-  z-index: 10;
+  background-color: #1a1919;
+  z-index: 1000;
 }
 li {
   padding: 1rem 1.5rem;
+  border-bottom: 1px solid black;
   font-size: 1.5rem;
   color: White;
   text-align: center;
-  border-bottom: 1px solid black;
+  list-style-type: none;
+  cursor: pointer;
+}
+li:hover {
+  background-color: #242222;
+  text-shadow: 0px 0px 4px #ffffff;
 }
 
 a {
   color: white;
   text-decoration: none;
+}
+@media (min-width: 500px) {
+  .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 33rem;
+    height: 65.5rem;
+    z-index: 2;
+  }
+  nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 </style>

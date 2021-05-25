@@ -1,12 +1,13 @@
 <template>
-  <article class="showBox">
+  <article class="sliderBox">
     <img
       class="showImg"
       v-if="active.poster_path"
       :src="imgSrc"
-      alt="posterImg"
+      :alt="active.title + 'screenshot'"
     />
-    <img v-else class="showImg" alt="posterImg" :src="posterSrc" />
+    <img v-else class="showImg" alt="showImg placeholder" :src="posterSrc" />
+
     <div class="posterAndTextBox">
       <img
         v-if="active.backdrop_path"
@@ -17,8 +18,8 @@
       <img
         v-else
         class="showPoster"
-        :alt="active.title + 'poster placeholder'"
         :src="posterSrc"
+        :alt="active.title + 'poster placeholder'"
       />
       <div class="text">
         <h3>{{ active.title || active.name }}</h3>
@@ -29,9 +30,11 @@
   </article>
 </template>
 
-<script >
+<script>
 export default {
-  props: ["active"],
+  components: {},
+  props: ["active", "actor"],
+
   computed: {
     posterSrc() {
       if (!this.active.poster_path) {
@@ -47,12 +50,7 @@ export default {
         return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
       }
     },
-    placeholder() {
-      return require("../../../../public/assets/img/actorPlaceHolderImg.png");
-    },
-    actorPicture() {
-      return "https://image.tmdb.org/t/p/w500" + this.active.profile_path;
-    },
+
     overviewShort() {
       return this.cutOverview();
     },
@@ -90,8 +88,8 @@ export default {
 };
 </script>
 <style scoped>
-.showBox {
-  margin: 1rem auto;
+.sliderBox {
+  margin: 0 auto;
   width: 100%;
   background-color: black;
   border-radius: 10px;
@@ -99,7 +97,7 @@ export default {
 }
 .showImg {
   width: 100%;
-  height: 30rem;
+  height: 27rem;
   object-fit: cover;
 }
 .posterAndTextBox {
@@ -136,4 +134,3 @@ button {
   background-color: var(--main-color);
 }
 </style>
-

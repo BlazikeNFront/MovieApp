@@ -172,11 +172,9 @@ export default {
 button {
   padding: 2rem;
 }
-
 .data {
   overflow: hidden;
 }
-
 .loader {
   display: flex;
   flex-direction: column;
@@ -202,16 +200,16 @@ h3 {
 }
 form {
   margin: 0 auto;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
   font-size: 2rem;
 }
 input {
+  padding: 0.5rem 0rem;
   border: 1px solid black;
   border-radius: 5px;
-  padding: 0.5rem 0rem;
   font-size: 2rem;
   text-align: center;
 }
@@ -220,24 +218,23 @@ form p {
 }
 form button {
   margin-top: 2rem;
-  font-family: inherit;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  color: White;
   padding: 1rem 2rem;
   background-color: black;
   border-radius: 15px;
+  font-family: inherit;
+  border: none;
+  font-size: 1rem;
+  color: White;
 }
 
 .ratedShows {
+  width: 100%;
+  padding: 3rem 0.5rem;
+  display: flex;
+  scroll-behavior: smooth;
+  overflow-x: SCROLL;
   text-align: center;
   transition: all 1s;
-  padding: 3rem 0.5rem;
-  scroll-behavior: smooth;
-  display: flex;
-  width: 100%;
-  overflow-x: SCROLL;
 }
 
 .infoBox {

@@ -1,9 +1,7 @@
 <template>
   <div v-if="active.gender !== '0'">
-    <div class="box">
-      <show-box v-if="!actor" :active="active"></show-box>
-      <person-box v-else :personInfo="active"></person-box>
-    </div>
+    <show-box v-if="!actor" :active="active"></show-box>
+    <person-box v-else :personInfo="active"></person-box>
   </div>
 </template>
 
@@ -78,85 +76,10 @@ export default {
 <style scoped>
 .box {
   margin: 1rem auto;
-  width: 100%;
-  height: 30rem;
+  width: 95%;
+  border-radius: 10px;
   background-color: black;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
-}
-.posterAndTextBox {
-  position: relative;
-  height: 40%;
-
-  margin-left: 1rem;
-  display: flex;
-  align-items: center;
-}
-.posterAndTextBox--actor {
-  position: initial;
-  justify-content: space-around;
-  height: 95%;
-}
-
-img {
-  width: 10rem;
-  transform: translate(0rem, -2.5rem);
-}
-.actorImg {
-  position: initial;
-  align-items: center;
-  transform: none;
-  width: 17rem;
-  border-radius: 8px;
-}
-
-.text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-button {
-  background: none;
-  border: none;
-  color: white;
-  font-family: inherit;
-}
-ul {
-  list-style-type: none;
-}
-li {
-  margin: 1rem 0.5rem;
-}
-
-.img {
-  width: 100%;
-  height: 60%;
-  background-size: cover;
-}
-h3 {
-  color: white;
-  font-size: 2rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-h4 {
-  margin-top: 1rem;
-}
-.posterPlaceholder {
-  transform: translate(0rem, 0.5rem);
-}
-.placeholder {
-  background-image: url(/img/movieImgPlaceholder.9b3f9c24.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-p {
-  display: block;
   overflow: hidden;
-  margin: 0.5rem;
-  max-height: 6rem;
 }
 </style>

@@ -1,17 +1,14 @@
 <template>
   <body>
-    <div class="phoneContainer">
-      <div class="phoneImg"></div>
-      <div class="overlayForDesktop">
+    <div class="phoneOverlayForDesktop">
+      <div class="app">
         <the-header></the-header>
-        <main @click="closeSearchOptionInHeader">
-          <div class="mainContainer">
-            <router-view v-slot="slotProps"
-              ><transition name="fade" mode="out-in">
-                <component :is="slotProps.Component"></component>
-              </transition>
-            </router-view>
-          </div>
+        <main class="main" @click="closeSearchOptionInHeader">
+          <router-view v-slot="slotProps"
+            ><transition name="fade" mode="out-in">
+              <component :is="slotProps.Component"></component>
+            </transition>
+          </router-view>
         </main>
       </div>
     </div>
@@ -20,7 +17,7 @@
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
-/**/
+
 export default {
   components: {
     TheHeader,
@@ -45,67 +42,75 @@ export default {
 *:after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-  box-sizing: border-box;
   font-size: 62.5%;
   font-family: "Montserrat", sans-serif;
-
   color: white;
 }
-.phoneImg {
-  display: none;
+h1 {
+  font-size: 5rem;
+}
+h2 {
+  font-size: 4rem;
+  font-weight: 400;
+}
+h3 {
+  font-size: 3rem;
+}
+h4 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
 }
 
-.overlayForDesktop {
+.app {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.main {
   margin: 0 auto;
-  max-width: 503px;
+  padding-top: 7rem; /* AVOID STACKING WITH HEADER */
+  width: 100%;
+  min-height: 100vh;
   background-color: var(--main-color);
-}
-.phoneContainer {
-  display: initial;
-}
-
-.mainContainer {
-  width: 95%;
-  max-width: 513px;
-
-  height: 840px;
-  background-color: var(--main-color);
-  margin: 0 auto;
-  border: 1px solid black;
   overflow: hidden;
 }
 
-@media (min-width: 600px) {
-  .phoneContainer {
-    display: block;
+@media (min-width: 500px) {
+  .phoneOverlayForDesktop {
     position: relative;
-    width: 100rem;
-    transform: scale(0.8);
     margin: 0 auto;
+    margin-top: 5rem;
+    width: 90rem;
+    height: 75rem;
+    background-image: url("../public/assets/img/phoneOverlay.png");
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
-  .phoneImg {
-    display: block;
+  .app {
     position: absolute;
-    z-index: -1;
-    top: -9rem;
-    width: 83rem;
-    height: 108rem;
-    left: -3rem;
-    background-image: url(/img/phoneOverlay.6cbf4aaa.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    transform: translate(14%);
-    background-color: var(--main-color);
-  }
-  .overlayForDesktop {
-    border-radius: 15px;
-  }
-  .mainContainer {
+    top: 4rem;
+    left: 11rem;
+    width: 35rem;
+    height: 65.5rem;
+    border-radius: 25px;
     overflow-y: scroll;
+  }
+
+  .main {
+    padding-top: 7rem;
+    min-height: 100%;
   }
 }
 

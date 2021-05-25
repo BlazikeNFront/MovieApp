@@ -1,26 +1,31 @@
 <template>
-  <header>
+  <header class="header">
     <div class="searchBar" v-if="searchBar">
       <button class="closeSearchButton" @click="toggleSearchOption"></button>
-      <form @submit.prevent="handleSearch">
-        <input type="text" placeholder="...search" v-model.trim="searchInput" />
+      <form class="form" @submit.prevent="handleSearch">
+        <input
+          class="input"
+          type="text"
+          placeholder="...search"
+          v-model.trim="searchInput"
+        />
         <button class="button formButton">Search</button>
       </form>
     </div>
     <div class="headerBox" v-if="!searchBar">
+      <nav-bar v-if="navBar" @close-nav="toggleNavBar"></nav-bar>
       <button class="toggleMenuButton" @click="toggleNavBar"></button>
-      <router-link to="/"><logo></logo></router-link>
+      <router-link class="routerLink" to="/"><logo></logo></router-link>
     </div>
     <div class="headerBox" v-if="!searchBar">
       <button class="searchButton" @click="toggleSearchOption"></button>
       <div v-if="!isAuth">
-        <router-link to="/login">
+        <router-link class="routerLink" to="/login">
           <button class="button signInButton">Login</button></router-link
         >
       </div>
     </div>
   </header>
-  <nav-bar v-if="navBar" @close-nav="toggleNavBar"></nav-bar>
 </template>
 <script>
 import Logo from "../UI/Logo.vue";
@@ -60,10 +65,17 @@ export default {
     },
 
     handleSearch() {
-      this.$store.dispatch("HeaderLayout/updateSearchData", {
-        url: `https://api.themoviedb.org/3/search/multi?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&query=${this.searchInput}&page=1`,
-      });
-      this.$router.push("/searchResult");
+      const routerProps = {
+        name: "search-result",
+        params: { userQuery: this.searchInput },
+        query: { page: "1" },
+      };
+
+      this.$router.push(
+        `/searchResult/${routerProps.params.userQuery}?page=${routerProps.query.page}`,
+        routerProps
+      );
+
       this.searchInput = "";
     },
   },
@@ -72,14 +84,18 @@ export default {
 
 <style scoped>
 header {
-  padding: 1.5rem 1.5rem;
+  position: fixed;
   margin: 0 auto;
-  max-width: 500px;
+  padding: 1.5rem 1.5rem;
+  width: 100%;
+  max-width: 50rem;
+  border-bottom: 2px solid var(--main-color);
+  border-radius: 0 0 10px 10px;
   background-color: #292e2b;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 0 0 10px 10px;
+  z-index: 1000;
 }
 input {
   height: 3rem;
@@ -90,43 +106,44 @@ input {
   font-size: 2rem;
   text-align: center;
 }
-::placeholder {
+
+input::placeholder {
   color: #a8adaa;
 }
 
 form {
   display: flex;
-  width: 80%;
   justify-content: space-between;
 }
+
 .headerBox {
   display: flex;
   align-items: center;
 }
+
 .searchBar {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 }
-.button {
-  font-family: inherit;
-  border-radius: 20px;
-  background-color: none;
-  border: none;
+
+button {
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+  font-family: inherit;
 }
 
 .formButton {
+  padding: 0.6rem;
   font-family: inherit;
   background: black;
-  padding: 0.6rem;
   color: white;
 }
 
-a {
+.routerLink {
   text-decoration: none;
 }
+
 .signInButton {
   background-color: #292e2b;
   color: white;
@@ -135,33 +152,45 @@ a {
 }
 .searchButton {
   margin-right: 1rem;
-  background-color: #292e2b;
-  background-image: url("../../../public/assets/icons/searchIcon.png");
+  width: 3rem;
+  height: 3rem;
   box-shadow: none;
   border: none;
+  background-color: #292e2b;
+  background-image: url("../../../public/assets/icons/searchIcon.png");
   background-size: cover;
-  height: 3rem;
-  width: 3rem;
 }
 .closeSearchButton {
   margin-right: 2rem;
-  background-image: url("../../../public/assets/icons/closeButton.svg");
-  background-color: #292e2b;
+  width: 2rem;
+  height: 2rem;
   box-shadow: none;
   border: none;
   background-size: cover;
-  height: 2rem;
-  width: 2rem;
+  background-image: url("../../../public/assets/icons/closeButton.svg");
+  background-color: #292e2b;
 }
 
 .toggleMenuButton {
   margin-right: 2rem;
-  background-color: #292e2b;
-  background-image: url("../../../public/assets//icons/menu.svg");
+  width: 2.5rem;
+  height: 2.5rem;
   box-shadow: none;
   border: none;
+  background-color: #292e2b;
+  background-image: url("../../../public/assets//icons/menu.svg");
   background-size: cover;
-  height: 2.5rem;
-  width: 2.5rem;
+}
+@media (min-width: 500px) {
+  header {
+    position: absolute;
+    z-index: 1000;
+  }
+  .searchBar {
+    width: 5rem;
+  }
+  .closeSearchButton {
+    position: absolute;
+  }
 }
 </style>

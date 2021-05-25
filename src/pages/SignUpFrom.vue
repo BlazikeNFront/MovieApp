@@ -1,7 +1,7 @@
 <template>
   <section>
     <base-card>
-      <h2>Register Form</h2>
+      <h2>Sign Up</h2>
       <form @submit.prevent="submitForm()">
         <div class="formElement">
           <label for="email">E-mail</label>
@@ -41,7 +41,7 @@
         </div>
         <p v-if="!!errorText" class="errorText">{{ errorText }}</p>
         <div class="buttonSpinnerContainer">
-          <base-button CSS="common userSignUpForm"> SIGN UP !</base-button>
+          <button>SIGN UP</button>
           <spinner class="spinner" v-if="isLoading"></spinner>
         </div>
       </form>
@@ -119,31 +119,31 @@ export default {
 </script>
 <style scoped>
 section {
-  margin-top: 5rem;
+  margin: 5rem auto;
+  width: 90%;
+  background-color: #292e2b;
+  border-radius: 20px;
 }
 
 h2 {
+  font-size: 3rem;
   text-align: center;
 }
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 0;
-  height: 59rem;
 }
-h2 {
-  font-size: 3rem;
-}
+
 label {
   font-size: 1.5rem;
 }
 
 .formElement {
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem 0;
 }
 
 input {
