@@ -4,23 +4,29 @@
     <div v-else class="boxcontainer tvShow">
       <img class="poster" :src="showposterSrc" />
       <div class="showData">
-        <div class="rate">
-          <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
-          <p class="voteCounted">
-            Vote counted: {{ showInformations.vote_count }}
-          </p>
+        <div class="rateBox">
+          <p class="baseInfo">TMDB rate:</p>
+          <span class="baseInfo__span">{{
+            showInformations.vote_average
+          }}</span>
+          <p class="baseInfo">Vote counted:</p>
+          <span class="baseInfo__span">{{ showInformations.vote_count }}</span>
         </div>
         <div class="lastEpisode">
-          <p>Last episode</p>
+          <p class="baseInfo">Last episode</p>
           <div class="lastEpisode__data">
-            <p>{{ showInformations.last_episode_to_air.name }}</p>
+            <span class="baseInfo__span">{{
+              showInformations.last_episode_to_air.name
+            }}</span>
             <p>{{ showInformations.last_episode_to_air.air_date }}</p>
           </div>
         </div>
       </div>
-      <div class="overView">
-        {{ showInformations.overview }}
+
+      <div class="overviewContainer">
+        <p class="overview">{{ showInformations.overview }}</p>
       </div>
+
       <rate-form type="tv" :Id="showInformations.id"></rate-form>
       <div class="additionalInfo">
         <h4>Seasons:</h4>
@@ -64,12 +70,12 @@ export default {
 </script>
 <style scoped>
 .boxcontainer {
+  padding: 3rem 0;
+  background-color: #292e2b;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  background-color: #292e2b;
-  padding: 3rem 0;
   text-align: center;
-  border-radius: var(--border-radius-lg);
 }
 
 .spinner {
@@ -81,7 +87,15 @@ img {
   width: 100%;
   border-radius: var(--border-radius-md);
 }
-
+.baseInfo {
+  font-size: 1.5rem;
+}
+.baseInfo__span {
+  font-size: 1.5rem;
+  color: var(--main-color);
+  font-weight: 400;
+  letter-spacing: 1px;
+}
 .showData {
   margin-top: 2rem;
   display: flex;
@@ -110,7 +124,7 @@ img {
   justify-content: space-around;
 }
 
-.overView {
+.overviewContainer {
   margin: 2rem 1rem;
 }
 .rate {
@@ -119,6 +133,10 @@ img {
   align-items: center;
 }
 
+.overview {
+  text-align: justify;
+  font-size: 1.5rem;
+}
 .additionalInfo {
   margin: 1rem;
   text-align: center;
@@ -129,5 +147,15 @@ h3 {
 }
 .form {
   margin: 0 auto;
+}
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: var(--main-color);
+  font-family: inherit;
+  font-size: 2rem;
+}
+.showCreators {
+  margin: 1rem;
 }
 </style>

@@ -1,19 +1,21 @@
 <template>
   <section>
+    <h2>{{ title }}</h2>
     <div class="sliderButtonsContainer">
       <arrow-button class="button" @click="slideLeft"></arrow-button>
-      <arrow-button class="button right" @click="slideRight"></arrow-button>
+      <arrow-button
+        class="button button--right"
+        @click="slideRight"
+      ></arrow-button>
     </div>
-    <h3>{{ title }}</h3>
-
     <ul>
       <li>
         <transition mode="out-in">
-          <show-card
+          <carousel-slide
             v-if="loadedData"
             :active="activeSlide"
             :actor="false"
-          ></show-card>
+          ></carousel-slide>
         </transition>
       </li>
     </ul>
@@ -23,12 +25,12 @@
 
 
 <script>
-import ShowCard from "../ShowCard/ShowCard.vue";
+import CarouselSlide from "./CarouselSlide.vue";
 import ArrowButton from "../Common/ArrowButton.vue";
 export default {
   props: ["slides", "title"],
   components: {
-    ShowCard,
+    CarouselSlide,
     ArrowButton,
   },
   data() {
@@ -44,7 +46,7 @@ export default {
 
   mounted() {
     this.createSlidesData();
-    //this.startSlideShow();
+    /*  this.startSlideShow(); */
   },
 
   methods: {
@@ -121,10 +123,17 @@ export default {
 
 
 <style scoped>
-h3 {
-  margin-top: 1rem;
-  font-size: 2rem;
-  color: black;
+section {
+  margin: 2rem 0;
+  padding: 2rem 0;
+  border-radius: 20px;
+  background-color: #292e2b;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+h2 {
+  color: var(--main-color);
   text-align: center;
 }
 ul {
@@ -134,22 +143,22 @@ button {
   width: 100%;
   height: 100%;
 }
-.right {
+.button--right {
   transform: translate(0, -0.9rem) rotate(180deg);
 }
 
 .sliderButtonsContainer {
   position: relative;
   top: 20rem;
-  width: 96%;
   margin: 0 auto;
+  width: 96%;
   display: flex;
   justify-content: space-between;
   z-index: 10;
 }
 .v-enter-from {
-  opacity: 0;
   transform: translate(10rem);
+  opacity: 0;
 }
 
 .v-enter-active {
@@ -157,8 +166,8 @@ button {
 }
 
 .v-enter-to {
-  opacity: 1;
   transform: translate(0rem);
+  opacity: 1;
 }
 .v-leave-from {
   opacity: 1;
@@ -167,7 +176,7 @@ button {
   transition: all 1s ease-out;
 }
 .v-leave-to {
-  opacity: 0;
   transform: translate(-10rem);
+  opacity: 0;
 }
 </style>

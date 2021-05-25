@@ -1,42 +1,52 @@
 <template>
-  <section>
+  <div>
     <spinner v-if="!showInformations" class="spinner"></spinner>
-    <div v-else class="boxcontainer movie">
-      <img class="poster" :src="showposterSrc" />
-      <h2>{{ showInformations.title }}</h2>
-      <div class="showData">
-        <div class="rate">
-          <p class="rate">TMDB rate: {{ showInformations.vote_average }}</p>
-          <p class="voteCounted">
-            Vote counted: {{ showInformations.vote_count }}
-          </p>
+    <section v-else>
+      <div class="boxcontainer movie">
+        <h2>{{ showInformations.title }}</h2>
+        <img class="poster" :src="showposterSrc" />
+
+        <div class="showData">
+          <div class="rateBox">
+            <p class="baseInfo">
+              TMDB rate:
+              <span class="baseInfo__span">{{
+                showInformations.vote_average
+              }}</span>
+            </p>
+            <p class="baseInfo">Votes counted:</p>
+            <span class="baseInfo__span">
+              {{ showInformations.vote_count }}</span
+            >
+          </div>
+          <div class="dateOfRealesed">
+            <p class="baseInfo baseInfo--userRate">Date of realeased:</p>
+            <span class="baseInfo__span">{{
+              showInformations.release_date
+            }}</span>
+          </div>
         </div>
-        <div class="dateOfRealesed">
-          <p>
-            Date of realeased:
-            {{ showInformations.release_date }}
-          </p>
+        <div class="overView">
+          {{ showInformations.overview }}
+        </div>
+        <div class="additionalInfo">
+          <p class="baseInfo">Your Rate:</p>
+          <rate-form type="movie" :Id="showInformations.id"></rate-form>
+          <div>
+            <h4>Genres:</h4>
+            <div class="genres__wrapper">
+              <span
+                class="genres__badge"
+                v-for="genre in showInformations.genres"
+                :key="genre['name']"
+                >{{ genre.name }}</span
+              >
+            </div>
+          </div>
         </div>
       </div>
-      <div class="overView">
-        {{ showInformations.overview }}
-      </div>
-      <div class="additionalInfo">
-        <p>Your Rate:</p>
-        <rate-form type="movie" :Id="showInformations.id"></rate-form>
-        <div class="genre">
-          <h4>Genres:</h4>
-          <p
-            class="genres"
-            v-for="genre in showInformations.genres"
-            :key="genre['name']"
-          >
-            {{ genre.name }}
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -55,15 +65,26 @@ export default {
       }
     },
   },
+  mounted() {
+    if (this.$store.getters["ShowDetails/showInformations"] === null) {
+      const movieID = this.$route.params.movieID;
+      const payload = {
+        typeOfShow: "movie",
+        id: movieID,
+      };
+      this.$store.dispatch("ShowDetails/updateShowInformations", payload);
+    }
+  },
 };
 </script>
 
 <style scoped>
 .boxcontainer {
+  padding: 3rem 0;
+  border-radius: 20px;
+  background-color: #292e2b;
   display: flex;
   flex-direction: column;
-  background-color: #292e2b;
-  padding: 3rem 0;
   text-align: center;
 }
 .spinner {
@@ -74,7 +95,11 @@ export default {
 img {
   width: 100%;
 }
-
+.dateOfRealesed {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
 .showData {
   margin-top: 2rem;
   display: flex;
@@ -90,7 +115,9 @@ img {
   display: flex;
   flex-direction: column;
 }
-
+.baseInfo--userRate {
+  font-size: 1.7rem;
+}
 .poster {
   width: 90%;
   margin: 0 auto;
@@ -104,19 +131,49 @@ img {
 }
 
 .overView {
-  margin: 2rem 1rem;
+  margin: 2rem;
+  font-size: 1.3rem;
+  text-align: justify;
 }
-.rate {
+.rateBox {
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.baseInfo {
+  font-size: 1.5rem;
+}
+.baseInfo__span {
+  color: var(--main-color);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
 
 .additionalInfo {
   margin: 1rem;
+  height: 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   text-align: center;
 }
-
+.genres__wrapper {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.genres__badge {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  background-color: black;
+  color: var(--main-color);
+  text-transform: uppercase;
+}
 h3 {
   color: black;
 }

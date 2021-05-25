@@ -8,7 +8,7 @@
         :actor="show.gender"
       ></show-card>
     </ul>
-    <h2 v-if="searchData.results.length === 0">
+    <h2 v-else-if="searchData.length === 0">
       Sorry not a single data found ... :(
     </h2>
   </section>
@@ -20,7 +20,11 @@ export default {
   components: {
     ShowCard,
   },
-
+  mounted() {
+    this.$store.dispatch("HeaderLayout/updateSearchData", {
+      url: `https://api.themoviedb.org/3/search/multi?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&query=${this.$route.params.userQuery}&page=${this.$route.query.page}`,
+    });
+  },
   data() {
     return {
       searchData: this.$store.getters["HeaderLayout/searchData"],
@@ -41,14 +45,8 @@ export default {
 </script>
 <style scoped>
 h2 {
-  display: block;
-  width: 90%;
-  font-size: 4rem;
   margin: 19rem auto;
+  width: 90%;
   text-align: center;
-}
-
-button {
-  padding: 1rem;
 }
 </style>

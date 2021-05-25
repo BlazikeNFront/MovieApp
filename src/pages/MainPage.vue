@@ -1,17 +1,15 @@
 <template>
   <main>
-    <div>
-      <standard-carousel
-        v-if="moviesLoaded"
-        :slides="trendingMovies.results"
-        title="Trending Movies"
-      ></standard-carousel>
-      <standard-carousel
-        v-if="tvShowsLoaded"
-        :slides="trendingTv.results"
-        title="Trending TvShow"
-      ></standard-carousel>
-    </div>
+    <standard-carousel
+      v-if="moviesLoaded"
+      :slides="trendingMovies.results"
+      title="Trending Movies"
+    ></standard-carousel>
+    <standard-carousel
+      v-if="tvShowsLoaded"
+      :slides="trendingTv.results"
+      title="Trending TvShow"
+    ></standard-carousel>
   </main>
 </template>
 <script>
@@ -49,5 +47,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>

@@ -2,52 +2,52 @@
   <form ref="form">
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(1)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(2)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(3)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(4)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(5)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(6)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(7)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(8)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(9)"
     />
     <font-awesome-icon
       :icon="['fas', 'star']"
-      class="expli"
+      class="star"
       @click="handleRate(10)"
     />
   </form>
@@ -139,26 +139,37 @@ export default {
 
 <style scoped>
 form {
-  display: flex;
-  width: 18rem;
-  background-color: black;
-  border-radius: 10px;
-
-  justify-content: center;
   margin: 0 auto;
+  width: 18rem;
+  border-radius: 10px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
 }
-.expli {
-  margin: 0.2rem;
+.star {
+  margin: 0.5rem 0rem;
   font-size: 1.4rem;
   color: grey;
   transition: all 0.2s ease;
-  margin: 0.5rem 0rem;
 }
 .checked {
   color: yellow;
 }
 p {
+  font-size: 1.3rem;
   text-align: center;
+}
+a {
+  font-size: 1.5rem;
+  color: var(--main-color);
+}
+@media (min-width: 500px) {
+  form {
+    width: 15rem;
+  }
+  .star {
+    font-size: 1.2rem;
+  }
 }
 </style>
 

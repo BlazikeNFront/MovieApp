@@ -2,17 +2,21 @@
   <section>
     <h3>Login</h3>
     <form @submit.prevent="submitForm()">
-      <label for="email">E-mail</label>
-      <input class="email" type="email" name="email" v-model="email" />
-      <label for="password">Password</label>
-      <input
-        class="password"
-        type="password"
-        name="password"
-        autocomplete="on"
-        v-model="password"
-      />
-      <button class="button login">Login</button>
+      <div class="formControl">
+        <label for="email">E-mail</label>
+        <input class="email" type="email" name="email" v-model="email" />
+      </div>
+      <div class="formControl">
+        <label for="password">Password</label>
+        <input
+          class="password"
+          type="password"
+          name="password"
+          autocomplete="on"
+          v-model="password"
+        />
+      </div>
+      <button class="button button--login">Login</button>
       <spinner class="spinner" v-if="isLoading"></spinner>
       <p v-if="!!error">{{ error }}</p>
     </form>
@@ -68,15 +72,19 @@ export default {
 
 <style scoped>
 section {
-  margin: 13rem 50%;
+  margin: 10rem auto;
+  padding: 3rem 0rem;
+  width: 90%;
+  border-radius: 20px;
+  background-color: #292e2b;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .signUpText {
+  margin-top: 11rem;
   width: 30rem;
   font-size: 2rem;
-  margin-top: 11rem;
 }
 
 a {
@@ -85,12 +93,15 @@ a {
 h3 {
   font-size: 3rem;
 }
-
+.formControl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 h4 {
   margin-top: 2rem;
-  text-align: center;
-  line-height: 2rem;
   width: 16rem;
+  text-align: center;
   line-height: 3rem;
 }
 
@@ -112,16 +123,13 @@ input {
   font-family: inherit;
 }
 
-button {
-  font-family: inherit;
+.button--login {
+  padding: 1rem 5rem;
   border-radius: 20px;
-  background-color: none;
-  border: none;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
-  width: 20rem;
+  background-color: var(--main-color);
   font-size: 2rem;
-  padding: 0.7rem 2rem;
 }
+
 .email {
   width: 24rem;
 }
@@ -136,7 +144,15 @@ p {
 .spinner {
   position: absolute;
   margin-left: 7rem;
-
   transform: scale(0.7);
+}
+a {
+  margin: 1rem auto;
+  padding: 0.5rem 0;
+  width: 25rem;
+  border-radius: 20px;
+  background-color: var(--main-color);
+  display: block;
+  color: black;
 }
 </style>

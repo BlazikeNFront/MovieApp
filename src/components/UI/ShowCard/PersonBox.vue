@@ -1,15 +1,14 @@
 <template>
-  <article class="posterAndTextBox posterAndTextBox--actor">
+  <article class="posterAndTextBox">
     <img
       v-if="personInfo.profile_path"
       class="actorImg"
       :src="actorPicture"
       :alt="personInfo.name + ' picture'"
     />
-
     <img
       v-else
-      class="actorImg"
+      class="posterPlaceholder"
       src="../../../../public/assets/img/actorPlaceHolderImg.png"
       :alt="personInfo.name + ' picture'"
     />
@@ -47,19 +46,32 @@ export default {
 };
 </script>
 <style scoped>
+.posterAndTextBox {
+  position: relative;
+  margin: 1rem 0.5rem;
+  padding: 1rem;
+  height: 25rem;
+  border-radius: 20px;
+  background-color: #292e2b;
+  display: flex;
+  align-items: center;
+}
 .actorImg {
-  position: initial;
+  width: 16rem;
+  border-radius: 8px;
   align-items: center;
   transform: none;
-  width: 17rem;
+}
+.posterPlaceholder {
+  width: 25rem;
+  height: 20rem;
   border-radius: 8px;
 }
-
 .text {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 
 button {
@@ -75,11 +87,6 @@ li {
   margin: 1rem 0.5rem;
 }
 
-.img {
-  width: 100%;
-  height: 60%;
-  background-size: cover;
-}
 h3 {
   color: white;
   font-size: 2rem;
@@ -89,14 +96,6 @@ h3 {
 
 h4 {
   margin-top: 1rem;
-}
-.posterPlaceholder {
-  transform: translate(0rem, 0.5rem);
-}
-.placeholder {
-  background-image: url(/img/movieImgPlaceholder.9b3f9c24.png);
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 p {
