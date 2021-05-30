@@ -44,7 +44,7 @@ export default {
       this.error = null;
       this.isLoading = true;
       try {
-        await this.$store.dispatch("signIn", {
+        await this.$store.dispatch("UserAuth/signIn", {
           email: this.email,
           password: this.password,
           returnSecureToken: true,

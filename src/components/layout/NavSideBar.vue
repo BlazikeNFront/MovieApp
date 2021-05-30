@@ -52,12 +52,12 @@ export default {
   emits: ["close-nav"],
   computed: {
     isAuth() {
-      return this.$store.getters["isAuth"];
+      return this.$store.getters["UserAuth/isAuth"];
     },
   },
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("UserAuth/logout");
       this.$router.push("/");
     },
     handleRouteChange() {
@@ -68,25 +68,25 @@ export default {
       }
     },
     handleMoviesRequest() {
-      this.$store.dispatch("HeaderLayout/updateSearchData", {
-        url: `https://api.themoviedb.org/3/movie/top_rated?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1`,
-        movies: true,
+      this.$router.push({
+        name: "nav-search-result",
+        params: { typeOfSearch: "movies" },
+        query: { page: 1 },
       });
-      this.$router.push("/searchResult");
     },
     handleTvShowRequest() {
-      this.$store.dispatch("HeaderLayout/updateSearchData", {
-        url: `https://api.themoviedb.org/3/tv/on_the_air?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1
-`,
+      this.$router.push({
+        name: "nav-search-result",
+        params: { typeOfSearch: "tvShows" },
+        query: { page: 1 },
       });
-      this.$router.push("/searchResult");
     },
     handleCelebsRequest() {
-      this.$store.dispatch("HeaderLayout/updateSearchData", {
-        url:
-          "https://api.themoviedb.org/3/person/popular?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=1",
+      this.$router.push({
+        name: "nav-search-result",
+        params: { typeOfSearch: "celebs" },
+        query: { page: 1 },
       });
-      this.$router.push("/searchResult");
     },
   },
 };

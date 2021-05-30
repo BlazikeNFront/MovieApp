@@ -73,15 +73,15 @@ export default {
       actors: null,
 
       userNameInput: { value: "", isValid: true },
-      userID: this.$store.getters["userId"],
+      userID: this.$store.getters["UserAuth/userId"],
     };
   },
   computed: {
     email() {
-      return this.$store.getters["userEmail"];
+      return this.$store.getters["UserAuth/userEmail"];
     },
     userName() {
-      return this.$store.getters["userName"];
+      return this.$store.getters["UserAuth/userName"];
     },
   },
 
@@ -110,7 +110,7 @@ export default {
       }
 
       try {
-        this.$store.dispatch("setUserName", {
+        this.$store.dispatch("UserAuth/setUserName", {
           userID: this.userID,
           userName: this.userNameInput.value,
         });
@@ -122,7 +122,7 @@ export default {
     async moviesRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/movie.json`
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/movie.json`
         );
         const data = await response.json();
         if (data === null) {
@@ -137,7 +137,7 @@ export default {
     async tvShowRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/tv.json`
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/tv.json`
         );
         const data = await response.json();
         if (data === null) {
@@ -152,7 +152,7 @@ export default {
     async actorsRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/person.json`
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/person.json`
         );
         const data = await response.json();
 
