@@ -27,6 +27,9 @@ export default {
       this.$store.dispatch("HeaderLayout/closeHeaderSearch");
     },
   },
+  mounted() {
+    this.$store.dispatch("UserAuth/checkForAuthCookies");
+  },
 };
 </script>
 

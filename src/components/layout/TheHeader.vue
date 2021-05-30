@@ -51,7 +51,7 @@ export default {
       return this.$store.getters["HeaderLayout/navBarState"];
     },
     isAuth() {
-      return this.$store.getters["isAuth"];
+      return this.$store.getters["UserAuth/isAuth"];
     },
   },
 
@@ -66,17 +66,15 @@ export default {
 
     handleSearch() {
       const routerProps = {
-        name: "search-result",
+        name: "user-search-result",
         params: { userQuery: this.searchInput },
         query: { page: "1" },
       };
 
       this.$router.push(
-        `/searchResult/${routerProps.params.userQuery}?page=${routerProps.query.page}`,
+        `/customSearch/${routerProps.params.userQuery}?page=${routerProps.query.page}`,
         routerProps
       );
-
-      this.searchInput = "";
     },
   },
 };

@@ -104,7 +104,7 @@ export default {
       }
 
       try {
-        await this.$store.dispatch("signUp", {
+        await this.$store.dispatch("UserAuth/signUp", {
           email: this.email.value,
           password: this.passwords.value1,
         });

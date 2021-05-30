@@ -21,7 +21,9 @@
         :src="posterSrc"
       />
       <div class="text">
-        <h3>{{ active.title || active.name }}</h3>
+        <h3 :class="{ h3SmallerFont: isTitleLong }">
+          {{ active.title || active.name }}
+        </h3>
         <p>{{ overviewShort || "There is no overview for this show..." }}</p>
         <button @click="updateDetailShowComponent">More Details...</button>
       </div>
@@ -41,7 +43,7 @@ export default {
       }
     },
     imgSrc() {
-      if (!this.active.poster_path) {
+      if (!this.active.backdrop_path) {
         return require("../../../../public/assets/img/movieImgPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
@@ -55,6 +57,14 @@ export default {
     },
     overviewShort() {
       return this.cutOverview();
+    },
+    isTitleLong() {
+      const titleOfTheShow = this.active.title || this.active.name;
+      if (titleOfTheShow.length > 20) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 
@@ -96,11 +106,14 @@ export default {
   background-color: black;
   border-radius: 10px;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .showImg {
   width: 100%;
   height: 30rem;
-  object-fit: cover;
+  object-fit: contain;
 }
 .posterAndTextBox {
   width: 100%;
@@ -126,9 +139,13 @@ export default {
 h3 {
   text-align: center;
 }
+.h3SmallerFont {
+  font-size: 2rem;
+}
 p {
   text-align: justify;
 }
+
 button {
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;

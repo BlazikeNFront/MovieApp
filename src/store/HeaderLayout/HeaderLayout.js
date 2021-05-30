@@ -6,6 +6,7 @@ const headerLayoutStore = {
       headerSearchState: false,
       navBarState: false,
       searchData: [],
+      numberOfPages: null,
     };
   },
 
@@ -23,6 +24,12 @@ const headerLayoutStore = {
     },
     updateSearchData(state, payload) {
       state.searchData = payload;
+    },
+    setNumberOfPages(state, payload) {
+      state.numberOfPages = payload;
+    },
+    clearSearchData(state) {
+      state.searchData = [];
     },
   },
 
@@ -51,11 +58,16 @@ const headerLayoutStore = {
           data.results.splice(0, 3);
         } // this condition avoid anime shows that comes from database as first places... KEKW
 
-        context.commit("updateSearchData", data);
+        context.commit("updateSearchData", data.results);
+        context.commit("setNumberOfPages", data.total_pages);
+
         context.state.headerSearchState = false;
       } catch (err) {
         console.log(err);
       }
+    },
+    clearSearchData(context) {
+      context.commit("clearSearchData");
     },
   },
 
@@ -68,6 +80,9 @@ const headerLayoutStore = {
     },
     searchData(state) {
       return state.searchData;
+    },
+    getNumberOfPages(state) {
+      return state.numberOfPages;
     },
   },
 };

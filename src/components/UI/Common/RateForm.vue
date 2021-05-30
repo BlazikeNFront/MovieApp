@@ -88,7 +88,7 @@ export default {
 
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/${this.type}/${this.Id}.json`
+          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`
         );
 
         const data = await response.json();
@@ -117,7 +117,7 @@ export default {
       }
 
       const response = await fetch(
-        `https://movieapp-9f058-default-rtdb.firebaseio.com/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
+        `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
         {
           method: "PUT",
           body: val,
