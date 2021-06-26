@@ -1,4 +1,4 @@
-const headerLayoutStore = {
+export default {
   namespaced: true,
 
   state() {
@@ -63,7 +63,14 @@ const headerLayoutStore = {
 
         context.state.headerSearchState = false;
       } catch (err) {
-        console.log(err);
+        context.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Error occured while searching database :(. Try again later",
+          { root: true }
+        );
+        context.dispatch("ErrorModal/toggleErrorModal", "", {
+          root: true,
+        });
       }
     },
     clearSearchData(context) {
@@ -86,5 +93,3 @@ const headerLayoutStore = {
     },
   },
 };
-
-export default headerLayoutStore;

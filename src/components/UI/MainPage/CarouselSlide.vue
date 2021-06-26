@@ -1,10 +1,11 @@
 <template>
-  <article class="sliderBox">
+  <div class="sliderBox">
     <img
       class="showImg"
       v-if="active.poster_path"
       :src="imgSrc"
       :alt="active.title + 'screenshot'"
+      :title="active.title"
     />
     <img v-else class="showImg" alt="showImg placeholder" :src="posterSrc" />
 
@@ -14,20 +15,22 @@
         class="showPoster"
         :src="posterSrc"
         :alt="active.title + 'poster'"
+        :title="active.title"
       />
       <img
         v-else
         class="showPoster"
         :src="posterSrc"
         :alt="active.title + 'poster placeholder'"
+        :title="active.title"
       />
-      <div class="text">
+      <article class="text">
         <h3>{{ active.title || active.name }}</h3>
         <p>{{ overviewShort || "There is no overview for this show..." }}</p>
         <button @click="updateDetailShowComponent">More Details...</button>
-      </div>
+      </article>
     </div>
-  </article>
+  </div>
 </template>
 
 <script>
@@ -114,7 +117,7 @@ export default {
 }
 .text {
   margin-left: 2rem;
-  width: 25rem;
+  width: 65%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -125,6 +128,7 @@ h3 {
   text-align: center;
 }
 p {
+  font-size: 1.2rem;
   text-align: justify;
 }
 button {

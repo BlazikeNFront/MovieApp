@@ -164,7 +164,12 @@ p {
 .invalid {
   border-color: red;
 }
-
+button {
+  padding: 1rem 5rem;
+  border-radius: 20px;
+  background-color: var(--main-color);
+  font-size: 2rem;
+}
 .buttonSpinnerContainer {
   float: left;
 }

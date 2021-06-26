@@ -1,4 +1,5 @@
-const showDetails = {
+import { movieDBAPIKey } from "../../../privates.js";
+export default {
   namespaced: true,
   state() {
     return {
@@ -23,7 +24,7 @@ const showDetails = {
         return;
       }
       const { typeOfShow, id } = payload;
-      const url = `https://api.themoviedb.org/3/${typeOfShow}/${id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+      const url = `https://api.themoviedb.org/3/${typeOfShow}/${id}?api_key=${movieDBAPIKey}`;
       try {
         const data = await fetch(url);
         if (!data.ok) {
@@ -34,7 +35,14 @@ const showDetails = {
 
         context.commit("updateShowInformations", await dataJson);
       } catch (e) {
-        console.log(e);
+        context.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Error occured while searching database :(. Try again later",
+          { root: true }
+        );
+        context.dispatch("ErrorModal/toggleErrorModal", "", {
+          root: true,
+        });
       }
     },
   },
@@ -44,4 +52,3 @@ const showDetails = {
     },
   },
 };
-export default showDetails;

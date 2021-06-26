@@ -19,15 +19,14 @@
         @pageChange="changePage($event)"
       ></pagination-buttons>
     </div>
-    <h2 v-else-if="searchData.length === 0">
-      Sorry not a single data found ... :(
-    </h2>
+    <h2 v-else>Sorry not a single data found ... :(</h2>
   </div>
 </template>
 <script>
 import ShowCard from "../components/UI/ShowCard/ShowCard.vue";
 import PaginationButtons from "../components/UI/Common/PaginationButtons.vue";
 import Spinner from "../components/UI/Common/Spinner.vue";
+import { movieDBAPIKey } from "../../privates.js";
 export default {
   components: {
     ShowCard,
@@ -60,13 +59,12 @@ export default {
   },
   methods: {
     fetchDataBasedOnTypeOfShow(page = this.$route.query.page) {
-      console.log(page);
       this.$store.dispatch("HeaderLayout/clearSearchData");
 
       switch (this.currentTypeOfSearch) {
         case "movies":
           this.$store.dispatch("HeaderLayout/updateSearchData", {
-            url: `https://api.themoviedb.org/3/movie/top_rated?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=${page}`,
+            url: `https://api.themoviedb.org/3/movie/top_rated?api_key=${movieDBAPIKey}&language=en-US&page=${page}`,
             movies: true,
           });
 
@@ -74,7 +72,7 @@ export default {
 
         case "tvShows":
           this.$store.dispatch("HeaderLayout/updateSearchData", {
-            url: `https://api.themoviedb.org/3/tv/on_the_air?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=${page}
+            url: `https://api.themoviedb.org/3/tv/on_the_air?api_key=${movieDBAPIKey}&language=en-US&page=${page}
 `,
           });
 
@@ -82,7 +80,7 @@ export default {
 
         case "celebs":
           this.$store.dispatch("HeaderLayout/updateSearchData", {
-            url: ` https://api.themoviedb.org/3/person/popular?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&page=${page}`,
+            url: ` https://api.themoviedb.org/3/person/popular?api_key=${movieDBAPIKey}&language=en-US&page=${page}`,
           });
 
           break;
@@ -94,7 +92,7 @@ export default {
         params: { typeOfSearch: this.currentTypeOfSearch },
         query: { page },
       });
-      console.log(page);
+
       this.fetchDataBasedOnTypeOfShow(page);
     },
   },

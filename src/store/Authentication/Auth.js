@@ -1,3 +1,5 @@
+import { authAPIKey } from "../../../privates.js";
+import { fbURL } from "../../../privates.js";
 export default {
   namespaced: true,
   state() {
@@ -16,7 +18,6 @@ export default {
       state.userId = payload.userId;
       state.tokenExpiration = payload.tokenExpiration;
       state.email = payload.userEmail;
-      console.log(state);
     },
     logout(state) {
       state.token = null;
@@ -42,7 +43,7 @@ export default {
     async signUp(context, payload) {
       try {
         const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDS_XL-QBuPajQnPI7padxk-fwVMb9U14A",
+          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${authAPIKey}`,
           {
             method: "POST",
             body: JSON.stringify({
@@ -71,7 +72,7 @@ export default {
     async signIn(context, payload) {
       try {
         const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDS_XL-QBuPajQnPI7padxk-fwVMb9U14A",
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${authAPIKey}`,
           {
             method: "POST",
             body: JSON.stringify({
@@ -104,7 +105,7 @@ export default {
         document.cookie = `user-expiresIn=${responseData.expiresIn}; Secure`;
 
         const userNameData = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${context.state.userId}/userName.json`
+          `${fbURL}/Users/${context.state.userId}/userName.json`
         );
 
         const responseUserNameData = await userNameData.json();
@@ -145,25 +146,35 @@ export default {
       }
     },
     async setUserName(context, payload) {
-      const userName = JSON.stringify(payload.userName);
-      const response = await fetch(
-        `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${payload.userID}/userName.json`,
-        {
-          method: "PUT",
-          body: userName,
+      try {
+        const userName = JSON.stringify(payload.userName);
+        const response = await fetch(
+          `${fbURL}/Users/${payload.userID}/userName.json`,
+          {
+            method: "PUT",
+            body: userName,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("ERROR IN RESPONSE DATA IN setUserName action");
         }
-      );
-
-      if (!response.ok) {
-        console.log("ERROR IN RESPONSE DATA IN setUserName action");
+        context.commit("setUserName", payload.userName);
+      } catch (err) {
+        context.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Couldn't set username :(. Try again later",
+          { root: true }
+        );
+        context.dispatch("ErrorModal/toggleErrorModal", "", {
+          root: true,
+        });
       }
-
-      context.commit("setUserName", payload.userName);
     },
+  },
 
-    logout(context) {
-      context.commit("logout");
-    },
+  logout(context) {
+    context.commit("logout");
   },
 
   getters: {

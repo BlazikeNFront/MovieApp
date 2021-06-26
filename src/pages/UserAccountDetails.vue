@@ -52,7 +52,7 @@
 import MovieBoxSmall from "../components/UI/UserAccount/MovieBoxSmall.vue";
 import TvshowBoxSmall from "../components/UI/UserAccount/TvshowBoxSmall.vue";
 import PersonBoxSmall from "../components/UI/UserAccount/PersonBoxSmall.vue";
-
+import { fbURL } from "../../privates.js";
 export default {
   components: {
     MovieBoxSmall,
@@ -122,7 +122,7 @@ export default {
     async moviesRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/movie.json`
+          `${fbURL}/Users/${this.userID}/ratedShows/movie.json`
         );
         const data = await response.json();
         if (data === null) {
@@ -131,13 +131,17 @@ export default {
           this.moviesRated = data;
         }
       } catch (err) {
-        console.log(err);
+        this.$store.dispatch("ErrorModa/toggleErrorModal");
+        this.$store.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Couldn't get data about rated movies :( Try again Later"
+        );
       }
     },
     async tvShowRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/tv.json`
+          `${fbURL}/Users/${this.userID}/ratedShows/tv.json`
         );
         const data = await response.json();
         if (data === null) {
@@ -146,13 +150,17 @@ export default {
           this.tvShows = data;
         }
       } catch (err) {
-        console.log(err);
+        this.$store.dispatch("ErrorModa/toggleErrorModal");
+        this.$store.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Couldn't get data about rated shows :( Try again Later"
+        );
       }
     },
     async actorsRatedData() {
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/person.json`
+          `${fbURL}/Users/${this.userID}/ratedShows/person.json`
         );
         const data = await response.json();
 
@@ -162,7 +170,11 @@ export default {
           this.actors = data;
         }
       } catch (err) {
-        console.log(err);
+        this.$store.dispatch("ErrorModa/toggleErrorModal");
+        this.$store.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Couldn't get data about rated actors:( Try again Later"
+        );
       }
     },
   },
@@ -172,9 +184,7 @@ export default {
 button {
   padding: 2rem;
 }
-.data {
-  overflow: hidden;
-}
+
 .loader {
   display: flex;
   flex-direction: column;
@@ -182,15 +192,15 @@ button {
   align-items: center;
   margin-top: 50%;
 }
-
+.data {
+  overflow: hidden;
+}
 h3 {
   text-align: center;
-}
-
-.loader h3 {
   font-size: 3rem;
   color: #292e2b;
 }
+
 .dataLoadingBox {
   margin: 0 auto;
   display: flex;

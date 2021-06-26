@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { movieDBAPIKey } from "../../../../privates.js";
 export default {
   props: ["id", "type"],
   mounted() {
@@ -51,8 +52,7 @@ export default {
     },
 
     async fetchData() {
-      console.log(this.type);
-      const url = `https://api.themoviedb.org/3/${this.type}/${this.id}?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US`;
+      const url = `https://api.themoviedb.org/3/${this.type}/${this.id}?api_key=${movieDBAPIKey}&language=en-US`;
 
       try {
         const response = await fetch(url);
@@ -86,7 +86,11 @@ export default {
             "https://image.tmdb.org/t/p/w500" + responseData.profile_path;
         }
       } catch (err) {
-        console.log(err);
+        this.$store.dispatch("ErrorModa/toggleErrorModal");
+        this.$store.dispatch(
+          "ErrorModal/setErrorMessage",
+          "Couldn't get data about show :( Try again Later"
+        );
       }
     },
   },

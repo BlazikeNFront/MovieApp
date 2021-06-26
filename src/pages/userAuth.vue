@@ -129,7 +129,11 @@ input {
   background-color: var(--main-color);
   font-size: 2rem;
 }
-
+.spinner {
+  position: absolute;
+  margin-left: 7rem;
+  transform: scale(0.7);
+}
 .email {
   width: 24rem;
 }
@@ -141,11 +145,6 @@ p {
   margin-top: 1rem;
 }
 
-.spinner {
-  position: absolute;
-  margin-left: 7rem;
-  transform: scale(0.7);
-}
 a {
   margin: 1rem auto;
   padding: 0.5rem 0;
