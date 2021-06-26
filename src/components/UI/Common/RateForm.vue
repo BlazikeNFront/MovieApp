@@ -57,6 +57,7 @@
   </p>
 </template>
 <script>
+import { fbURL } from "../../../../privates.js";
 export default {
   props: ["Id", "type"],
 
@@ -88,11 +89,11 @@ export default {
 
       try {
         const response = await fetch(
-          `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`
+          `${fbURL}/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`
         );
 
         const data = await response.json();
-        console.log(data, this.type, this.Id);
+
         if (data) {
           this.rateForm(data);
         }
@@ -117,7 +118,7 @@ export default {
       }
 
       const response = await fetch(
-        `https://movieapp-9f058-default-rtdb.firebaseio.com/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
+        `${fbURL}/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
         {
           method: "PUT",
           body: val,

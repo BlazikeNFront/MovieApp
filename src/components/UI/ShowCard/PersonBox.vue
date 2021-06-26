@@ -1,5 +1,5 @@
 <template>
-  <article class="posterAndTextBox">
+  <section class="posterAndTextBox">
     <img
       v-if="personInfo.profile_path"
       class="actorImg"
@@ -23,7 +23,7 @@
       <p>Rate actor:</p>
       <rate-form type="person" :Id="personInfo.id"></rate-form>
     </div>
-  </article>
+  </section>
 </template>
 
 <script >

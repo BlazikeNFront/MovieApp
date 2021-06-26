@@ -28,6 +28,7 @@
 import ShowCard from "../components/UI/ShowCard/ShowCard.vue";
 import PaginationButtons from "../components/UI/Common/PaginationButtons.vue";
 import Spinner from "../components/UI/Common/Spinner.vue";
+import { movieDBAPIKey } from "../../privates.js";
 
 export default {
   components: {
@@ -69,7 +70,7 @@ export default {
 
     fetchDataFromApi(query, page) {
       this.$store.dispatch("HeaderLayout/updateSearchData", {
-        url: `https://api.themoviedb.org/3/search/multi?api_key=b9e62fadaa93179070f235a9087033e2&language=en-US&query=${query}&page=${page}`,
+        url: `https://api.themoviedb.org/3/search/multi?api_key=${movieDBAPIKey}&language=en-US&query=${query}&page=${page}`,
       });
     },
   },

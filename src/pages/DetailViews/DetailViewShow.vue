@@ -44,7 +44,11 @@
             {{ creator.name }}
           </p>
         </div>
-        <p>Homepage:{{ showInformations.homepage }}</p>
+        <div class="showHomePageContainer">
+          <a :href="showInformations.homepage" target="_blank">
+            Show Homepage
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -69,6 +73,11 @@ export default {
 };
 </script>
 <style scoped>
+.spinner {
+  margin-top: 50%;
+  text-align: center;
+}
+
 .boxcontainer {
   padding: 3rem 0;
   background-color: #292e2b;
@@ -77,15 +86,20 @@ export default {
   flex-direction: column;
   text-align: center;
 }
-
-.spinner {
-  margin-top: 50%;
-  text-align: center;
-}
-
 img {
   width: 100%;
   border-radius: var(--border-radius-md);
+}
+.poster {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.showData {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 .baseInfo {
   font-size: 1.5rem;
@@ -95,12 +109,6 @@ img {
   color: var(--main-color);
   font-weight: 400;
   letter-spacing: 1px;
-}
-.showData {
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
 }
 .lastEpisode {
   display: flex;
@@ -112,20 +120,12 @@ img {
   flex-direction: column;
 }
 
-.poster {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.seasonsInfo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-}
-
 .overviewContainer {
   margin: 2rem 1rem;
+}
+.overview {
+  text-align: justify;
+  font-size: 1.5rem;
 }
 .rate {
   display: flex;
@@ -133,17 +133,16 @@ img {
   align-items: center;
 }
 
-.overview {
-  text-align: justify;
-  font-size: 1.5rem;
-}
 .additionalInfo {
   margin: 1rem;
   text-align: center;
 }
 
-h3 {
-  color: black;
+.seasonsInfo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
 }
 .form {
   margin: 0 auto;
@@ -157,5 +156,19 @@ button {
 }
 .showCreators {
   margin: 1rem;
+}
+p {
+  font-size: 1.5rem;
+}
+.showHomePageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+a {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
 }
 </style>

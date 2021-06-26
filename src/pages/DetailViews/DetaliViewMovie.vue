@@ -79,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+.spinner {
+  margin-top: 50%;
+  text-align: center;
+}
 .boxcontainer {
   padding: 3rem 0;
   border-radius: 20px;
@@ -87,25 +91,31 @@ export default {
   flex-direction: column;
   text-align: center;
 }
-.spinner {
-  margin-top: 50%;
-  text-align: center;
-}
-
-img {
-  width: 100%;
-}
-.dateOfRealesed {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-}
 .showData {
   margin-top: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
+
+img {
+  width: 100%;
+}
+.rateBox {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.baseInfo {
+  font-size: 1.5rem;
+}
+.dateOfRealesed {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
 .lastEpisode {
   display: flex;
   align-items: center;
@@ -117,6 +127,11 @@ img {
 }
 .baseInfo--userRate {
   font-size: 1.7rem;
+}
+.baseInfo__span {
+  color: var(--main-color);
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 .poster {
   width: 90%;
@@ -134,20 +149,6 @@ img {
   margin: 2rem;
   font-size: 1.3rem;
   text-align: justify;
-}
-.rateBox {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.baseInfo {
-  font-size: 1.5rem;
-}
-.baseInfo__span {
-  color: var(--main-color);
-  font-weight: 600;
-  letter-spacing: 1px;
 }
 
 .additionalInfo {

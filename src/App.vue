@@ -2,6 +2,7 @@
   <body>
     <div class="phoneOverlayForDesktop">
       <div class="app">
+        <error-dialog v-if="showErrorDialog"></error-dialog>
         <the-header></the-header>
         <main class="main" @click="closeSearchOptionInHeader">
           <router-view v-slot="slotProps"
@@ -17,10 +18,16 @@
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
-
+import ErrorDialog from "./components/UI/Common/ErrorDialog.vue";
 export default {
   components: {
     TheHeader,
+    ErrorDialog,
+  },
+  computed: {
+    showErrorDialog() {
+      return this.$store.getters["ErrorModal/getShowErrorModal"];
+    },
   },
   methods: {
     closeSearchOptionInHeader() {
