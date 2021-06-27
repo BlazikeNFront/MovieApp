@@ -9,11 +9,11 @@
           <span class="baseInfo__span">{{
             showInformations.vote_average
           }}</span>
-          <p class="baseInfo">Vote counted:</p>
+          <p class="baseInfo">Total votes:</p>
           <span class="baseInfo__span">{{ showInformations.vote_count }}</span>
         </div>
         <div class="lastEpisode">
-          <p class="baseInfo">Last episode</p>
+          <p class="baseInfo">Last episode :</p>
           <div class="lastEpisode__data">
             <span class="baseInfo__span">{{
               showInformations.last_episode_to_air.name
@@ -26,8 +26,10 @@
       <div class="overviewContainer">
         <p class="overview">{{ showInformations.overview }}</p>
       </div>
-
-      <rate-form type="tv" :Id="showInformations.id"></rate-form>
+      <div class="rateForm">
+        <p>Rate Show :</p>
+        <rate-form type="tv" :Id="showInformations.id"></rate-form>
+      </div>
       <div class="additionalInfo">
         <h4>Seasons:</h4>
         <div class="seasonsInfo">
@@ -86,13 +88,11 @@ export default {
   flex-direction: column;
   text-align: center;
 }
-img {
-  width: 100%;
-  border-radius: var(--border-radius-md);
-}
+
 .poster {
+  margin: 1rem auto;
   width: 90%;
-  margin: 0 auto;
+  border-radius: 10px;
 }
 
 .showData {
@@ -112,6 +112,7 @@ img {
 }
 .lastEpisode {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 .lastEpisode__data {
@@ -148,6 +149,7 @@ img {
   margin: 0 auto;
 }
 button {
+  margin: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   background-color: var(--main-color);

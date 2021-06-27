@@ -51,7 +51,7 @@
       @click="handleRate(10)"
     />
   </form>
-  <p v-if="!userId">
+  <p v-if="!userID">
     U need to be logged in to rate shows. Click
     <router-link to="/login">here to sign in</router-link>
   </p>
@@ -70,7 +70,7 @@ export default {
     return {
       formRate: null,
       form: null,
-      userID: this.$store.getters["userId"],
+      userID: this.$store.getters["UserAuth/userId"],
     };
   },
 
@@ -83,11 +83,11 @@ export default {
     },
 
     async checkIfWasRated() {
-      if (!this.userId) {
-        return;
-      }
-
       try {
+        if (!this.userID) {
+          return;
+        }
+
         const response = await fetch(
           `${fbURL}/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`
         );
@@ -107,7 +107,7 @@ export default {
     },
 
     async handleRate(val) {
-      if (!this.userId) {
+      if (!this.userID) {
         return;
       }
       this.rateForm(val);
@@ -130,18 +130,13 @@ export default {
       }
     },
   },
-  computed: {
-    userId() {
-      return this.$store.getters["isAuth"];
-    },
-  },
 };
 </script>
 
 <style scoped>
 form {
   margin: 0 auto;
-  width: 18rem;
+  width: 20rem;
   border-radius: 10px;
   background-color: black;
   display: flex;
@@ -149,7 +144,7 @@ form {
 }
 .star {
   margin: 0.5rem 0rem;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: grey;
   transition: all 0.2s ease;
 }

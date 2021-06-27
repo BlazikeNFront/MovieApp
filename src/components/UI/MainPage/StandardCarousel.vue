@@ -10,9 +10,9 @@
     </div>
     <ul>
       <li>
-        <transition mode="out-in">
+        <transition name="carousel" mode="out-in" @after-leave="transitionEnd">
           <carousel-slide
-            v-if="loadedData"
+            v-if="readyToTransition"
             :active="activeSlide"
             :actor="false"
           ></carousel-slide>
@@ -37,16 +37,16 @@ export default {
     return {
       numberOfActive: 0,
       activeSlide: null,
+      readyToTransition: false,
       activeList: this.slides,
-      loadedData: false,
-      isClickable: true,
+      isClickable: false,
       interval: null,
     };
   },
 
   mounted() {
     this.createSlidesData();
-    /*  this.startSlideShow(); */
+    this.startSlideShow();
   },
 
   methods: {
@@ -56,48 +56,43 @@ export default {
         elements.push(element);
       }
       this.activeSlide = elements[0];
-      this.loadedData = true;
+      this.readyToTransition = true;
+      this.isClickable = true;
       this.lengthOfArray = this.activeList.length;
       this.activeList = elements;
     },
 
     startSlideShow() {
       this.interval = setInterval(() => {
-        this.loadedData = false;
-
         this.numberOfActive =
           (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
 
         this.activeSlide = this.activeList[this.numberOfActive];
-        setTimeout(() => {
-          this.loadedData = true;
-        }, 1000);
       }, 50000);
     },
-
+    transitionEnd() {
+      this.readyToTransition = true;
+    },
     slideLeft() {
-      if (!this.isClickable) {
+      if (!this.isClickable || !this.readyToTransition) {
         return;
       }
-
       if (this.interval) {
         clearInterval(this.interval);
       }
       this.isClickable = false;
-      this.loadedData = false;
-
+      this.readyToTransition = false;
       this.numberOfActive =
         (this.numberOfActive + this.lengthOfArray - 1) % this.lengthOfArray;
 
       this.activeSlide = this.activeList[this.numberOfActive];
 
       setTimeout(() => {
-        this.loadedData = true;
         this.isClickable = true;
-      }, 1000);
+      }, 2000);
     },
     slideRight() {
-      if (!this.isClickable) {
+      if (!this.isClickable || !this.readyToTransition) {
         return;
       }
 
@@ -105,15 +100,13 @@ export default {
         clearInterval(this.interval);
       }
       this.isClickable = false;
-      this.loadedData = false;
-
+      this.readyToTransition = false;
       this.numberOfActive =
         (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
 
       this.activeSlide = this.activeList[this.numberOfActive];
 
       setTimeout(() => {
-        this.loadedData = true;
         this.isClickable = true;
       }, 1000);
     },
@@ -124,8 +117,9 @@ export default {
 
 <style scoped>
 section {
-  margin: 2rem 0;
+  margin: 2rem 0.3rem;
   padding: 2rem 0;
+
   border-radius: 20px;
   background-color: #292e2b;
   display: flex;
@@ -156,26 +150,26 @@ button {
   justify-content: space-between;
   z-index: 10;
 }
-.v-enter-from {
+.carousel-enter-from {
   transform: translate(10rem);
   opacity: 0;
 }
 
-.v-enter-active {
-  transition: all 1s ease-out;
+.carousel-enter-active {
+  transition: all 0.5s ease-out;
 }
 
-.v-enter-to {
+.carousel-enter-to {
   transform: translate(0rem);
   opacity: 1;
 }
-.v-leave-from {
+.carousel-leave-from {
   opacity: 1;
 }
-.v-leave-active {
-  transition: all 1s ease-out;
+.carousel-leave-active {
+  transition: all 0.5s ease-in;
 }
-.v-leave-to {
+.carousel-leave-to {
   transform: translate(-10rem);
   opacity: 0;
 }

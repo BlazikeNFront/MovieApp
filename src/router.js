@@ -1,13 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "./store/index.js";
+
 import MainPage from "./pages/MainPage.vue";
-import UserSearchResult from "./pages/UserSearchResult.vue";
-import NavSearchResult from "./pages/NavSearchResult.vue";
-import DetailViewMovie from "./pages/DetailViews/DetaliViewMovie.vue";
-import DetailViewShow from "./pages/DetailViews/DetailViewShow.vue";
-import SignUpForm from "./pages/SignUpFrom.vue";
-import UserAuth from "./pages/userAuth.vue";
-import UserAccountDetails from "./pages/UserAccountDetails.vue";
+
+const UserSearchResult = () =>
+  import(/* webpackChunkName: "homePage" */ "./pages/UserSearchResult.vue");
+
+const NavSearchResult = () =>
+  import(
+    /* webpackChunkName: "NavSearchResult" */ "./pages/NavSearchResult.vue"
+  );
+
+const DetailViewMovie = () =>
+  import(
+    /* webpackChunkName: "DetailViewMovie" */ "./pages/DetailViews/DetaliViewMovie.vue"
+  );
+
+const DetailViewShow = () =>
+  import(
+    /* webpackChunkName: "DetailViewShow" */ "./pages/DetailViews/DetailViewShow.vue"
+  );
+
+const SignUpForm = () =>
+  import(/* webpackChunkName: "SignUpForm" */ "./pages/SignUpFrom.vue");
+const UserAuth = () =>
+  import(/* webpackChunkName: "UserAuth" */ "./pages/userAuth.vue");
+
+const UserAccountDetails = () =>
+  import(
+    /* webpackChunkName: "UserAccountDetails" */ "./pages/UserAccountDetails.vue"
+  );
 
 const router = createRouter({
   history: createWebHistory(),

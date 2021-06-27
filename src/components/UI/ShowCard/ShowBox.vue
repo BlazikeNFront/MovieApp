@@ -129,7 +129,7 @@ export default {
 }
 .text {
   margin-left: 2rem;
-  width: 25rem;
+  width: 23rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -151,6 +151,11 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 20px;
   background-color: var(--main-color);
+}
+@media (min-width: 425px) {
+  .text {
+    width: 26rem;
+  }
 }
 </style>
 

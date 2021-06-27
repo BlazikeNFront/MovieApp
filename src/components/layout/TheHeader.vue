@@ -96,6 +96,7 @@ header {
   z-index: 1000;
 }
 input {
+  width: 23rem;
   height: 3rem;
   background-color: inherit;
   border: none;
@@ -132,7 +133,8 @@ button {
 }
 
 .formButton {
-  padding: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
   font-family: inherit;
   background: black;
   color: white;

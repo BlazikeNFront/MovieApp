@@ -14,6 +14,7 @@ export default {
 
   mutations: {
     setUser(state, payload) {
+      console.log(payload);
       state.token = payload.token;
       state.userId = payload.userId;
       state.tokenExpiration = payload.tokenExpiration;
@@ -64,6 +65,7 @@ export default {
           userId: responseData.localId,
           tokenExpiration: responseData.expiresIn,
         });
+        context.dispatch("getUserName");
       } catch (err) {
         throw new Error(err);
       }
@@ -105,10 +107,12 @@ export default {
         document.cookie = `user-expiresIn=${responseData.expiresIn}; Secure`;
 
         const userNameData = await fetch(
-          `${fbURL}/Users/${context.state.userId}/userName.json`
+          `${fbURL}/Users/${context.getters.userId}/userName.json`
         );
 
         const responseUserNameData = await userNameData.json();
+
+        document.cookoie = `user-userName=${responseUserNameData}; Secure`;
         if (!userNameData.ok) {
           const error = new Error(responseData.error.message);
           throw error;
@@ -118,6 +122,7 @@ export default {
         throw new Error(err);
       }
     },
+
     async checkForAuthCookies(context) {
       try {
         const cookiesObject = {};
@@ -134,13 +139,14 @@ export default {
           const valueForObjectProp = singleCookie[1].split(";")[0];
           cookiesObject[singleCookie[0]] = valueForObjectProp;
         });
-
+        console.log(cookiesObject);
         context.commit("setUser", {
           token: cookiesObject.token,
           userId: cookiesObject.id,
           tokenExpiration: cookiesObject.expiresIn,
           userEmail: cookiesObject.email,
         });
+        context.commit("setUserName", cookiesObject.userName);
       } catch (err) {
         console.log(err);
       }
@@ -171,10 +177,22 @@ export default {
         });
       }
     },
-  },
+    async checkDbForUserName(context) {
+      try {
+        const data = await fetch(
+          `${fbURL}/Users/${context.getters.userId}/userName.json`
+        );
+        const userName = await data.json();
 
-  logout(context) {
-    context.commit("logout");
+        context.commit("setUserName", userName);
+        document.cookoie = `user-userName=${userName}; Secure`;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    logout(context) {
+      context.commit("logout");
+    },
   },
 
   getters: {

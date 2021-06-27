@@ -101,19 +101,19 @@ button {
     position: relative;
     margin: 0 auto;
     margin-top: 5rem;
-    width: 90rem;
-    height: 75rem;
+    width: 41rem;
+    height: 76rem;
     background-image: url("../public/assets/img/phoneOverlay.png");
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
   }
 
   .app {
     position: absolute;
-    top: 4rem;
-    left: 11rem;
-    width: 35rem;
-    height: 65.5rem;
+    top: 2rem;
+    left: 1.5rem;
+    width: 38.5rem;
+    height: 68.5rem;
     border-radius: 25px;
     overflow-y: scroll;
   }

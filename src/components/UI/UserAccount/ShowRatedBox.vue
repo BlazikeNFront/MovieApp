@@ -38,7 +38,6 @@ export default {
         return;
       }
 
-      // WHY you use store reset ?
       this.$store.dispatch("ShowDetails/updateShowInformations", null);
 
       const payload = {
@@ -101,7 +100,7 @@ export default {
 .container {
   margin: 0 1rem;
   width: 11rem;
-  height: 23rem;
+  height: 100%;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
   border-radius: 5px;
   background-color: black;

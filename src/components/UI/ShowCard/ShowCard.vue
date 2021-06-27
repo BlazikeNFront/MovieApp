@@ -1,5 +1,5 @@
 <template>
-  <div v-if="active.gender !== '0'">
+  <div class="box" v-if="active.gender !== '0'">
     <show-box v-if="!actor" :active="active"></show-box>
     <person-box v-else :personInfo="active"></person-box>
   </div>

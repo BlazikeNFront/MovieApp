@@ -25,7 +25,9 @@
         :title="active.title"
       />
       <article class="text">
-        <h3>{{ active.title || active.name }}</h3>
+        <h3 :class="{ smallFont: isTitleLong }">
+          {{ active.title || active.name }}
+        </h3>
         <p>{{ overviewShort || "There is no overview for this show..." }}</p>
         <button @click="updateDetailShowComponent">More Details...</button>
       </article>
@@ -53,7 +55,13 @@ export default {
         return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
       }
     },
-
+    isTitleLong() {
+      const title = this.active.title || this.active.name;
+      if (title.length > 25) {
+        return true;
+      }
+      return false;
+    },
     overviewShort() {
       return this.cutOverview();
     },
@@ -94,6 +102,7 @@ export default {
 .sliderBox {
   margin: 0 auto;
   width: 100%;
+  height: 45rem;
   background-color: black;
   border-radius: 10px;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
@@ -126,6 +135,9 @@ export default {
 }
 h3 {
   text-align: center;
+}
+.smallFont {
+  font-size: 1.8rem;
 }
 p {
   font-size: 1.2rem;

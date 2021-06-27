@@ -10,7 +10,7 @@
         <p class="infoBox__infoValue">{{ email }}</p>
       </div>
       <div class="infoBox">
-        <p class="InfoBox_typeOfInfo">Your userName:</p>
+        <p class="InfoBox_typeOfInfo">Your username:</p>
         <p v-if="userName" class="infoBox__infoValue">{{ userName }}</p>
         <form v-else @submit.prevent="handleSetUserRequest">
           <label for="userName">Set Username</label>
@@ -59,13 +59,14 @@ export default {
     TvshowBoxSmall,
     PersonBoxSmall,
   },
-
   mounted() {
     this.moviesRatedData();
     this.tvShowRatedData();
     this.actorsRatedData();
+    if (!this.userName) {
+      this.fetchUserNameFromDB();
+    }
   },
-
   data() {
     return {
       moviesRated: null,
@@ -103,7 +104,9 @@ export default {
         return false;
       }
     },
-
+    fetchUserNameFromDB() {
+      this.$store.dispatch("UserAuth/checkDbForUserName");
+    },
     async handleSetUserRequest() {
       if (!this.validateForm() === false) {
         return;
@@ -220,6 +223,7 @@ input {
   padding: 0.5rem 0rem;
   border: 1px solid black;
   border-radius: 5px;
+  width: 20rem;
   font-size: 2rem;
   text-align: center;
 }

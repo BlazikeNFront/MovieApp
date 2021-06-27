@@ -14,7 +14,7 @@
                 showInformations.vote_average
               }}</span>
             </p>
-            <p class="baseInfo">Votes counted:</p>
+            <p class="baseInfo">Total votes:</p>
             <span class="baseInfo__span">
               {{ showInformations.vote_count }}</span
             >
@@ -30,7 +30,7 @@
           {{ showInformations.overview }}
         </div>
         <div class="additionalInfo">
-          <p class="baseInfo">Your Rate:</p>
+          <p>Rate movie :</p>
           <rate-form type="movie" :Id="showInformations.id"></rate-form>
           <div>
             <h4>Genres:</h4>
@@ -101,6 +101,9 @@ export default {
 img {
   width: 100%;
 }
+p {
+  font-size: 1.5rem;
+}
 .rateBox {
   width: 50%;
   display: flex;
@@ -130,12 +133,13 @@ img {
 }
 .baseInfo__span {
   color: var(--main-color);
-  font-weight: 600;
+  font-size: 1.5rem;
+
   letter-spacing: 1px;
 }
 .poster {
+  margin: 1rem auto;
   width: 90%;
-  margin: 0 auto;
 }
 
 .seasonsInfo {
