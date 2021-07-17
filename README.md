@@ -1,24 +1,5 @@
-# movieapp
+Simple application to with help of imdbAPI allows user to get basic information about movies, tv shows or actors.
 
-## Project setup
-```
-npm install
-```
+FrontEnd - VUE 3 / VUEX / VUE ROUTER
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+BackEnd - Firebase
