@@ -56,5 +56,20 @@ p {
   text-align: justify;
   font-size: 1.7rem;
 }
+@media (min-width: 500px) {
+  .backDrop {
+    position: fixed;
+    width: 39rem;
+    height: 69rem;
+
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+  }
+  dialog {
+    width: 35em;
+    height: 58rem;
+  }
+}
 </style>
 

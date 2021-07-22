@@ -30,8 +30,10 @@
           {{ showInformations.overview }}
         </div>
         <div class="additionalInfo">
-          <p>Rate movie :</p>
-          <rate-form type="movie" :Id="showInformations.id"></rate-form>
+          <div class="rateForm">
+            <p>Rate movie :</p>
+            <rate-form type="movie" :Id="showInformations.id"></rate-form>
+          </div>
           <div>
             <h4>Genres:</h4>
             <div class="genres__wrapper">
@@ -142,13 +144,6 @@ p {
   width: 90%;
 }
 
-.seasonsInfo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-}
-
 .overView {
   margin: 2rem;
   font-size: 1.3rem;
@@ -162,6 +157,9 @@ p {
   flex-direction: column;
   justify-content: space-evenly;
   text-align: center;
+}
+.rateForm {
+  height: 10rem;
 }
 .genres__wrapper {
   margin: 0 auto;

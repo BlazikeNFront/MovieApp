@@ -101,7 +101,6 @@ export default {
 </script>
 <style scoped>
 .showBox {
-  margin: 1rem auto;
   width: 100%;
   background-color: black;
   border-radius: 10px;
@@ -112,24 +111,23 @@ export default {
 }
 .showImg {
   width: 100%;
-  height: 30rem;
-  object-fit: contain;
+  height: 20rem;
 }
 .posterAndTextBox {
+  margin: 0.5rem;
   width: 100%;
-  height: 18rem;
   display: flex;
   align-items: center;
 }
 .showPoster {
   position: relative;
-  top: -3rem;
+  top: -6rem;
   left: 1rem;
   width: 10rem;
 }
 .text {
-  margin-left: 2rem;
-  width: 23rem;
+  margin: 0 2rem;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -143,6 +141,7 @@ h3 {
   font-size: 2rem;
 }
 p {
+  margin: 0.5rem 0;
   text-align: justify;
 }
 
@@ -152,9 +151,9 @@ button {
   border-radius: 20px;
   background-color: var(--main-color);
 }
-@media (min-width: 425px) {
-  .text {
-    width: 26rem;
+@media (min-width: 375px) {
+  .showPoster {
+    top: -4rem;
   }
 }
 </style>

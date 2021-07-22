@@ -49,7 +49,7 @@ export default {
       }
     },
     imgSrc() {
-      if (!this.active.poster_path) {
+      if (!this.active.backdrop_path) {
         return require("../../../../public/assets/img/movieImgPlaceholder.png");
       } else {
         return "https://image.tmdb.org/t/p/w500" + this.active.backdrop_path;
@@ -101,33 +101,33 @@ export default {
 <style scoped>
 .sliderBox {
   margin: 0 auto;
+  padding: 1rem 0;
   width: 100%;
-  height: 45rem;
+  height: 43rem;
   background-color: black;
   border-radius: 10px;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
 }
 .showImg {
   width: 100%;
-  height: 27rem;
-  object-fit: cover;
+  max-height: 22rem;
 }
 .posterAndTextBox {
   width: 100%;
-  height: 18rem;
+
   display: flex;
   align-items: center;
 }
 .showPoster {
   position: relative;
-  top: -3rem;
+  top: -5rem;
   left: 1rem;
   width: 10rem;
 }
 .text {
-  margin-left: 2rem;
-  width: 65%;
-  height: 100%;
+  margin-left: 1rem;
+  width: 100%;
+  height: 18rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,6 +140,7 @@ h3 {
   font-size: 1.8rem;
 }
 p {
+  margin: 0.5rem;
   font-size: 1.2rem;
   text-align: justify;
 }
@@ -148,5 +149,13 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 20px;
   background-color: var(--main-color);
+}
+@media (min-width: 375px) {
+  .text {
+    margin-top: 1rem;
+  }
+  p {
+    margin: 0.5rem 1rem;
+  }
 }
 </style>

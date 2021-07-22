@@ -18,7 +18,7 @@
       </div>
       <button class="button button--login">Login</button>
       <spinner class="spinner" v-if="isLoading"></spinner>
-      <p v-if="!!error">{{ error }}</p>
+      <p v-if="!!error" class="errorMsg">{{ error }}</p>
     </form>
 
     <h4 class="signUpText">
@@ -144,7 +144,9 @@ input {
 p {
   margin-top: 1rem;
 }
-
+.errorMsg {
+  color: red;
+}
 a {
   margin: 1rem auto;
   padding: 0.5rem 0;

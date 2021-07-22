@@ -243,6 +243,7 @@ form button {
 
 .ratedShows {
   width: 100%;
+  height: 100%;
   padding: 3rem 0.5rem;
   display: flex;
   scroll-behavior: smooth;
@@ -267,6 +268,7 @@ form button {
 .infoBox__infoValue {
   display: block;
   width: 60%;
+  text-align: center;
 }
 
 .invalid {

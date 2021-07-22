@@ -133,6 +133,7 @@ button {
 }
 
 .formButton {
+  margin-left: 0.5rem;
   padding: 0.6rem 1rem;
   border-radius: 10px;
   font-family: inherit;
@@ -161,7 +162,6 @@ button {
   background-size: cover;
 }
 .closeSearchButton {
-  margin-right: 2rem;
   width: 2rem;
   height: 2rem;
   box-shadow: none;
@@ -181,16 +181,18 @@ button {
   background-image: url("../../../public/assets//icons/menu.svg");
   background-size: cover;
 }
+@media (min-width: 420px) {
+  input {
+    width: 28rem;
+  }
+}
 @media (min-width: 500px) {
   header {
     position: absolute;
     z-index: 1000;
   }
-  .searchBar {
-    width: 5rem;
-  }
-  .closeSearchButton {
-    position: absolute;
+  input {
+    width: 24rem;
   }
 }
 </style>

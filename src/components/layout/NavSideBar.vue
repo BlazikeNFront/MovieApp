@@ -107,7 +107,7 @@ nav {
   top: 5.89rem;
   left: 0;
   width: 15rem;
-  height: 20rem;
+
   border-radius: 0 15px 15px 0;
   background-color: #1a1919;
   z-index: 1000;
@@ -115,6 +115,7 @@ nav {
 li {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid black;
+
   font-size: 1.5rem;
   color: White;
   text-align: center;
@@ -122,8 +123,10 @@ li {
   cursor: pointer;
 }
 li:hover {
-  background-color: #242222;
   text-shadow: 0px 0px 4px #ffffff;
+}
+li:last-child {
+  border: none;
 }
 
 a {

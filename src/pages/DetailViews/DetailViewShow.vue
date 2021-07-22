@@ -32,14 +32,7 @@
       </div>
       <div class="additionalInfo">
         <h4>Seasons:</h4>
-        <div class="seasonsInfo">
-          <button
-            v-for="season in showInformations['seasons']"
-            :key="season.name"
-          >
-            {{ season.name }}
-          </button>
-        </div>
+
         <div class="showCreators">
           <h4>Created by:</h4>
           <p v-for="creator in showInformations.created_by" :key="creator.id">
@@ -58,6 +51,16 @@
 
 <script>
 export default {
+  mounted() {
+    if (this.$store.getters["ShowDetails/showInformations"] === null) {
+      const movieID = this.$route.params.showID;
+      const payload = {
+        typeOfShow: "tv",
+        id: movieID,
+      };
+      this.$store.dispatch("ShowDetails/updateShowInformations", payload);
+    }
+  },
   computed: {
     showInformations() {
       return this.$store.getters["ShowDetails/showInformations"];
@@ -128,10 +131,8 @@ export default {
   text-align: justify;
   font-size: 1.5rem;
 }
-.rate {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.rateForm {
+  height: 10rem;
 }
 
 .additionalInfo {
@@ -139,12 +140,6 @@ export default {
   text-align: center;
 }
 
-.seasonsInfo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-}
 .form {
   margin: 0 auto;
 }

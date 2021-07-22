@@ -31,8 +31,8 @@ export default {
         }
 
         context.commit("updateTrendingMovies", dataJson);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     },
 
@@ -50,8 +50,8 @@ export default {
         }
 
         context.commit("updateTrendingTvShows", dataJson);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     },
   },

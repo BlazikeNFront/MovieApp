@@ -5,7 +5,7 @@
       <arrow-button class="button" @click="slideLeft"></arrow-button>
       <arrow-button
         class="button button--right"
-        @click="slideRight"
+        @click="slideRight(false)"
       ></arrow-button>
     </div>
     <ul>
@@ -64,11 +64,8 @@ export default {
 
     startSlideShow() {
       this.interval = setInterval(() => {
-        this.numberOfActive =
-          (this.numberOfActive + this.lengthOfArray + 1) % this.lengthOfArray;
-
-        this.activeSlide = this.activeList[this.numberOfActive];
-      }, 50000);
+        this.slideRight(true);
+      }, 5000);
     },
     transitionEnd() {
       this.readyToTransition = true;
@@ -91,12 +88,12 @@ export default {
         this.isClickable = true;
       }, 2000);
     },
-    slideRight() {
+    slideRight(autoSlide) {
       if (!this.isClickable || !this.readyToTransition) {
         return;
       }
 
-      if (this.interval) {
+      if (!autoSlide && this.interval) {
         clearInterval(this.interval);
       }
       this.isClickable = false;
@@ -118,15 +115,15 @@ export default {
 <style scoped>
 section {
   margin: 2rem 0.3rem;
-  padding: 2rem 0;
-
   border-radius: 20px;
+  min-height: 50rem;
   background-color: #292e2b;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 h2 {
+  margin-top: 2rem;
   color: var(--main-color);
   text-align: center;
 }

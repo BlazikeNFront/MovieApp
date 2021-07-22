@@ -21,7 +21,10 @@
         </li>
       </ul>
       <p>Rate actor:</p>
-      <rate-form type="person" :Id="personInfo.id"></rate-form>
+
+      <div class="personBox__rateForm">
+        <rate-form type="person" :Id="personInfo.id"></rate-form>
+      </div>
     </div>
   </section>
 </template>
@@ -50,14 +53,14 @@ export default {
   position: relative;
   margin: 1rem 0.5rem;
   padding: 1rem;
-  height: 25rem;
+  height: 100%;
   border-radius: 20px;
   background-color: #292e2b;
   display: flex;
   align-items: center;
 }
 .actorImg {
-  width: 16rem;
+  width: 10rem;
   border-radius: 8px;
   align-items: center;
   transform: none;
@@ -72,6 +75,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 button {
@@ -85,11 +89,12 @@ ul {
 }
 li {
   margin: 1rem 0.5rem;
+  text-align: center;
 }
 
 h3 {
   color: white;
-  font-size: 2rem;
+
   font-weight: 500;
   text-align: center;
 }
@@ -100,9 +105,26 @@ h4 {
 
 p {
   display: block;
-  overflow: hidden;
   margin: 0.5rem;
   max-height: 6rem;
+  font-size: 1.5rem;
   text-align: center;
+  overflow: hidden;
+}
+.personBox__rateForm {
+  transform: scale(0.8);
+}
+@media (min-width: 375px) {
+  .actorImg {
+    width: 14rem;
+  }
+}
+@media (min-width: 425px) {
+  .actorImg {
+    width: 16rem;
+  }
+  .personBox__rateForm {
+    transform: scale(0.9);
+  }
 }
 </style>

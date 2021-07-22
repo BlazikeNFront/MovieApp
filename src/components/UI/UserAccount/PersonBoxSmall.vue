@@ -22,3 +22,8 @@ export default {
   },
 };
 </script>
+<style  scoped>
+.dataLoadingBox {
+  margin: 0 auto;
+}
+</style>

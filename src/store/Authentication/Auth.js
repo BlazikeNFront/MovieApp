@@ -14,7 +14,6 @@ export default {
 
   mutations: {
     setUser(state, payload) {
-      console.log(payload);
       state.token = payload.token;
       state.userId = payload.userId;
       state.tokenExpiration = payload.tokenExpiration;
@@ -60,12 +59,19 @@ export default {
         if (!response.ok) {
           throw new Error(responseData.error.message || "failed to sign up");
         }
-        context.commit("setUser", {
+
+        const setUserPayload = {
+          userEmail: responseData.email,
           token: responseData.idToken,
           userId: responseData.localId,
           tokenExpiration: responseData.expiresIn,
-        });
-        context.dispatch("getUserName");
+        };
+
+        context.commit("setUser", setUserPayload);
+        document.cookie = `user-id=${responseData.localId}; Secure`;
+        document.cookie = `user-token=${responseData.idToken}; Secure`;
+        document.cookie = `user-email=${responseData.email}; Secure`;
+        document.cookie = `user-expiresIn=${responseData.expiresIn}; Secure`;
       } catch (err) {
         throw new Error(err);
       }
@@ -139,7 +145,7 @@ export default {
           const valueForObjectProp = singleCookie[1].split(";")[0];
           cookiesObject[singleCookie[0]] = valueForObjectProp;
         });
-        console.log(cookiesObject);
+
         context.commit("setUser", {
           token: cookiesObject.token,
           userId: cookiesObject.id,

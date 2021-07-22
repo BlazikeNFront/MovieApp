@@ -10,8 +10,8 @@
       />
       <div>
         <h3>{{ title }}</h3>
-        <div class="scale">
-          <rate-form :type="type" :Id="id"></rate-form>
+        <div class="rate">
+          <rate-form :type="type" :Id="id" :isRated="true"></rate-form>
         </div>
       </div>
     </div>
@@ -65,7 +65,6 @@ export default {
           const name = responseData.title || responseData.original_name;
 
           if (name.split("").length > 16) {
-            console.log(name.split("").length);
             this.title = name.split("").splice(0, 10).join("") + "...";
           } else {
             this.title = name;
@@ -98,16 +97,18 @@ export default {
 
 <style scoped>
 .container {
+  position: relative;
   margin: 0 1rem;
-  width: 11rem;
-  height: 100%;
+  padding: 1rem 0;
+  width: 18rem;
+  height: fit-content;
   box-shadow: 4px 10px 15px rgba(0, 0, 0, 0.8);
   border-radius: 5px;
   background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .spinner {
   margin: 35% auto;
@@ -115,14 +116,14 @@ export default {
 
 .moviePoster {
   width: 90%;
-  height: 73%;
+  height: 25rem;
   border-radius: 5px;
 }
 h3 {
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
-.scale {
-  transform: scale(0.6);
+.rate {
+  transform: scale(0.8);
 }
 </style>

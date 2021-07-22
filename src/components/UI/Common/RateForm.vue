@@ -1,65 +1,68 @@
 <template>
-  <form ref="form">
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(1)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(2)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(3)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(4)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(5)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(6)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(7)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(8)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(9)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'star']"
-      class="star"
-      @click="handleRate(10)"
-    />
-  </form>
+  <div class="rateForm">
+    <spinner v-if="!ajaxCallResult"></spinner>
+    <form ref="form" v-show="ajaxCallResult">
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(1)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(2)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(3)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(4)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(5)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(6)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(7)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(8)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(9)"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'star']"
+        class="star"
+        @click="handleRate(10)"
+      />
+    </form>
+  </div>
   <p v-if="!userID">
-    U need to be logged in to rate shows. Click
+    U need to be logged in to rate. Click
     <router-link to="/login">here to sign in</router-link>
   </p>
 </template>
 <script>
 import { fbURL } from "../../../../privates.js";
 export default {
-  props: ["Id", "type"],
+  props: ["Id", "type", "isRated"],
 
   mounted() {
     this.form = Array.from(this.$refs.form.children);
@@ -68,7 +71,7 @@ export default {
 
   data() {
     return {
-      formRate: null,
+      ajaxCallResult: false,
       form: null,
       userID: this.$store.getters["UserAuth/userId"],
     };
@@ -76,7 +79,9 @@ export default {
 
   methods: {
     rateForm(val) {
+      this.ajaxCallResult = true;
       this.form.forEach((element) => element.classList.remove("checked"));
+
       for (let i = 0; i < val; i++) {
         this.form[i].classList.add("checked");
       }
@@ -85,6 +90,7 @@ export default {
     async checkIfWasRated() {
       try {
         if (!this.userID) {
+          this.ajaxCallResult = true;
           return;
         }
 
@@ -97,8 +103,9 @@ export default {
         if (data) {
           this.rateForm(data);
         }
+        this.ajaxCallResult = true;
         if (!response.ok) {
-          const error = new Error("No r");
+          const error = new Error("Server side error");
           throw error;
         }
       } catch (err) {
@@ -107,26 +114,30 @@ export default {
     },
 
     async handleRate(val) {
-      if (!this.userID) {
-        return;
-      }
-      this.rateForm(val);
-
-      this.form.forEach((element) => element.classList.remove("checked"));
-      for (let i = 0; i < val; i++) {
-        this.form[i].classList.add("checked");
-      }
-
-      const response = await fetch(
-        `${fbURL}/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
-        {
-          method: "PUT",
-          body: val,
+      try {
+        if (!this.userID) {
+          return;
         }
-      );
+        this.rateForm(val);
 
-      if (!response.ok) {
-        console.log("ERROR RESPONSE IN HandleRate METHOD(RATEFORM COMPONENT)");
+        this.form.forEach((element) => element.classList.remove("checked"));
+        for (let i = 0; i < val; i++) {
+          this.form[i].classList.add("checked");
+        }
+
+        const response = await fetch(
+          `${fbURL}/Users/${this.userID}/ratedShows/${this.type}/${this.Id}.json`,
+          {
+            method: "PUT",
+            body: val,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("IMDB server side error");
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
   },
@@ -134,13 +145,23 @@ export default {
 </script>
 
 <style scoped>
+.rateForm {
+  position: relative;
+}
 form {
   margin: 0 auto;
+  margin-top: 1rem;
   width: 20rem;
   border-radius: 10px;
   background-color: black;
   display: flex;
   justify-content: center;
+}
+.rateFormSpinner {
+  position: absolute;
+  bottom: -3rem;
+  left: 5rem;
+  transform: scale(0.8);
 }
 .star {
   margin: 0.5rem 0rem;
@@ -158,6 +179,9 @@ p {
 a {
   font-size: 1.5rem;
   color: var(--main-color);
+}
+.spinner {
+  transform: scale(0.7);
 }
 @media (min-width: 500px) {
   form {
